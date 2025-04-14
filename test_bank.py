@@ -1,0 +1,29 @@
+from bank import value
+
+def main():
+    test_0_value()
+    test_20_value()
+    test_100_value()
+
+
+
+
+def test_0_value():
+    greetings = ["hello", "hello, newman", "hello there"].casefold().strip()
+    for greeting in greetings:
+        assert value(greeting) == "$0"
+
+def test_20_value():
+   greetings =  ["how you doing?", "hey"].casefold().strip()
+   for greeting in greetings:
+        assert value(greeting) == "$20"
+
+def test_100_value():
+    greetings =  ["what's happening?", "what's up?"].casefold().strip()
+    for greeting in greetings:
+        assert value(greeting) == "$100"
+
+
+
+if __name__ == "__main__":
+    main()
