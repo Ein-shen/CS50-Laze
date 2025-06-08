@@ -1,0 +1,41 @@
+import re
+import sys
+
+
+def main():
+    print(validate(input("IPv4 Address: ")))
+    sys.exit()
+
+
+
+def validate(ip):
+           if re.match(r"^\d+\.\d+\.\d\.\d+$", ip)
+                goo = ip.split(".")
+                for i in goo:
+                    j = int(i)
+                    if j  < 0 or j > 255:
+                        return False
+                    return True
+             return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    main()
