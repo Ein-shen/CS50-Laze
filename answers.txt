@@ -1,0 +1,18 @@
+If songs.db contains the top 100 songs of one listener from 2018, how would you characterize their audio aura?
+
+Indept data, music listening preference of a person base average:
+
+ENERGY
+average energy of music is 0.659
+
+VALENCE
+average valenece of music is 0.484
+
+DANCEABILITY
+average danceability of music is 0.716
+
+
+
+Hypothesize about why the way you’ve calculated this aura might not be very representative of the listener. What better ways of calculating this aura would you propose?
+
+The user's top 100 songs may not provide enough accurate information. We may need additional data based on their listening activity.
