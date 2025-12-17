@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <title>My Webpage</title>
+    </head>
+    <body>
+        <header>
+            <h1>Jujutsu Kaisen</h1>
+            <nav>
+                <ul>
+                    <li> <a href="./index.html"> Home</a> </a></li>
+                    <li> <a href="./about_me.html"> About</a> </a></li>
+                    <li> <a href="./contact.html"> Contact</a> </a></li>
+                    <li> <a href="./present.html"> Present</a> </a></li>
+
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section>
+                <div class="container col-xxl-8 px-4 py-5">
+                    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                    <div class="col-10 col-sm-8 col-lg-6">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXKy-h9A8vx4bknTrzs-fTcAJFLNYclrCWXg&s" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Hi! I'm Gojo Saturo</h1>
+                        <p class="lead">Gojo Satoru is the strongest jujutsu sorcerer alive, blessed with the rare Six Eyes and Limitless technique. His unmatched power and charismatic presence make him a living legend, capable of single-handedly changing the fate of the jujutsu world.</p>
+                        <a href="./about_me.html" class="btn btn-primary btn-lg">Read more</a>
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="pb-2 border-bottom">Gojo Satoru's Cursed Techniques</h2>
+                <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                <div class="feature col">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
+                    </div>
+                    <h3 class="fs-2">Limitless</h3>
+                    <p>The inherited technique of the Gojo family that grants control over space at an atomic level. By manipulating the concept of infinity, Gojo creates an impenetrable barrier that slows down approaching attacks infinitely, making him virtually untouchable in combat.</p>
+
+                </div>
+                <div class="feature col">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"></use></svg>
+                    </div>
+                    <h3 class="fs-2">Six Eyes</h3>
+                    <p>An extremely rare ocular ability that allows Gojo to see cursed energy in incredible detail and process information at superhuman speeds. The Six Eyes drastically reduces the cursed energy cost of techniques, enabling him to maintain his powers indefinitely without exhaustion.</p>
+
+                </div>
+                <div class="feature col">
+                    <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+                    </div>
+                    <h3 class="fs-2">Hollow Purple</h3>
+                    <p>Gojo's most devastating attack, created by combining the repulsive force of Blue and the attractive force of Red. This imaginary mass obliterates everything in its path, leaving nothing but void as it tears through both matter and cursed energy.</p>
+
+                </div>
+                </div>
+            </section>
+
+
+        <section class="container text-center py-5">
+            <h2 class="mb-4">Unleash Gojo's Power!</h2>
+            <button id="powerBtn" class="btn btn-danger btn-lg px-5 py-3" style="font-size: 1.5rem;">🔥 Click Gojo's Power 🔥</button>
+            <div id="powerDisplay" style="display: none; margin-top: 30px; font-size: 2.5rem; font-weight: bold;"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        © Shen Sarsale, 2025
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const powerBtn = document.getElementById('powerBtn');
+        const powerDisplay = document.getElementById('powerDisplay');
+
+        powerBtn.addEventListener('click', function() {
+            
+            alert('⚡ Domain Expansion: Unlimited Void! ⚡');
+
+            powerDisplay.style.display = 'block';
+            powerDisplay.textContent = '🔥 Power Level: INFINITE! 🔥';
+            powerBtn.textContent = '✨ Click Again! ✨';
+            powerDisplay.style.animation = 'fadeIn 0.5s ease';
+
+            setTimeout(() => {
+                powerDisplay.style.color = '#dc3545';
+            }, 500);
+        });
+    </script>
+    </body>
+</html>

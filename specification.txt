@@ -1,0 +1,31 @@
+
+
+
+HTML Elements Used:
+
+<html>
+<head>
+<title>
+<p>
+<h1>
+<button>
+<footer>
+<div>
+<nav>
+<body>
+
+CSS Properties Used:
+
+padding-top
+text-align
+backgound-color
+width
+margin
+
+
+JavaScript & Bootstrap:
+
+I used JavaScript to make the button interactive — when you click it,
+it shows an alert, updates the text on the page, and adds some color-changing animations,
+while Bootstrap was included to help with the overall page layout and styling, giving it a clean,
+responsive design without having to write all the CSS from scratch.
