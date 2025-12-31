@@ -3,11 +3,11 @@ import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
 
 // ===== ADJUST THESE =====
-const MAX_RECENT = 5
-const FETCH_LIMIT = 50
+const MAX_RECENT = 6      // how many decks to show
+const FETCH_LIMIT = 100   // how many recent attempts to pull before removing duplicates
 // ========================
 
-// Keep only the newest attempt per deck (list is already newest-first)
+// One row per deck, newest first: the deck you just studied moves to the top
 const getUniqueRecent = (attempts) => {
   const seen = new Set()
   return attempts
@@ -25,6 +25,7 @@ const Ai = ({ onNavigate }) => {
 
   useEffect(() => {
     const fetchRecentAttempts = async () => {
+      // show cached data instantly
       const cached = localStorage.getItem('recent_attempts')
       if (cached && cached !== 'undefined') {
         try {
@@ -37,6 +38,7 @@ const Ai = ({ onNavigate }) => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
+      // then fetch fresh data
       const { data, error } = await supabase
         .from('quiz_attempts')
         .select('id, deck_id, score, total_questions, created_at, decks(deckname)')
@@ -61,12 +63,12 @@ const Ai = ({ onNavigate }) => {
 
   const handleClick = (deckId) => {
     navigate(`/cards/${deckId}`)
-    onNavigate?.()   // lets the sidebar close on mobile
+    onNavigate?.()   // closes the mobile sidebar
   }
 
   return (
     <div className="w-full px-6 pb-6">
-      <h2 className="font-bold text-xs mb-2">Recent Activities:</h2>
+      <h2 className="font-bold text-xs mb-2">Recent:</h2>
 
       <div className="flex flex-col gap-2">
         {recentAttempts.length === 0 && (
@@ -99,7 +101,7 @@ const Ai = ({ onNavigate }) => {
             </span>
           </div>
         ))}
-              </div>
+      </div>
     </div>
   )
 }
