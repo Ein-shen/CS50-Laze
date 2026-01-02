@@ -94,7 +94,7 @@ export const Navbar = () => {
   const menuItems = [
     { label: 'Profile', icon: User, onClick: () => goTo('/profile') },
     { label: 'Settings', icon: Settings, onClick: () => goTo('/settings') },
-    { label: 'Help', icon: HelpCircle, onClick: () => goTo('/help') },
+    // { label: 'Help', icon: HelpCircle, onClick: () => goTo('/help') },
   ]
 
   return (
