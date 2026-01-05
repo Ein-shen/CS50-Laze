@@ -64,7 +64,7 @@ const Total = () => {
   }, [deckId])
 
   return (
-    <div className="w-full min-h-screen div-theme flex flex-col items-center pt-8 sm:pt-20 pb-8 px-4">
+    <div className="w-full min-h-screen div-theme  flex flex-col items-center pt-8 sm:pt-20 pb-8 px-4">
       <div className="w-full md:w-[55%] max-w-2xl card-theme rounded-md flex flex-col gap-4 px-4 py-8 sm:px-6 sm:py-10 md:px-10">
 
         <h1 className="font-bold text-xl sm:text-2xl text-center break-words">
