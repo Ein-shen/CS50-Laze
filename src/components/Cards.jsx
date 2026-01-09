@@ -62,7 +62,7 @@ const Cards = ({children}) => {
         <div className="flex flex-col h-full">
           <div className="flex items-center gap-4">
             <Return to="/decks" />
-            <h1 className="pl-3 font-bold text-xl">{deck?.deckname} </h1>
+            <h1 className="pl-3 font-bold capitalize text-xl">{deck?.deckname} </h1>
           </div>
           <div className="flex flex-row gap-2 pl-24 pt-10 mt-auto mb-[-12px]">
 
