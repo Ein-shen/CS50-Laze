@@ -34,10 +34,14 @@ const Popup = ({ user, profile, onComplete, onCancel }) => {
   return (
     <div style={styles.overlay}>
       <div style={styles.modal}>
-        <h2 className='font-bold'>Edit Profile</h2>
-        <p className='font-bold'>Update your details below.</p>
+        <h2 className='font-bold flex flex-row items-center gap-2'>
+           <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={24} width={24}/>
+                  
+          Edit Profile</h2>
+
         <form onSubmit={handleSubmit}>
           <input
+            className='div-theme'
             style={styles.input}
             name="fullname"
             placeholder="Full Name"
@@ -46,6 +50,7 @@ const Popup = ({ user, profile, onComplete, onCancel }) => {
             required
           />
           <input
+            className='div-theme'
             style={styles.input}
             name="username"
             placeholder="Username"
@@ -59,14 +64,14 @@ const Popup = ({ user, profile, onComplete, onCancel }) => {
          <button
               type="submit"
               disabled={loading}
-              className='border-2 border-black bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
+              className='  card-theme card-hover-theme rounded-md px-4 py-2 font-semibold w-full'
           >
               {loading ? 'Saving...' : 'Save Changes'}
           </button>
           <button
               type="button"
               onClick={onCancel}
-              className='border-2 border-black bg-gray-200 rounded-md px-4 py-2 font-semibold w-full mt-2'
+              className='  bg-gray-200 hover:bg-gray-300 rounded-md px-4 py-2 font-semibold w-full mt-2'
           >
               Cancel
           </button>
@@ -90,7 +95,7 @@ const styles = {
     zIndex: 1000,
   },
   modal: {
-    backgroundColor: '#fff',
+    backgroundColor: '#89A482',
     padding: '2rem',
     borderRadius: '12px',
     width: '100%',
@@ -104,14 +109,12 @@ const styles = {
     padding: '0.75rem',
     marginBottom: '0.75rem',
     borderRadius: '8px',
-    border: '1px solid #ccc',
+    border: '1px solid #D1EDD3',
     fontSize: '1rem',
   },
   button: {
     width: '100%',
     padding: '0.75rem',
-    backgroundColor: '#4f46e5',
-    color: '#fff',
     border: 'none',
     borderRadius: '8px',
     fontSize: '1rem',
