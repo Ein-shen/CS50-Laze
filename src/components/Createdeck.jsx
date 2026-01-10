@@ -80,6 +80,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                 <form onSubmit={handleSubmit}>
                     <input
                         style={Deck_style.input}
+                        className='div-theme '
                         name="deckname"
                         placeholder="Name your deck"
                         value={form.deckname}
@@ -89,7 +90,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className='   card-theme card-hover-theme rounded-md px-4 py-2 font-semibold w-full'
+                        className='   div-theme card-hover-theme rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
@@ -115,7 +116,7 @@ const Deck_style = {
     },
     modal: {
         position: 'relative',
-        backgroundColor: '#D1EDD3',
+        backgroundColor: '#ACC5A6',
         padding: '2rem',
         borderRadius: '12px',
         width: '100%',
