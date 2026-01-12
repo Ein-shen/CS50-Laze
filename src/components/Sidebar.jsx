@@ -30,7 +30,7 @@ const Sidebar = ({ recentAttempts = [] }) => {
                 <button
                     onClick={() => setIsOpen(true)}
                     aria-label="Open menu"
-                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg   card-theme p-2"
+                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg     p-2"
                 >
                     <Menu size={20} strokeWidth={3} />
                 </button>
@@ -40,15 +40,15 @@ const Sidebar = ({ recentAttempts = [] }) => {
             {isOpen && (
                 <div
                     onClick={() => setIsOpen(false)}
-                    className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-black/40 card-theme z-30"
+                    className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-black/40  z-30"
                 />
             )}
 
             {/* Sidebar */}
             <div
-                className={`fixed left-0 card-theme top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
-                    border-r overflow-y-auto transform transition-transform duration-300
-                    ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+                className={`fixed left-0 card-theme top-14 bottom-0 w-64 z-40 flex flex-col text-black
+                overflow-y-auto transform transition-transform duration-300
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
             >
                 {/* Close button - mobile only */}
                 <button
@@ -60,13 +60,13 @@ const Sidebar = ({ recentAttempts = [] }) => {
                 </button>
 
                 {/* Main navigation */}
-                <div className="flex flex-col gap-3 px-6 pt-12 md:pt-6 pb-16 ">
+                <div className="flex flex-col gap-3 px-6 pt-16 md:pt-10 pb-16">
                     {navItems.map(({ label, path, icon }) => {
                         const isActive =
                             path === '/'
                                 ? location.pathname === '/'
                                 : location.pathname === path ||
-                                  location.pathname.startsWith(path + '/')
+                                location.pathname.startsWith(path + '/')
 
                         return (
                             <button
@@ -84,7 +84,10 @@ const Sidebar = ({ recentAttempts = [] }) => {
                 </div>
 
                
-                  <Ai />
+                  <div className=" ">
+                    <Ai onNavigate={() => setIsOpen(false)} />
+                </div>
+            
                   
                 </div>
             
