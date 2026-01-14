@@ -72,7 +72,7 @@ const Sidebar = ({ recentAttempts = [] }) => {
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full flex items-center gap-3 div-theme font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
+                                className={`w-full flex items-center gap-3 div-theme font-bold text-left text-xs px-4 py-3 rounded-lg transition-colors hover:bg-black/5 ${
                                     isActive ? 'card-theme' : 'bg-[#A8B99F]'
                                 }`}
                             >
