@@ -138,99 +138,105 @@ const Study = () => {
     }
   }
 
- return (
-  <div className="min-h-screen w-full div-theme flex flex-col items-center gap-4 sm:gap-6 pt-4 sm:pt-10 pb-6 px-4">
+  return (
+    <div className="min-h-screen w-full div-theme flex flex-col items-center gap-4 sm:gap-6 pt-4 sm:pt-10 pb-6 px-4">
 
-    {/* Header */}
-    <div className="rounded-md card-theme w-full md:w-[68%] flex items-center justify-between gap-3 px-4 sm:px-6 py-4 sm:py-6">
-      <button
-        type="button"
-        aria-label="Close"
-        className="flex-shrink-0"
-        onClick={() => navigate(`/cards/${deckId}`)}
-      >
-        <X size={24} color="black" />
-      </button>
+      {/* Header */}
+      <div className="rounded-md card-theme w-full md:w-[68%] flex items-center justify-between gap-3 px-4 sm:px-6 py-4 sm:py-6">
+        <button
+          type="button"
+          aria-label="Close"
+          className="flex-shrink-0"
+          onClick={() => navigate(`/cards/${deckId}`)}
+        >
+          <X size={24} color="black" />
+        </button>
 
-      <h1 className="flex-1 min-w-0 text-base sm:text-xl font-bold text-center truncate">
-        <img src="/mortarboard.png" alt="mortarboard" className="inline-block w-6 h-6 sm:w-8 sm:h-8" />{' '}
-        {deck?.deckname}
-      </h1>
+        <h1 className="flex-1 min-w-0 text-base sm:text-xl font-bold text-center truncate">
+          <img src="/mortarboard.png" alt="mortarboard" className="inline-block w-6 h-6 sm:w-8 sm:h-8" />{' '}
+          {deck?.deckname}
+        </h1>
 
-      <div className="flex-shrink-0 flex flex-col gap-0.5 text-right">
-        <p className="font-bold text-xs sm:text-base">
-          Card: {index + 1} / {cards.length}
-        </p>
-        <p className="font-bold text-xs sm:text-base">Score: {score}</p>
+        <div className="flex-shrink-0 flex flex-col gap-0.5 text-right">
+          <p className="font-bold text-xs sm:text-base">
+            Card: {index + 1} / {cards.length}
+          </p>
+          <p className="font-bold text-xs sm:text-base">Score: {score}</p>
+        </div>
       </div>
-    </div>
 
-    <form className="w-full md:w-[68%] flex flex-col gap-4 pt-7 sm:gap-6">
+      {/* pt-10 here = space between header and question card */}
+      <form className="w-full md:w-[68%] flex flex-col gap-4 pt-10 sm:gap-6">
 
-      {/* Question card */}
-      <div className="w-full card-theme rounded-md flex flex-col items-center justify-center gap-4 sm:gap-6 min-h-[160px] sm:min-h-[200px] px-4 py-5">
-        {card.front_image_url && (
-          <img
-            src={card.front_image_url}
-            alt="front"
-            className="w-full max-w-[13rem] sm:max-w-xs h-auto max-h-56 object-cover rounded-md"
-          />
-        )}
+        {/* Question card */}
+        <div className="w-full card-theme rounded-md flex flex-col items-center justify-center gap-4 sm:gap-6 min-h-[160px] sm:min-h-[200px] px-4 py-5">
+          {card.front_image_url && (
+            <img
+              src={card.front_image_url}
+              alt="front"
+              className="w-full max-w-[13rem] sm:max-w-xs h-auto max-h-56 object-cover rounded-md"
+            />
+          )}
 
-        <h1 className="text-lg sm:text-xl font-bold text-center break-words">{card.front}</h1>
+          <h1 className="text-lg sm:text-xl font-bold text-center break-words">{card.front}</h1>
 
-        {selected ? (
-          <h1 className="flex flex-row font-bold items-center gap-2 font-bold text-2xl sm:text-3xl text-center break-words text-green-600 capitalize">
-            {card.back}
-            <img src="https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000" alt="c"  height={40} width={40}/>
+          {selected ? (
+            <h1 className="flex flex-row items-center gap-2 font-bold text-2xl sm:text-3xl text-center break-words text-green-600 capitalize">
+              {card.back}
+              <img
+                src="https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000"
+                alt="correct"
+                height={40}
+                width={40}
+              />
             </h1>
-        ) : (
-          <h1 className="font-bold text-md ">_ _ _ _</h1>
-        )}
-      </div>
+          ) : (
+            <h1 className="font-bold text-md">_ _ _ _</h1>
+          )}
+        </div>
 
-      {/* Answer choices */}
-      <div className="w-full flex flex-col pb-2 pt-4 sm:flex-row items-stretch gap-3 sm:gap-4">
-        {options.map((opt) => {
-          const isPicked = selected === opt
-          const isCorrect = opt === card.back
+        {/* Answer choices */}
+        <div className="w-full flex flex-col pb-2 pt-4 sm:flex-row items-stretch gap-3 sm:gap-4">
+          {options.map((opt) => {
+            const isPicked = selected === opt
+            const isCorrect = opt === card.back
 
-          let color = 'bg-[#8BBB92] hover:bg-[#a3cdaa]'
-          if (selected) {
-            if (isCorrect) color = 'bg-green-300'
-            else if (isPicked) color = 'bg-red-300'
-            else color = 'bg-[#8BBB92] opacity-60'
-          }
+            let color = 'bg-[#8BBB92] hover:bg-[#a3cdaa]'
+            if (selected) {
+              if (isCorrect) color = 'bg-green-300'
+              else if (isPicked) color = 'bg-red-300'
+              else color = 'bg-[#8BBB92] opacity-60'
+            }
 
-          return (
-            <button
-              type="button"
-              key={opt}
-              disabled={selected !== null}
-              onClick={() => handleAnswer(opt)}
-              className={`w-full min-h-[3.5rem] sm:min-h-[4rem] capitalize rounded-md px-4 sm:px-6 py-2 text-center font-bold text-xs sm:text-base break-words transition ${color}`}
-            >
-              {opt}
-            </button>
-          )
-        })}
-      </div>
+            return (
+              <button
+                type="button"
+                key={opt}
+                disabled={selected !== null}
+                onClick={() => handleAnswer(opt)}
+                className={`w-full min-h-[3.5rem] sm:min-h-[4rem] capitalize rounded-md px-4 sm:px-6 py-2 text-center font-bold text-xs sm:text-base break-words transition ${color}`}
+              >
+                {opt}
+              </button>
+            )
+          })}
+        </div>
 
-      {/* Next button: always takes up space, only visible after answering */}
-      <button
-        type="button"
-        onClick={handleNext}
-        disabled={!selected}
-        tabIndex={selected ? 0 : -1}
-        className={`w-full px-6 py-3 card-theme card-hover-theme rounded-md font-bold ${
-          selected ? '' : 'invisible'
-        }`}
-      >
-        Next
-      </button>
-    </form>
-  </div>
-)
+        {/* Next button: always takes up space, only visible after answering */}
+        <button
+          type="button"
+          onClick={handleNext}
+          disabled={!selected}
+          tabIndex={selected ? 0 : -1}
+          className={`w-full px-6 py-3 card-theme card-hover-theme rounded-md font-bold ${
+            selected ? '' : 'invisible'
+          }`}
+        >
+          Next
+        </button>
+      </form>
+    </div>
+  )
 }
 
 export default Study
