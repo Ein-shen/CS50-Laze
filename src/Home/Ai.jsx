@@ -67,7 +67,7 @@ const Ai = ({ onNavigate }) => {
   }
 
   return (
-    <div className="w-full px-8 pb-6">
+    <div className="w-full px-6 pb-6">
       <h2 className="font-bold text-xs mb-2">Recent:</h2>
 
       <div className="flex flex-col gap-2">
@@ -79,7 +79,7 @@ const Ai = ({ onNavigate }) => {
           <div
             key={attempt.id}
             onClick={() => handleClick(attempt.deck_id)}
-            className="flex items-center justify-between gap-2 card-hover-theme div-theme rounded-md px-3 py-3.5 text-xs shadow-sm hover:shadow-md transition cursor-pointer"
+            className="flex items-center justify-between gap-2 card-hover-theme div-theme rounded-md px-2 py-3.5 text-xs shadow-sm hover:shadow-md transition cursor-pointer"
           >
             {/* Left: icon + deck name */}
             <div className="flex items-center gap-2 min-w-0">
