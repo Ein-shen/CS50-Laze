@@ -42,6 +42,8 @@ import ShareStudy from './components/ShareStudy'
 import Stalk from './components/Stalk'
 import AddFriendButton from './components/AddFriendButton'
 import ShareTotal from './components/ShareTotal'
+import { Settings } from './components/Settings'
+import { Help } from './components/Help'
 
 // Admin
 import AdminLogin from './admin/AdminLogin'
@@ -244,9 +246,10 @@ export default function App() {
                             : <Dashboard session={session} />
                 }
             >
-
+                
                 <Route index element={<Home />} />
-
+                <Route path="help" element={<Help />} />
+                <Route path="settings" element={<Settings />} />
                 <Route path="createdeck" element={<Createdeck />} />
 
                 <Route path="chat" element={<Chat />} />
