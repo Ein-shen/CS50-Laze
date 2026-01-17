@@ -66,7 +66,7 @@ const Ai = ({ onNavigate }) => {
 
   return (
     <div className="w-full px-6 pb-6">
-      <h2 className="font-bold text-xs mb-2">Recent:</h2>
+      <h2 className="font-bold text-xs mb-2">Recent Activities:</h2>
 
       <div className="flex flex-col gap-2">
         {recentAttempts.length === 0 && (
@@ -77,23 +77,29 @@ const Ai = ({ onNavigate }) => {
           <div
             key={attempt.id}
             onClick={() => handleClick(attempt.deck_id)}
-            className="flex justify-between gap-2 card-hover-theme div-theme rounded-md px-3 py-2 text-xs shadow-sm hover:shadow-md transition cursor-pointer"
+            className="flex items-center justify-between gap-2 card-hover-theme div-theme rounded-md px-3 py-2 text-xs shadow-sm hover:shadow-md transition cursor-pointer"
           >
-            <span className="font-semibold truncate">
-              {attempt.decks?.deckname ?? 'Unknown deck'}
-            </span>
-            <span className="flex-shrink-0 flex flex-row items-center gap-1">
+            {/* Left: icon + deck name */}
+            <div className="flex items-center gap-2 min-w-0">
               <img
                 src="https://img.icons8.com/?size=100&id=0vQcEsGZ967K&format=png&color=000000"
                 alt=""
                 width={14}
                 height={14}
+                className="flex-shrink-0"
               />
+              <span className="font-semibold truncate">
+                {attempt.decks?.deckname ?? 'Unknown deck'}
+              </span>
+            </div>
+
+            {/* Right: score */}
+            <span className="flex-shrink-0">
               {attempt.score} / {attempt.total_questions}
             </span>
           </div>
         ))}
-      </div>
+              </div>
     </div>
   )
 }
