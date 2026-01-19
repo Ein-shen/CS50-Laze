@@ -39,8 +39,8 @@ const Message = () => {
           <h1 className="text-base sm:text-lg  flex flex-row gap-2  justify-center font-bold flex-1 text-center pr-10 sm:pr-16">
             <img src="https://img.icons8.com/?size=100&id=jOjH1Mt48Fp1&format=png&color=000000" 
                      alt=" messenger"
-                     width={18}
-                     height={18} />
+                     width={24}
+                     height={24} />
 
             Message
           </h1>
