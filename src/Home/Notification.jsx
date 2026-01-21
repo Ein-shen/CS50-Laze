@@ -42,8 +42,8 @@ const Notification = () => {
             <img
               src="https://img.icons8.com/?size=100&id=nY7Q73ERmlBS&format=png&color=000000"
               alt="Notification"
-              width={18}
-              height={18}
+              width={24}
+              height={24}
             />
             Notification
           </h1>
@@ -56,7 +56,7 @@ const Notification = () => {
            
 
             {requests.length === 0 && (
-              <p className="text-black-300 pt-10">No Notifications.</p>
+              <p className="text-gray-700 pt-10">No Notifications.</p>
             )}
 
             {requests.map(r => (
