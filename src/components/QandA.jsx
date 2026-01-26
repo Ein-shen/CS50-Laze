@@ -375,7 +375,9 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               key={c.id}
               className=" card-theme rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
             >
-              <h2 className="text-gray-600 text-lg sm:text-2xl px-1 sm:pl-2 pb-2 sm:pb-4">Front</h2>
+              <h2 className="text-gray-600 text-lg sm:text-2xl px-1 sm:pl-2 pb-2 sm:pb-4 flex flex-row gap-2 items-center  ">
+                <img src="https://img.icons8.com/?size=100&id=44353&format=png&color=000000" alt="front" height={29} width={29} />
+                Front</h2>
 
               {c.front_image_url && (
                 <img
@@ -386,20 +388,25 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               )}
 
               <p className="font-bold border-b border-black/80 pb-3 sm:pb-5 pt-3 sm:pt-4 px-1 sm:pl-5 text-base sm:text-lg break-words">
+               
                 {c.front}
               </p>
 
-              <h2 className="text-gray-600 text-lg sm:text-2xl pt-3 sm:pt-5 px-1 sm:pl-2">Back</h2>
+              <h2 className="text-gray-600 flex flex-row gap-2 items-center text-lg sm:text-2xl pt-3 sm:pt-5 px-1 sm:pl-2">
+                <img src="https://img.icons8.com/?size=100&id=22188&format=png&color=000000" alt="front" height={29} width={29} />
+                Back</h2>
               <p className="font-bold border-b  border-black/80 pb-3 sm:pb-5 pt-2 sm:pt-5 px-1 sm:pl-5 text-base sm:text-lg break-words">
                 {c.back}
               </p>
 
               {(c.option1 || c.option2 || c.option3) && (
                 <div className="flex flex-col gap-2 pt-2 border-b  border-black/80 pb-5 sm:pb-8">
-                  <h2 className="text-gray-600 text-lg sm:text-2xl pt-2 sm:pt-5 px-1 sm:pl-2">Choices</h2>
+                  <h2 className="text-gray-600 text-lg sm:text-2xl flex felx-row items-center gap-2 pt-2 sm:pt-5 px-1 sm:pl-2">
+                    <img src="https://img.icons8.com/?size=100&id=WymyiG7EB0Qq&format=png&color=000000" alt="ch" height={29} width={29}/>
+                    Choices</h2>
                   {[c.option1, c.option2, c.option3].filter(Boolean).map((opt, i) => (
                     <span key={i} className="font-bold px-1 sm:pl-5 text-base sm:text-lg break-words">
-                      {opt}
+                      - {opt}
                     </span>
                   ))}
                 </div>
