@@ -2,19 +2,18 @@ import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import Signout from '../pages/Signout'
-
+import Ai from '../Home/Ai'
 const navItems = [
     {
-    label: 'Home',
-    path: '/',
-    icon: 'https://img.icons8.com/?size=100&id=tNcJ7GGjHsUq&format=png&color=000000',
+        label: 'Overview',
+        path: '/',
+        icon: 'https://img.icons8.com/?size=100&id=tNcJ7GGjHsUq&format=png&color=000000',
     },
-    // { label: 'Overview', path: '/overview', icon: 'https://img.icons8.com/?size=100&id=aOXlHTOpHruk&format=png&color=000000'},
     { label: 'Decks', path: '/decks', icon: 'https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000' },
-    { label: 'Profile', path: '/profile', icon: 'https://img.icons8.com/?size=100&id=rZLCb6BZFj26&format=png&color=000000' },
 ]
 
-const Sidebar = () => {
+// recentAttempts comes from Dashboard. "= []" prevents a crash if it's missing.
+const Sidebar = ({ recentAttempts = [] }) => {
     const navigate = useNavigate()
     const location = useLocation()
     const [isOpen, setIsOpen] = useState(false)
@@ -26,18 +25,18 @@ const Sidebar = () => {
 
     return (
         <>
-            {/* Menu button - mobile only, under the navbar. Hidden while the drawer is open */}
+            {/* Menu button - mobile only */}
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
                     aria-label="Open menu"
-                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg border border-black/80 card-theme p-2"
+                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg   card-theme p-2"
                 >
                     <Menu size={20} strokeWidth={3} />
                 </button>
             )}
 
-            {/* Overlay - mobile only, starts right below the navbar */}
+            {/* Overlay - mobile only */}
             {isOpen && (
                 <div
                     onClick={() => setIsOpen(false)}
@@ -45,10 +44,10 @@ const Sidebar = () => {
                 />
             )}
 
-            {/* Sidebar: always starts right below the navbar */}
+            {/* Sidebar */}
             <div
-                className={`fixed left-0  card-theme top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
-                    border-roverflow-y-auto transform transition-transform duration-300
+                className={`fixed left-0 card-theme top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
+                    border-r overflow-y-auto transform transition-transform duration-300
                     ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
             >
                 {/* Close button - mobile only */}
@@ -61,19 +60,19 @@ const Sidebar = () => {
                 </button>
 
                 {/* Main navigation */}
-                <div className="flex   flex-col gap-3 px-6 pt-12 md:pt-6">
+                <div className="flex flex-col gap-3 px-6 pt-12 md:pt-6 pb-16 ">
                     {navItems.map(({ label, path, icon }) => {
                         const isActive =
                             path === '/'
                                 ? location.pathname === '/'
                                 : location.pathname === path ||
-                                location.pathname.startsWith(path + '/')
+                                  location.pathname.startsWith(path + '/')
 
                         return (
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full flex items-center gap-3 div-theme  font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
+                                className={`w-full flex items-center gap-3 div-theme font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
                                     isActive ? 'card-theme' : 'bg-[#A8B99F]'
                                 }`}
                             >
@@ -84,10 +83,11 @@ const Sidebar = () => {
                     })}
                 </div>
 
-                <div className="mt-auto px-6 pb-6">
-                    <Signout />
+               
+                  <Ai />
+                  
                 </div>
-            </div>
+            
         </>
     )
 }
