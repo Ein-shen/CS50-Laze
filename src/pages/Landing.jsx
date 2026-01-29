@@ -154,7 +154,7 @@ export default function Landing() {
             <div className="w-8 h-8 rounded-full div-theme border-2 border-black" />
             <div>
               <p className="text-sm font-bold text-black">Maya</p>
-              <p className="text-[11px] text-gray-600">studying Bio 101</p>
+              <p className="text-[11px] text-gray-600">studying </p>
             </div>
           </div>
           <div className="space-y-2">
