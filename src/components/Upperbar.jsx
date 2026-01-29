@@ -1,26 +1,24 @@
-import { Link, useLocation } from 'react-router-dom'
-
+import { Link,  } from 'react-router-dom'
+import Search from '../Home/Search'
 
 const Upperbar = () => {
-    const location = useLocation()
-    const isHome = location.pathname === "/"
-
-    if (!isHome) return null
+    
 
     return (
-        <div className="flex flex-row items-center gap-4 text-black">
-            <Link to="/search">
-                <img
-                    src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
-                    alt="Search"
-                    width={24}
-                    height={24}
-                />
-            </Link>
+        <div className="flex flex-row items-center gap-4   text-black">
+            <div className='flex flex-row items-center gap-2'>
+               
+
+                <Search />
+            
+
+            </div>
+            
+           
 
             <Link to="/notification">
                 <img
-                 src="https://img.icons8.com/?size=100&id=F5WMYjiT3vpJ&format=png&color=000000"
+                 src="https://img.icons8.com/?size=100&id=nY7Q73ERmlBS&format=png&color=000000"
                  alt="Notification"
                  width={24}
                  height={24}
@@ -28,7 +26,7 @@ const Upperbar = () => {
             </Link>
 
             <Link to="/message">
-                <img src="https://img.icons8.com/?size=100&id=7xKps2PngOP0&format=png&color=000000" 
+                <img src="https://img.icons8.com/?size=100&id=jOjH1Mt48Fp1&format=png&color=000000" 
                      alt=" messenger"
                      width={24}
                      height={24} />
