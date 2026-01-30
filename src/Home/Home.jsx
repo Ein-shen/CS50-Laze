@@ -1,4 +1,5 @@
 import Ai from "../Home/Ai"
+import Greetings from '../components/Greetings'
 
 const Home = () => {
   return (
