@@ -95,150 +95,117 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
   }
 
   return (
+    <div className="flex justify-center div-theme items-center pt-14 flex-col gap-4 w-full">
+      <div>
+        <div style={styles.card}>
+          <div
+            style={{
+              ...styles.avatar,
+              flexShrink: 0,
+              alignSelf: 'center',
+              overflow: 'hidden',
+              cursor: isOwnProfile ? 'pointer' : 'default',
+              position: 'relative',
+            }}
+            onClick={handleAvatarClick}
+          >
+            {profile.profiles_image ? (
+              <img
+                src={profile.profiles_image}
+                alt={profile.fullname}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              initials
+            )}
 
-        <div className="flex justify-center div-theme  items-center pt-14 flex-col gap-4 w-full">
-          <div>
-              <div style={styles.card}>
-                <div
-                  style={{
-                    ...styles.avatar,
-                    flexShrink: 0,
-                    alignSelf: 'center',
-                    overflow: 'hidden',
-                    cursor: isOwnProfile ? 'pointer' : 'default',
-                    position: 'relative',
-                  }}
-                  onClick={handleAvatarClick}
-                >
-                  {profile.profiles_image ? (
-                    <img
-                      src={profile.profiles_image}
-                      alt={profile.fullname}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    initials
-                  )}
+            {isOwnProfile && (
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+            )}
 
-                  {isOwnProfile && (
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      style={{ display: 'none' }}
-                    />
-                  )}
-
-                  {uploading && (
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      backgroundColor: 'rgba(0,0,0,0.4)', fontSize: '0.7rem', color: '#fff'
-                    }}>
-                      ...
-                    </div>
-                  )}
-                </div>
-                <div className=''>
-                  <div className="flex items-center  justify-center gap-2 min-w-0">
-                    <h2 className="break-words min-w-0" style={styles.name}>
-                      {profile.fullname}
-                    </h2>
-                    {onEditClick && (
-                      <div className="shrink-0">
-                        <Edit onEdit={onEditClick} />
-                      </div>
-                     
-                    )}
-                    
-                  </div>
-                   <h2 className="flex pl-8 min-w-0" style={styles.username}>@{profile.username}</h2>
-                  
-
-
-                {!isOwnProfile && (
-                  <div className="flex justify-center items-center gap-5">
-                    <AddFriendButton targetUserId={profile.id} />
-
-                    <Link to="/message">
-                      <MessageCircle className="text-black" strokeWidth={3} size={24} />
-                    </Link>
-                  </div>
-                )}
-
-
-
-                </div>
-                <div style={styles.actions}></div>
+            {uploading && (
+              <div style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                backgroundColor: 'rgba(0,0,0,0.4)', fontSize: '0.7rem', color: '#fff'
+              }}>
+                ...
               </div>
-
+            )}
+          </div>
+          <div className=''>
+            <div className="flex items-center justify-center gap-2 min-w-0">
+              <h2 className="break-words min-w-0" style={styles.name}>
+                {profile.fullname}
+              </h2>
+              {onEditClick && (
+                <div className="shrink-0">
+                  <Edit onEdit={onEditClick} />
+                </div>
+              )}
             </div>
+            <h2 className="flex pl-8 min-w-0" style={styles.username}>@{profile.username}</h2>
 
-            <div className="flex flex-row  justify-center items-center gap-4 w-[100%] h-10 pr-1">
+            {!isOwnProfile && (
+              <div className="flex justify-center items-center gap-5">
+                <AddFriendButton targetUserId={profile.id} />
 
-              <button
-                  className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center ${
-                    visibility === 'public' ? 'border-b-2 border-black' : 'border-2 border-transparent'
-                  }`}
+                <Link to="/message">
+                  <MessageCircle className="text-black" strokeWidth={3} size={24} />
+                </Link>
+              </div>
+            )}
+          </div>
+          <div style={styles.actions}></div>
+        </div>
+      </div>
 
-                    onClick={() =>
-                      setVisibility('public')
+      {/* FIX 1: both tabs always use border-b-2; only the color changes, so sizes never differ */}
+      <div className="flex flex-row justify-center items-center gap-4 w-[100%] h-10 pr-1">
+        <button
+          className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center border-b-2 ${
+            visibility === 'public' ? 'border-black' : 'border-transparent'
+          }`}
+          onClick={() => setVisibility('public')}
+        >
+          <img src="https://img.icons8.com/?size=100&id=paJ3yfLnNSCK&format=png&color=000000" alt="pub" height={18} width={18} />
+          Public
+        </button>
 
-                    }
-                >
-                  <img src="https://img.icons8.com/?size=100&id=paJ3yfLnNSCK&format=png&color=000000" alt="pub" height={18} width={18} />
-                  Public
-                </button>
+        {isOwnProfile && (
+          <button
+            className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center border-b-2 ${
+              visibility === 'private' ? 'border-black' : 'border-transparent'
+            }`}
+            onClick={() => setVisibility('private')}
+          >
+            <img src="https://img.icons8.com/?size=100&id=LnUkDWKbslSu&format=png&color=000000" alt="priv" height={18} width={18} />
+            Private
+          </button>
+        )}
+      </div>
 
-                {isOwnProfile && (
-
-                  <button
-                    className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center  ${
-                      visibility === 'private' ? 'border-b-2 border-black' : 'border-2 border-transparent'
-                    }`}
-                    onClick={() => setVisibility('private')}
-                  >
-                    <img src="https://img.icons8.com/?size=100&id=LnUkDWKbslSu&format=png&color=000000" alt="priv" height={18} width={18}/>
-                    Private
-                  </button>
-                )}
-
-              
-             </div>
-
-
-            <div className="h-[calc(100vh-200px)] flex justify-center overflow-y-auto w-4/5 ">
-
-              {(() => {
-                if (visibility === 'public') return <Public userId={profile.id} />
-                if (visibility === 'private' && isOwnProfile) return <Private userId={profile.id} viewerId={user?.id} />
-               
-                return null
-              })()}
-
-
-            </div>
-
-
-
-
-
-
-
-
+      {/* FIX 2: no inner scrollbar; min height keeps the page scrollable on both tabs */}
+      <div className="flex justify-center w-4/5 min-h-[calc(100vh-200px)]">
+        {(() => {
+          if (visibility === 'public') return <Public userId={profile.id} />
+          if (visibility === 'private' && isOwnProfile) return <Private userId={profile.id} viewerId={user?.id} />
+          return null
+        })()}
+      </div>
     </div>
   )
 }
 
-
-
-
-
-
 const styles = {
   card: {
-    backgroundColor:  '#ACC5A6',
+    backgroundColor: '#ACC5A6',
     borderRadius: '16px',
     padding: '1.5rem',
     display: 'flex',
@@ -246,7 +213,7 @@ const styles = {
     gap: '1rem',
     width: '280px',
     color: '#fff',
-    minHeight: '260px',   // was maxHeight, so the card can grow with long names
+    minHeight: '260px',
   },
   avatar: {
     width: '150px',
@@ -266,13 +233,11 @@ const styles = {
     margin: 0,
     fontSize: '1.25rem',
     fontWeight: '700',
-
   },
   username: {
     margin: 0,
     fontSize: '0.9rem',
     color: 'black',
-
   },
   actions: {
     display: 'flex',
