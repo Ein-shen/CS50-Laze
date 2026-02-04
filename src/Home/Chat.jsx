@@ -95,9 +95,9 @@ const Chat = () => {
 
           <div className="flex flex-col h-screen min-h-0 items-center pt-10 pb-10 pl-20 pr-20 gap-8">
 
-          <div className="border-2 border-black rounded-md w-full flex-1 flex flex-col min-h-0">
+          <div className=" border border-black/80 rounded-md w-full flex-1 flex flex-col min-h-0">
 
-            <div className="flex flex-row items-center gap-10 border-b-2 border-black py-5">
+            <div className="flex flex-row items-center gap-10 border-b border-black/80  py-5">
               <div>
                 <Return to={`/message/${deckId}`} />
               </div>
