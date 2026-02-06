@@ -37,7 +37,7 @@ const Message = () => {
         <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
           <h1 className="text-base sm:text-lg  flex flex-row gap-2  justify-center font-bold flex-1 text-center pr-10 sm:pr-16">
-            <img src="https://img.icons8.com/?size=100&id=7xKps2PngOP0&format=png&color=000000" 
+            <img src="https://img.icons8.com/?size=100&id=jOjH1Mt48Fp1&format=png&color=000000" 
                      alt=" messenger"
                      width={18}
                      height={18} />
@@ -46,7 +46,7 @@ const Message = () => {
           </h1>
         </div>
 
-        <div className="border border-black/80 card-theme rounded-md w-full flex-1 px-4 sm:px-10 py-6 sm:py-10 flex flex-col items-center gap-2">
+        <div className="  card-theme rounded-md w-full flex-1 px-4 sm:px-10 py-6 sm:py-10 flex flex-col items-center gap-2">
           <div className="relative w-full max-w-[200px]">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
             <input
