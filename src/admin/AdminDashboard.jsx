@@ -124,7 +124,7 @@ const AdminDashboard = () => {
             </div>
             <p className="text-gray-600 mb-6">See activity, promote admins, or ban users.</p>
 
-            <div className="flex items-center gap-2 border-2 border-black rounded-md px-3 py-2 w-fit mb-6 bg-gray-200">
+            <div className="flex items-center gap-2 border-2 border-black rounded-md px-3 py-2 w-fit mb-6 ">
                 <Search size={18} />
                 <input
                     value={query}
