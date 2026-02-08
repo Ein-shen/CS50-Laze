@@ -29,7 +29,7 @@ const AdminLayout = () => {
 
             {/* sidebar */}
             <div
-                className={`flex flex-col h-screen w-64 text-black p-6 fixed top-0 left-0 border-x-2 border-black z-40 bg-gray-300 transition-transform duration-200 
+                className={`flex flex-col h-screen w-64 text-black p-6 fixed top-0 left-0 border-x-2 border-black z-40 card-theme transition-transform duration-200 
                 ${isOpen ? 'translate-x-0 ' : '-translate-x-full '} md:translate-x-0`}
             >
                 <div className="relative flex items-center justify-center mb-8">
@@ -45,7 +45,7 @@ const AdminLayout = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <div className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg flex items-center gap-2">
+                    <div className="w-full border-2 border-black div-theme font-bold text-left px-4 py-2 rounded-lg flex items-center gap-2">
                         <ShieldCheck size={18} />
                         Admin Panel
                     </div>
@@ -57,7 +57,7 @@ const AdminLayout = () => {
             </div>
 
             {/* main content, offset to the right of the panel — same as Dashboard.jsx */}
-            <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto">
+            <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto div-theme">
                 <Outlet />
             </div>
         </div>
