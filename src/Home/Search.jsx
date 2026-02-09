@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
-import Return from "../components/Return"
 import { Search as SearchIcon } from 'lucide-react'
 
 const Search = () => {
@@ -9,17 +8,32 @@ const Search = () => {
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [open, setOpen] = useState(false)
   const [currentUserId, setCurrentUserId] = useState(null)
   const navigate = useNavigate()
   const debounceRef = useRef(null)
   const latestQueryRef = useRef("")
+  const wrapperRef = useRef(null)
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
+    supabase.auth.getUser().then(({ data: { user } }) => {
       setCurrentUserId(user?.id ?? null)
+    })
+  }, [])
+
+  // close dropdown when clicking outside
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false)
+      }
     }
-    getUser()
+    document.addEventListener("mousedown", handleClick)
+    return () => document.removeEventListener("mousedown", handleClick)
+  }, [])
+
+  useEffect(() => {
+    return () => clearTimeout(debounceRef.current)
   }, [])
 
   const runSearch = async (value) => {
@@ -27,94 +41,85 @@ const Search = () => {
     setLoading(true)
     setError(null)
 
-    let queryBuilder = supabase
-      .from('profiles')
-      .select('id, fullname, username, profiles_image')
-      .or(`fullname.ilike.%${value}%,username.ilike.%${value}%`)
-      .limit(10)
-
-    if (currentUserId) {
-      queryBuilder = queryBuilder.neq('id', currentUserId)
+    const safe = value.replace(/[,()%*\\]/g, " ").trim()
+    if (!safe) {
+      setResults([])
+      setLoading(false)
+      return
     }
 
-    const { data, error } = await queryBuilder
+    let qb = supabase
+      .from('profiles')
+      .select('id, fullname, username, profiles_image')
+      .or(`fullname.ilike.%${safe}%,username.ilike.%${safe}%`)
+      .limit(10)
 
-    // ignore stale responses from an earlier keystroke
+    if (currentUserId) qb = qb.neq('id', currentUserId)
+
+    const { data, error } = await qb
+
+    // ignore stale responses
     if (latestQueryRef.current !== value) return
 
     if (error) {
       setError(error.message)
+      setResults([])
     } else {
-      setResults(data)
+      setResults(data ?? [])
     }
     setLoading(false)
   }
 
   const handleSearch = (value) => {
     setQuery(value)
+    setOpen(true)
+    clearTimeout(debounceRef.current)
 
-    if (debounceRef.current) clearTimeout(debounceRef.current)
-
-    if (!value.trim()) {
+    const trimmed = value.trim()
+    if (!trimmed) {
+      latestQueryRef.current = ""
       setResults([])
+      setError(null)
       setLoading(false)
       return
     }
 
-    debounceRef.current = setTimeout(() => runSearch(value.trim()), 300)
+    debounceRef.current = setTimeout(() => runSearch(trimmed), 300)
   }
 
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current)
-    }
-  }, [])
+  const goToUser = (username) => {
+    setOpen(false)
+    setQuery("")
+    setResults([])
+    navigate(`/stalk/${username}`)
+  }
 
   return (
-    <div>
-      {/* Header */}
-      <div className="flex items-center py-6 sm:py-10 px-4">
-        <Return to="/" className="top-0" />
-        <h1 className="text-base sm:text-lg font-bold flex flex-row justify-center gap-2 flex-1 text-center pr-10 sm:pr-16">
-          <img
-            src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
-            alt="Search"
-            width={24}
-            height={20}
-          />
-          Search
-        </h1>
-      </div>
+    <div ref={wrapperRef} className="relative w-40 sm:w-64">
+      {/* Search input (original styling) */}
+      <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4 pointer-events-none" />
+      <input
+        type="text"
+        value={query}
+        onChange={e => handleSearch(e.target.value)}
+        onFocus={() => query && setOpen(true)}
+        placeholder="Look for friends"
+        className="h-7 w-full bg-transparent div-theme border border-black/80 rounded-lg pl-10 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
 
-      {/* Content */}
-      <div className="flex flex-col items-center pt-10 sm:pt-20 px-4">
-        {/* Search card */}
-        <div className="card-theme w-full max-w-md rounded-lg py-12 px-6">
-          <div className="relative">
-            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-            <input
-              type="text"
-              value={query}
-              onChange={e => handleSearch(e.target.value)}
-              placeholder="Look for friends"
-              className="h-14 sm:h-16 w-full bg-transparent div-theme border border-black/80 rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-        </div>
-
-        {loading && <p className="mt-4 text-gray-500">Searching...</p>}
-        {error && <p className="mt-4 text-red-400 text-center">{error}</p>}
-
-        {/* Results */}
-        <ul className="mt-8 w-full max-w-sm space-y-2">
-          {results.length === 0 && query && !loading && !error && (
-            <p className="text-gray-400 text-center">No users found.</p>
+      {/* Results dropdown (original card styling) */}
+      {open && query.trim() && (
+        <ul className="absolute left-0 top-full mt-2 w-72 max-h-80 overflow-y-auto z-50 space-y-2">
+          {loading && <li className="rounded-md px-4 py-2 card-theme text-gray-500 text-sm"> ...</li>}
+          {error && <li className="rounded-md px-4 py-2 card-theme text-red-400 text-sm">{error}</li>}
+          {!loading && !error && results.length === 0 && (
+            <li className="rounded-md px-4 py-2 card-theme text-gray-400 text-sm text-center">No users found.</li>
           )}
 
           {results.map(user => (
             <li
               key={user.id}
-              onClick={() => navigate(`/stalk/${user.username}`)}
+              onClick={() => goToUser(user.username)}
               className="flex items-center gap-3 rounded-md px-4 py-2 card-theme card-hover-theme shadow-sm hover:shadow-md transition cursor-pointer"
             >
               {user.profiles_image && (
@@ -124,14 +129,14 @@ const Search = () => {
                   className="w-10 h-10 rounded-md object-cover flex-shrink-0"
                 />
               )}
-              <div className="flex flex-col">
-                <span className="font-semibold">{user.fullname}</span>
-                <span className="text-sm text-gray-500">@{user.username}</span>
+              <div className="flex flex-col min-w-0">
+                <span className="font-semibold truncate">{user.fullname}</span>
+                <span className="text-sm text-gray-500 truncate">@{user.username}</span>
               </div>
             </li>
           ))}
         </ul>
-      </div>
+      )}
     </div>
   )
 }
