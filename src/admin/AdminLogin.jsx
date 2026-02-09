@@ -85,8 +85,8 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-400 overflow-y-auto py-8">
-      <div className="bg-gray-200 p-8 rounded-xl shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
+      <div className="card-theme  p-8 rounded-xl shadow-md w-full max-w-md">
 
         <div className="flex flex-col items-center gap-2 mb-6">
           <img src="/mortarboard.png" alt="Laze logo" className="w-16 h-16" />
