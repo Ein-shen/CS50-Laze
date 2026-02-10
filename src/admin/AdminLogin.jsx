@@ -88,12 +88,12 @@ const AdminLogin = () => {
     <div className="min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
       <div className="card-theme  p-8 rounded-xl shadow-md w-full max-w-md">
 
-        <div className="flex flex-col items-center gap-2 mb-6">
-          <img src="/mortarboard.png" alt="Laze logo" className="w-16 h-16" />
-          <p className="font-bold">Laze Admin</p>
+        <div className="flex flex-col items-center gap-2 mb-10">
+          
+          <p className="font-bold flex flex-row items-center text-xl">Welcome to 
+             L <img src="/mortarboard.png" alt="Laze logo" className="w-8 h-8" />zeu</p>
         </div>
-
-        <h1 className="text-2xl font-bold mb-6 text-center">Admin Sign In</h1>
+        <h1 className="text-md font-bold mb-6 text-center">Admin Sign In</h1>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
