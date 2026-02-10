@@ -12,7 +12,7 @@ function FlipCard({ rotate, front, back }) {
     >
       <div className="relative w-full h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         {/* Front */}
-        <div className="absolute inset-0 [backface-visibility:hidden] rounded-lg bg-gray-200 border-2 border-black p-4 flex flex-col">
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-lg  inner-theme p-4 flex flex-col">
           <span className="text-[10px] tracking-wide uppercase text-gray-500 font-bold mb-2">Q</span>
           <p className="text-black text-sm font-bold leading-snug">
             {front}
@@ -20,7 +20,7 @@ function FlipCard({ rotate, front, back }) {
           <span className="mt-auto text-[11px] text-gray-500 font-semibold">flip me →</span>
         </div>
         {/* Back */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-lg bg-[#2C4A5E] border-2 border-black p-4 flex flex-col">
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-lg card-theme p-4 flex flex-col">
           <span className="text-[10px] tracking-wide uppercase text-yellow-300 font-bold mb-2">Answer</span>
           <p className="text-white text-sm font-bold leading-snug">
             {back}
@@ -36,7 +36,7 @@ function FlipCard({ rotate, front, back }) {
 // =====================================================
 function InfoCard({ title, body }) {
   return (
-    <div className="bg-gray-200 border-2 border-black rounded-lg p-6">
+    <div className="card-theme border-2 border-black rounded-lg p-6">
       <h3 className="text-lg font-bold text-black mb-2">{title}</h3>
       <p className="text-sm text-gray-700 leading-relaxed">{body}</p>
     </div>
@@ -149,22 +149,22 @@ export default function Landing() {
          
         </div>
 
-        <div className="bg-gray-200 border-2 border-black rounded-lg p-5 max-w-sm mx-auto w-full">
+        <div className="inner-theme border-2 border-black rounded-lg p-5 max-w-sm mx-auto w-full">
           <div className="flex items-center gap-2 pb-3 mb-3 border-b-2 border-black">
-            <div className="w-8 h-8 rounded-full bg-[#2C4A5E] border-2 border-black" />
+            <div className="w-8 h-8 rounded-full div-theme border-2 border-black" />
             <div>
               <p className="text-sm font-bold text-black">Maya</p>
               <p className="text-[11px] text-gray-600">studying Bio 101</p>
             </div>
           </div>
           <div className="space-y-2">
-            <div className="bg-gray-100 text-black text-sm rounded-lg px-3 py-2 max-w-[80%] border border-black">
+            <div className="div-theme text-black text-sm rounded-lg px-3 py-2 max-w-[80%] border border-black">
               quiz me on chapter 4?
             </div>
-            <div className="bg-[#2C4A5E] text-white text-sm rounded-lg px-3 py-2 max-w-[80%] ml-auto border border-black">
+            <div className="nav-theme text-white text-sm rounded-lg px-3 py-2 max-w-[80%] ml-auto border border-black">
               sent you my deck, go
             </div>
-            <div className="bg-gray-100 text-black text-sm rounded-lg px-3 py-2 max-w-[80%] border border-black">
+            <div className="div-theme text-black text-sm rounded-lg px-3 py-2 max-w-[80%] border border-black">
               got 8/10, not bad!
             </div>
           </div>
