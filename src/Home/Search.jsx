@@ -72,35 +72,40 @@ const Search = () => {
 
   return (
     <div>
+      {/* Header */}
       <div className="flex items-center py-6 sm:py-10 px-4">
         <Return to="/" className="top-0" />
-        <h1 className="text-base sm:text-lg font-bold flex flex-row justify-center gap-2  flex-1 text-center pr-10 sm:pr-16">
+        <h1 className="text-base sm:text-lg font-bold flex flex-row justify-center gap-2 flex-1 text-center pr-10 sm:pr-16">
           <img
-                    src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
-                    alt="Search"
-                    width={24}
-                    height={20}
-                />
+            src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
+            alt="Search"
+            width={24}
+            height={20}
+          />
           Search
-          
-          </h1>
+        </h1>
       </div>
 
+      {/* Content */}
       <div className="flex flex-col items-center pt-10 sm:pt-20 px-4">
-        <div className="relative w-full max-w-md">
-          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
-          <input
-            type="text"
-            value={query}
-            onChange={e => handleSearch(e.target.value)}
-            placeholder="Look for friends"
-            className="bg-gray-300 h-14 sm:h-16 w-full border border-black/80 rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+        {/* Search card */}
+        <div className="card-theme w-full max-w-md rounded-lg py-12 px-6">
+          <div className="relative">
+            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+            <input
+              type="text"
+              value={query}
+              onChange={e => handleSearch(e.target.value)}
+              placeholder="Look for friends"
+              className="h-14 sm:h-16 w-full bg-transparent div-theme border border-black/80 rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
         </div>
 
         {loading && <p className="mt-4 text-gray-500">Searching...</p>}
         {error && <p className="mt-4 text-red-400 text-center">{error}</p>}
 
+        {/* Results */}
         <ul className="mt-8 w-full max-w-sm space-y-2">
           {results.length === 0 && query && !loading && !error && (
             <p className="text-gray-400 text-center">No users found.</p>
@@ -110,7 +115,7 @@ const Search = () => {
             <li
               key={user.id}
               onClick={() => navigate(`/stalk/${user.username}`)}
-              className="flex items-center gap-3 border-2 border-black rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
+              className="flex items-center gap-3 rounded-md px-4 py-2 card-theme card-hover-theme shadow-sm hover:shadow-md transition cursor-pointer"
             >
               {user.profiles_image && (
                 <img
