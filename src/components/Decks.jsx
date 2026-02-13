@@ -113,7 +113,7 @@ const Decks = () => {
                                     <div className="h-24 " />
                                     <div className="px-2 py-3">
                                         <p className="font-bold text-md capitalize items-center flex flex-row gap-1">
-                                            <img src="https://img.icons8.com/?size=100&id=4I9RTdowfoBi&format=png&color=000000" alt="deck"
+                                            <img src="https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000" alt="deck"
                                                   width={24} height={24} />
                                             {deck.deckname}
                                         </p>
