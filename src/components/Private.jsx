@@ -47,23 +47,24 @@ const Private = ({ userId }) => {
   }, [userId])
 
   if (loading) {
-    return <p className="text-center text-gray-500 mt-8">Loading decks...</p>
+    return <p className="w-4/5 max-w-4xl mx-auto text-center text-gray-500 mt-8">Loading decks...</p>
   }
 
   if (decks.length === 0) {
-    return <p className="text-center text-gray-500 mt-8">No private decks yet.</p>
+    return <p className="w-4/5 max-w-4xl mx-auto text-center text-gray-500 mt-8">No private decks yet.</p>
   }
 
   return (
-    <div className="flex flex-col items-center w-2/3 max-w-4xl mx-auto mt-6 ">
-      <div className="flex flex-col gap-3 w-full pb-5 ">
+    <div className="flex flex-col items-center w-4/5 max-w-4xl mx-auto mt-6">
+      <div className="flex flex-col gap-3 w-full pb-5">
         {decks.map((deck) => (
           <div
             key={deck.id}
             onClick={() => navigate(`/cards/${deck.id}`)}
-            className=" rounded-lg p-4 capitalize card-theme shadow-sm  card-hover-theme hover:shadow-md transition cursor-pointer "
+            className="rounded-lg p-4 items-center flex flex-row gap-1 capitalize card-theme shadow-sm card-hover-theme hover:shadow-md transition cursor-pointer"
           >
-            <p className="font-bold">{deck.deckname}</p>
+            <img src="https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000" alt="" height={20} width={20} />
+            <p className="font-bold text-xs">{deck.deckname}</p>
           </div>
         ))}
       </div>
