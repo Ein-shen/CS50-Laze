@@ -89,7 +89,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className='   card-theme hover:bg-green-400 rounded-md px-4 py-2 font-semibold w-full'
+                        className='   card-theme card-hover-theme rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
