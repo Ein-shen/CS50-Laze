@@ -49,32 +49,31 @@ const Public = ({ userId }) => {
   }, [userId])
 
   if (loading) {
-    return <p className="text-center text-gray-500 mt-8">Loading decks...</p>
+    return <p className="w-4/5 max-w-4xl mx-auto text-center text-gray-500 mt-8">Loading decks...</p>
   }
 
   if (decks.length === 0) {
-    return <p className="text-center text-gray-500 mt-8">No public decks yet.</p>
+    return <p className="w-4/5 max-w-4xl mx-auto text-center text-gray-500 mt-8">No public decks yet.</p>
   }
 
   return (
-    <div className="flex flex-col items-center w-4/5 max-w-4xl mx-auto gap-4 mt-6">
-      {decks.map((deck) => (
-        <div
-          key={deck.id}
-          className=" card-theme capitalize rounded-lg p-4 w-4/5 shadow-sm hover:shadow-md  card-hover-theme transition"
-
-          onClick={() => {
-            navigate(`/sharestudy/${deck.id}`)
-          }}
-        >
-          <h2 className="font-bold text-l">{deck.deckname}</h2>
-          {deck.description && (
-            <p className="text-gray-500 text-sm mt-1">{deck.description}</p>
-          )}
-        </div>
-      ))}
+    <div className="flex flex-col items-center w-4/5 max-w-4xl mx-auto mt-6">
+      <div className="flex flex-col gap-3 w-full pb-5">
+        {decks.map((deck) => (
+          <div
+            key={deck.id}
+            onClick={() => navigate(`/sharestudy/${deck.id}`)}
+            className="rounded-lg p-4 items-center flex flex-row gap-1 capitalize card-theme shadow-sm card-hover-theme hover:shadow-md transition cursor-pointer"
+          >
+            <img src="https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000" alt="" height={20} width={20} />
+            <h2 className="font-bold text-xs">{deck.deckname}</h2>
+            {deck.description && (
+              <p className="text-gray-500 text-sm mt-1">{deck.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
-
 export default Public
