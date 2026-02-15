@@ -62,10 +62,10 @@ const Decks = () => {
         <div className="flex flex-col items-center h-screen">
             <div className="flex flex-col  w-full max-w-5xl h-full pb-10 px-10 pt-10">
 
-                <h1 className="text-lg font-bold mb-8">Your Decks</h1>
+                <h1 className="text-lg font-bold text-light-theme mb-8">Your Decks</h1>
 
                 <button
-                    className="card-theme flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2  px-6 py-2 rounded-md w-fit mb-10"
+                    className=" text-light-theme card-hover-theme card-theme flex flex-row items-center  text-xs font-bold gap-2  px-6 py-2 rounded-md w-fit mb-10"
                     onClick={() => setShowCreateDeck(true)}
                 >
                     <img 
@@ -86,7 +86,7 @@ const Decks = () => {
                 >
                     {decks.map((deck) => (
                         deck.id ? (
-                            <div key={deck.id} className="card-theme  rounded-md">
+                            <div key={deck.id} className="card-theme   card-hover-theme rounded-md">
                                 <DeckDropDown
                                     deck={deck}
                                     onNavigate={() => {
