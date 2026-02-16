@@ -61,7 +61,7 @@ const Private = ({ userId }) => {
           <div
             key={deck.id}
             onClick={() => navigate(`/cards/${deck.id}`)}
-            className=" rounded-lg p-4 capitalize card-theme shadow-sm hover:shadow-md transition cursor-pointer "
+            className=" rounded-lg p-4 capitalize card-theme shadow-sm  card-hover-theme hover:shadow-md transition cursor-pointer "
           >
             <p className="font-bold">{deck.deckname}</p>
           </div>
