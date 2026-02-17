@@ -61,7 +61,7 @@ const Public = ({ userId }) => {
       {decks.map((deck) => (
         <div
           key={deck.id}
-          className=" card-theme capitalize rounded-lg p-4 w-4/5 shadow-sm hover:shadow-md transition"
+          className=" card-theme capitalize rounded-lg p-4 w-4/5 shadow-sm hover:shadow-md  card-hover-theme transition"
 
           onClick={() => {
             navigate(`/sharestudy/${deck.id}`)
