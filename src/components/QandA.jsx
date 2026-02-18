@@ -338,7 +338,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           </div>
 
           {/* Action bar: stacked on mobile, row on sm+ */}
-          <div className="w-full mt-3 card-theme  rounded-xl px-3 sm:px-8 py-3 sm:py-4">
+          <div className="w-full mt-3 card-theme   rounded-xl px-3 sm:px-8 py-3 sm:py-4">
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3">
               {choices.length > 0 && (
                 <button
@@ -407,12 +407,12 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
 
               <div className="flex flex-wrap justify-end gap-3 mt-4 sm:mt-8">
                 <button 
-                onClick={() => handleEdit(c)} className="items-center gap-2 div-theme flex flex-row  text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
+                onClick={() => handleEdit(c)} className="items-center card-hover-theme     gap-2 div-theme flex flex-row  text-xs font-bold   rounded-lg px-4 py-2 ">
                   <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={24} width={24}/>
                   Edit
                 </button>
                 <button
-                 onClick={() => handleDelete(c.id)} className="items-center gap-2 div-theme  flex flex-row  text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
+                 onClick={() => handleDelete(c.id)} className="items-center gap-2  card-hover-theme div-theme  flex flex-row  text-xs font-bold   rounded-lg px-4 py-2  ">
                   <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={24} width={24}/>
                   Delete
                 </button>
@@ -428,7 +428,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           <p className="text-sm sm:text-base">Add your activity to start study.</p>
 
           <button
-            className="flex flex-row gap-3 card-theme items-center font-bold   hover:bg-gray-400   text-xs px-6 py-2.5 rounded-lg w-full max-w-xs sm:w-fit "
+            className="flex flex-row gap-3 card-theme  card-hover-theme items-center font-bold      text-xs px-6 py-2.5 rounded-lg w-full max-w-xs sm:w-fit "
             onClick={handleAddNew}
           >
              <img 
