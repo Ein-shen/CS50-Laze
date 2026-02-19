@@ -20,3 +20,15 @@
 .inner-theme{
     background: #8BBB92;
 }
+
+.text-dark-theme {
+  color: #3a4451; /* Tailwind gray-800 */
+}
+
+.text-light-theme {
+  color: rgb(41, 36, 36);
+}
+
+.card-hover-theme:hover {
+  background-color: #bed8b7; 
+}
