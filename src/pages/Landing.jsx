@@ -45,26 +45,23 @@ function InfoCard({ title, body }) {
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-gray-300 font-sans">
+    <div className="min-h-screen div-theme font-sans px-10">
 
       {/* =====================================================
           NAV
       ===================================================== */}
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center font-bold text-2xl">
+          <span>L</span>
           <img src="/mortarboard.png" alt="" className="w-8 h-8" />
-          <span className="font-bold text-xl text-black">Lazeu</span>
+          <span>zeu</span>
         </div>
+
         <div className="flex items-center gap-3">
-          <Link
-            to="/login"
-            className="text-sm font-bold text-black px-4 py-2 rounded-lg border-2 border-transparent hover:border-black transition-colors"
-          >
-            Log in
-          </Link>
+           
           <Link
             to="/signup"
-            className="text-sm font-bold bg-[#2C4A5E] text-white px-4 py-2 rounded-lg border-2 border-black hover:bg-[#233a4a] transition-colors"
+            className="text-sm font-bold card-theme card-hover-theme border border-black/80 text-black px-4 py-2 rounded-lg   transition-colors"
           >
             Sign up free
           </Link>
@@ -87,15 +84,15 @@ export default function Landing() {
           <div className="flex flex-wrap gap-3">
             <Link
               to="/signup"
-              className="bg-gray-400 text-black font-bold text-sm px-6 py-3 rounded-lg border-2 border-black hover:bg-gray-300 transition-colors"
+              className="card-theme card-hover-theme  text-black font-bold text-sm px-6 py-3 rounded-lg border border-black/80   transition-colors"
             >
-              Create your first deck
+              Login now!
             </Link>
             <Link
               to="/login"
-              className="bg-gray-200 text-black font-bold text-sm px-6 py-3 rounded-lg border-2 border-black hover:bg-gray-100 transition-colors"
+              className="card-theme card-hover-theme text-black font-bold text-sm px-6 py-3 rounded-lg border border-black/80  transition-colors"
             >
-              I have an account
+              Learn more
             </Link>
           </div>
         </div>
@@ -179,13 +176,13 @@ export default function Landing() {
           FINAL CTA
       ===================================================== */}
       <section className="max-w-4xl mx-auto px-6 py-12 md:py-16 text-center">
-        <div className="bg-gray-200 border-2 border-black rounded-lg p-10">
+        <div className="card-theme  border-2 border-black rounded-lg p-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-6">
             Ready to stop studying alone?
           </h2>
           <Link
             to="/signup"
-            className="inline-block bg-gray-400 text-black font-bold text-sm px-8 py-3 rounded-lg border-2 border-black hover:bg-gray-300 transition-colors"
+            className="inline-block div-theme card-hover-theme text-black font-bold text-sm px-8 py-3 rounded-lg border border-black/80  transition-colors"
           >
             Create your account
           </Link>
