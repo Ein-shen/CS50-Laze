@@ -46,15 +46,16 @@ const Signup = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-400 overflow-y-auto py-8">
-      <div className="bg-gray-200 p-8 rounded-xl shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
+      <div className="card-theme p-8 rounded-xl shadow-md w-full max-w-md">
 
-        <div className="flex flex-col items-center gap-2 mb-6">
-          <img src="/mortarboard.png" alt="Laze logo" className="w-16 h-16" />
-          <p className="font-bold">Welcome to Lazeu</p>
+         <div className="flex flex-col items-center gap-2 mb-10">
+          
+          <p className="font-bold flex flex-row items-center text-2xl">Welcome to 
+             L <img src="/mortarboard.png" alt="Laze logo" className="w-8 h-8" />zeu</p>
         </div>
 
-        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
+        <h1 className="text-md font-bold mb-6 text-center">Create Account</h1>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
@@ -62,14 +63,14 @@ const Signup = () => {
           </div>
         )}
 
-        <form onSubmit={handleSignup} className="flex flex-col gap-4">
+        <form onSubmit={handleSignup} className="flex flex-col  gap-4">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border rounded-lg px-4 py-2 div-theme focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="password"
@@ -77,7 +78,7 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border rounded-lg px-4 py-2 div-theme focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="password"
@@ -85,7 +86,7 @@ const Signup = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border rounded-lg px-4 py-2 div-theme focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
             type="submit"
@@ -98,13 +99,13 @@ const Signup = () => {
 
         <div className="flex items-center my-4">
           <hr className="flex-1" />
-          <span className="mx-3 text-gray-400 text-sm">or</span>
+          <span className="mx-3 text-black-400 text-sm">or</span>
           <hr className="flex-1" />
         </div>
 
         <button
           onClick={handleGoogle}
-          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 border-black border-1"
+          className="w-full border py-2 rounded-lg card-theme card-hover-theme flex items-center justify-center gap-2   "
         >
           <img src="https://www.google.com/favicon.ico" className="w-5 h-5" />
           Continue with Google
