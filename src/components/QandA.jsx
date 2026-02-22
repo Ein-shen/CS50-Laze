@@ -4,7 +4,7 @@ import { X, Upload } from 'lucide-react'
 
 // Shared responsive class strings (mobile-first, scale up at sm:)
 const fieldInput =
-  "w-full min-h-[3.5rem] sm:min-h-[6rem] border border-black/80 bg-gray-300 " +
+  "w-full min-h-[3.5rem] div-theme sm:min-h-[6rem]  bg-gray-300 " +
   "rounded-2xl sm:rounded-full px-4 sm:px-10 py-3 text-base sm:text-lg " +
   "focus:outline-none focus:ring-2 focus:ring-black/40"
 
@@ -12,17 +12,17 @@ const fieldLabel = "block  font-bold px-1 sm:pl-10 pb-1 text-base sm:text-lg"
 
 const del =
   "font-bold min-h-[3rem] sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
-  "border border-black/80  hover:bg-red-400 rounded-full px-5 text-sm sm:text-base " +
+  " bg-red-400 hover:bg-red-200 rounded-full px-5 text-sm sm:text-base " +
   "disabled:opacity-60"
 
 const save =
   "font-bold min-h-[3rem] sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
-  "border border-black/80  hover:bg-green-400 rounded-full px-5 text-sm sm:text-base " +
+  "  bg-green-400 hover:bg-green-200 rounded-full px-5 text-sm sm:text-base " +
   "disabled:opacity-60"
 
 const choice =
-  "font-bold min-h-[3rem] hover:bg-blue-400 sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
-  "border border-black/80  rounded-full px-5 text-sm sm:text-base " +
+  "font-bold min-h-[3rem] bg-blue-400 hover:bg-blue-200 sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
+  "  rounded-full px-5 text-sm sm:text-base " +
   "disabled:opacity-60"
 
  
@@ -218,12 +218,12 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
   return (
     <div
       ref={scrollRef}
-      className="flex flex-col items-center w-full max-w-3xl mx-auto mt-3 sm:mt-5 px-3 sm:px-4 pb-6"
+      className="flex flex-col rounded-xl items-center w-full max-w-3xl mx-auto mt-3 sm:mt-5 px-3 sm:px-4 pb-6"
     >
       {showForm ? (
         <>
           {/* Form card */}
-          <div className="flex flex-col w-full  rounded-xl">
+          <div className="flex flex-col w-full  card-theme rounded-md">
             <button
               type="button"
               aria-label="Close form"
@@ -338,7 +338,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           </div>
 
           {/* Action bar: stacked on mobile, row on sm+ */}
-          <div className="w-full mt-3 border border-black/80 rounded-xl px-3 sm:px-8 py-3 sm:py-4">
+          <div className="w-full mt-3 card-theme  rounded-xl px-3 sm:px-8 py-3 sm:py-4">
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3">
               {choices.length > 0 && (
                 <button
@@ -369,11 +369,11 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
         </>
 
       ) : cardsList.length > 0 ? (
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col  gap-4">
           {cardsList.map((c) => (
             <div
               key={c.id}
-              className="border border-black/80 card-theme rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
+              className=" card-theme rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
             >
               <h2 className="text-gray-600 text-lg sm:text-2xl px-1 sm:pl-2 pb-2 sm:pb-4">Front</h2>
 
@@ -407,12 +407,12 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
 
               <div className="flex flex-wrap justify-end gap-3 mt-4 sm:mt-8">
                 <button 
-                onClick={() => handleEdit(c)} className="items-center gap-2 inner-theme flex flex-row  text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
+                onClick={() => handleEdit(c)} className="items-center gap-2 div-theme flex flex-row  text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
                   <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={24} width={24}/>
                   Edit
                 </button>
                 <button
-                 onClick={() => handleDelete(c.id)} className="items-center gap-2 inner-theme  flex flex-row  text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
+                 onClick={() => handleDelete(c.id)} className="items-center gap-2 div-theme  flex flex-row  text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
                   <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={24} width={24}/>
                   Delete
                 </button>
@@ -428,7 +428,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           <p className="text-sm sm:text-base">Add your activity to start study.</p>
 
           <button
-            className="flex flex-row gap-3 items-center font-bold border hover:bg-gray-400 border-black/80 text-xs px-6 py-2.5 rounded-lg w-full max-w-xs sm:w-fit "
+            className="flex flex-row gap-3 card-theme items-center font-bold   hover:bg-gray-400   text-xs px-6 py-2.5 rounded-lg w-full max-w-xs sm:w-fit "
             onClick={handleAddNew}
           >
              <img 
