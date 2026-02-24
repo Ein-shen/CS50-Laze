@@ -66,8 +66,8 @@ const ShareTotal = () => {
   }, [deckId])
 
   return (
-    <div className="w-screen h-screen bg-gray-300 flex flex-col items-center pt-20">
-      <div className="  gap-4 w-[55%] h-auto flex flex-col border-black border-2 rounded-md bg-white-300  px-10 py-10">
+    <div className="w-screen h-screen div-theme flex flex-col items-center pt-20">
+      <div className="  gap-4 w-[55%] h-auto flex flex-col card-theme  rounded-md bg-white-300  px-10 py-10">
 
 
         <h1 className="font-bold text-2xl text-center " > <img src="/mortarboard.png" className="w-12 h-16 inline pb-1"/>{deck?.deckname}  </h1>
@@ -79,7 +79,7 @@ const ShareTotal = () => {
 
         <div className="flex flex-row gap-10 justify-center items-center pt-32">
           <button
-            className="font-bold text-md border-black border-2 rounded-md h-12 w-32"
+            className="font-bold text-md div-theme rounded-md h-12 w-32"
             type="button"
             disabled={!ownerUsername}
             onClick={() => navigate(`/stalk/${ownerUsername}`)}
@@ -87,7 +87,7 @@ const ShareTotal = () => {
             Back
           </button>
           <button
-            className="font-bold text-md border-black border-2 rounded-md h-12 w-32"
+            className="font-bold text-md div-theme rounded-md h-12 w-32"
             type="button"
             onClick={() => navigate(`/sharestudy/${deckId}`)}
           >
