@@ -145,8 +145,8 @@ const Study = () => {
 
     // this is the loading screen after clicking the study button
     if (loading) return(
-        <div className="h-screen w-screen bg-gray-300 flex items-center justify-center">
-            <p className=" bg-gray-300 text-3xl font-bold  ">
+        <div className="h-screen w-screen div-theme  flex items-center justify-center">
+            <p className="  text-3xl font-bold  ">
             <img src="/mortarboard.png" alt="mortarboard" className="inline-block w-42 h-32" />
             Please wait...</p>
         </div>
@@ -177,9 +177,9 @@ const Study = () => {
 
     return (
 
-        <div className="w-screen h-screen bg-gray-300 flex flex-col items-center gap-4 pt-10">
+        <div className="w-screen h-screen div-theme flex flex-col items-center gap-4 pt-10">
 
-            <div className="rounded-md relative flex items-center justify-center border border-black/80 gap-10 w-[55%] h-auto px-6">
+            <div className="rounded-md card-theme relative flex items-center justify-center  gap-10 w-[55%] h-auto px-6">
 
                 <div className="pb-10 pt-10 flex flex-row">
                     <button type="button" className="absolute left-5 top-1/2 -translate-y-1/2 flex items-center justify-centerr" onClick={() => navigate(`/cards/${deckId}`)}>
@@ -207,7 +207,7 @@ const Study = () => {
 
             <form className="w-full px-10 flex flex-col items-center gap-4">
 
-                <div className="w-[68%] flex-col gap-6 rounded-md border-black border-2 flex items-center justify-center min-h-[200px]">
+                <div className="w-[68%] flex-col gap-6 card-theme rounded-md  flex items-center justify-center min-h-[200px]">
 
 
                     {card.front_image_url && (
@@ -242,14 +242,14 @@ const Study = () => {
                             key={opt}
                             disabled={selected !== null}
                             onClick={() => handleAnswer(opt)}
-                            className="w-full h-16 border border-black/80 rounded-md px-10 my-2 text-center font-bold text-md"
+                            className="w-full h-16  rounded-md px-10 my-2 text-center font-bold text-md"
                             style={{
                                 background:
                                 selected && isPicked
                                     ? isCorrect ? "lightgreen" : "salmon"
                                     : selected && isCorrect
                                     ? "lightgreen"
-                                    : "#d1d5db",
+                                    : "#8BBB92",
                             }}
                             >
                             {opt}
@@ -264,7 +264,7 @@ const Study = () => {
                         <button
                         type="button"
                         onClick={handleNext}
-                        className="w-full px-10 py-3 border-black border-2 rounded-md font-bold"
+                        className="w-full px-10 py-3 card-theme rounded-md font-bold"
                         >
                         Next
                         </button>
