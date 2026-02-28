@@ -223,7 +223,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
       {showForm ? (
         <>
           {/* Form card */}
-          <div className="flex flex-col w-full border border-black/80 rounded-xl">
+          <div className="flex flex-col w-full  rounded-xl">
             <button
               type="button"
               aria-label="Close form"
@@ -236,10 +236,10 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
             <form
               id="card-form"
               onSubmit={handleSubmit}
-              className="w-full flex flex-col gap-4 sm:gap-5 px-3 sm:px-6 pb-6 sm:pb-10 pt-1 sm:pt-3"
+              className="w-full flex flex-col  gap-4 sm:gap-5 px-3 sm:px-6 pb-6 sm:pb-10 pt-1 sm:pt-3"
             >
               {/* Front */}
-              <div className="w-full pb-2 sm:pb-3">
+              <div className="w-full  pb-2 sm:pb-3">
                 <label htmlFor="front" className={fieldLabel}>Front</label>
 
                 <div className="flex flex-col gap-3">
@@ -373,7 +373,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           {cardsList.map((c) => (
             <div
               key={c.id}
-              className="border border-black/80 rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
+              className="border border-black/80 card-theme rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
             >
               <h2 className="text-gray-600 text-lg sm:text-2xl px-1 sm:pl-2 pb-2 sm:pb-4">Front</h2>
 
@@ -407,12 +407,12 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
 
               <div className="flex flex-wrap justify-end gap-3 mt-4 sm:mt-8">
                 <button 
-                onClick={() => handleEdit(c)} className="items-center gap-2 flex flex-row border border-black/80 text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
+                onClick={() => handleEdit(c)} className="items-center gap-2 inner-theme flex flex-row  text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
                   <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={24} width={24}/>
                   Edit
                 </button>
                 <button
-                 onClick={() => handleDelete(c.id)} className="items-center gap-2  flex flex-row border border-black/80 text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
+                 onClick={() => handleDelete(c.id)} className="items-center gap-2 inner-theme  flex flex-row  text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
                   <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={24} width={24}/>
                   Delete
                 </button>
