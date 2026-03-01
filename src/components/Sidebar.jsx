@@ -48,7 +48,7 @@ const Sidebar = () => {
             {/* Sidebar: always starts right below the navbar */}
             <div
                 className={`fixed left-0  card-theme top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
-                    border-r border-black/80 overflow-y-auto transform transition-transform duration-300
+                    border-roverflow-y-auto transform transition-transform duration-300
                     ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
             >
                 {/* Close button - mobile only */}
@@ -73,8 +73,8 @@ const Sidebar = () => {
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full flex items-center gap-3 div-theme border border-black/80 font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
-                                    isActive ? 'nav-theme' : 'bg-[#A8B99F]'
+                                className={`w-full flex items-center gap-3 div-theme  font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
+                                    isActive ? 'card-theme' : 'bg-[#A8B99F]'
                                 }`}
                             >
                                 {icon && <img src={icon} alt="" width={20} height={20} />}
