@@ -66,7 +66,7 @@ const Cards = ({children}) => {
           </div>
           <div className="flex flex-row gap-2 pl-24 pt-10 mt-auto mb-[-12px]">
 
-            <button className=" hover:bg-gray-400 inner-theme text-xs flex items-center font-bold gap-2  px-6 py-2 rounded-lg w-fit"
+            <button className=" hover:bg-gray-400 card-theme text-xs flex items-center font-bold gap-2  px-6 py-2 rounded-lg w-fit"
               onClick={() => navigate(`/study/${deckId}`)}
               disabled={cards.length === 0}
             >
@@ -79,7 +79,7 @@ const Cards = ({children}) => {
             </button>
 
 
-            <button className="hover:bg-gray-400 text-xs inner-theme flex items-center font-bold gap-2 px-6 py-2 rounded-lg w-fit" // The upper Add Card button that exist
+            <button className="hover:bg-gray-400 text-xs card-theme flex items-center font-bold gap-2 px-6 py-2 rounded-lg w-fit" // The upper Add Card button that exist
               onClick={() => setAddNewTrigger((n) => n + 1)}
             >
               <img 
