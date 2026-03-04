@@ -60,7 +60,7 @@ const Ai = () => {
   }, [])
 
   return (
-    <div className="w-[80%] h-[36rem] border border-black/80 rounded-md flex flex-col px-10">
+    <div className="w-[80%] h-[36rem] card-theme border border-black/80 rounded-md flex flex-col px-10">
 
       <h1 className="font-bold text-2xl text-center pb-10 py-10">
         <Greetings /> Let's go study?
@@ -85,7 +85,7 @@ const Ai = () => {
               <div
                 key={attempt.id}
                 onClick={() => navigate(`/cards/${attempt.deck_id}`)}
-                className="flex justify-between  card-theme rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
+                className="flex justify-between  div-theme rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
               >
                 <span className="font-semibold">{attempt.decks?.deckname ?? 'Unknown deck'}</span>
                 <span>{attempt.score} / {attempt.total_questions}</span>
