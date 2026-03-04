@@ -151,7 +151,7 @@ export default function App() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-300">
+            <div className="min-h-screen flex items-center justify-center div-theme">
                 <h1 className="font-bold text-4xl leading-none flex items-end">
                     L<img src="/mortarboard.png" alt="" className="w-9 h-10 inline pb-1" />zeu
                     <span className="ml-1 flex gap-1 pb-1">
