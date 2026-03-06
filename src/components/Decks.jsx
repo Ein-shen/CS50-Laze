@@ -65,7 +65,7 @@ const Decks = () => {
                 <h1 className="text-lg font-bold mb-8">Your Decks</h1>
 
                 <button
-                    className="inner-theme flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2  px-6 py-2 rounded-md w-fit mb-10"
+                    className="card-theme flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2  px-6 py-2 rounded-md w-fit mb-10"
                     onClick={() => setShowCreateDeck(true)}
                 >
                     <img 
