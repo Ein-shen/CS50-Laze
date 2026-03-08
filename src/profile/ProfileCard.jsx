@@ -96,7 +96,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
   return (
 
-        <div className="flex justify-center items-center pt-14 flex-col gap-4 w-full">
+        <div className="flex justify-center div-theme  items-center pt-14 flex-col gap-4 w-full">
           <div>
               <div style={styles.card}>
                 <div
@@ -238,7 +238,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
 const styles = {
   card: {
-    backgroundColor: 'gray',
+    backgroundColor:  '#ACC5A6',
     borderRadius: '16px',
     padding: '1.5rem',
     display: 'flex',
