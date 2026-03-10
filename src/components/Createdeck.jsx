@@ -89,7 +89,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className=' border  border-black/80 bg-gray-200 hover:bg-green-400 rounded-md px-4 py-2 font-semibold w-full'
+                        className=' border  border-black/80  card-theme hover:bg-green-400 rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
@@ -106,7 +106,7 @@ const Deck_style = {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.6)',
+        backgroundColor: 'card-theme',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -115,7 +115,7 @@ const Deck_style = {
     },
     modal: {
         position: 'relative',
-        backgroundColor: '#fff',
+        backgroundColor: '#D1EDD3',
         padding: '2rem',
         borderRadius: '12px',
         width: '100%',
@@ -123,6 +123,7 @@ const Deck_style = {
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
+        border: '1px solid rgba(0, 0, 0, 0.8)' ,
     },
     input: {
         width: '100%',
@@ -135,8 +136,8 @@ const Deck_style = {
     button: {
         width: '100%',
         padding: '0.75rem',
-        backgroundColor: '#4f46e5',
-        color: '#fff',
+        backgroundColor: '#ACC5A6',
+        color: '#ACC5A6',
         border: 'none',
         borderRadius: '8px',
         fontSize: '1rem',
