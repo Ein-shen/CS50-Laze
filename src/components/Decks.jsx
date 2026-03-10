@@ -65,7 +65,7 @@ const Decks = () => {
                 <h1 className="text-lg font-bold mb-8">Your Decks</h1>
 
                 <button
-                    className=" card-theme flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2 border border-black/80 px-6 py-2 rounded-md w-fit mb-10"
+                    className="inner-theme flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2  px-6 py-2 rounded-md w-fit mb-10"
                     onClick={() => setShowCreateDeck(true)}
                 >
                     <img 
@@ -86,7 +86,7 @@ const Decks = () => {
                 >
                     {decks.map((deck) => (
                         deck.id ? (
-                            <div key={deck.id} className="card-theme border border-black/80 rounded-md">
+                            <div key={deck.id} className="card-theme  rounded-md">
                                 <DeckDropDown
                                     deck={deck}
                                     onNavigate={() => {
