@@ -56,12 +56,12 @@ const Private = ({ userId }) => {
 
   return (
     <div className="flex flex-col items-center w-2/3 max-w-4xl mx-auto mt-6 ">
-      <div className="flex flex-col gap-3 w-full pb-5">
+      <div className="flex flex-col gap-3 w-full pb-5 ">
         {decks.map((deck) => (
           <div
             key={deck.id}
             onClick={() => navigate(`/cards/${deck.id}`)}
-            className="border border-black/80 rounded-lg p-4 shadow-sm hover:shadow-md transition cursor-pointer "
+            className="border border-black/80 rounded-lg p-4 capitalize card-theme shadow-sm hover:shadow-md transition cursor-pointer "
           >
             <p className="font-bold">{deck.deckname}</p>
           </div>
