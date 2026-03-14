@@ -31,7 +31,7 @@ const Sidebar = () => {
                 <button
                     onClick={() => setIsOpen(true)}
                     aria-label="Open menu"
-                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg border border-black/80 bg-gray-300 p-2"
+                    className="md:hidden fixed left-4 top-[4.25rem] z-30 flex items-center rounded-lg border border-black/80 card-theme p-2"
                 >
                     <Menu size={20} strokeWidth={3} />
                 </button>
@@ -41,13 +41,13 @@ const Sidebar = () => {
             {isOpen && (
                 <div
                     onClick={() => setIsOpen(false)}
-                    className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-black/40 z-30"
+                    className="md:hidden fixed inset-x-0 top-14 bottom-0 bg-black/40 card-theme z-30"
                 />
             )}
 
             {/* Sidebar: always starts right below the navbar */}
             <div
-                className={`fixed left-0 top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
+                className={`fixed left-0  card-theme top-14 bottom-0 w-64 z-40 flex flex-col bg-gray-300 text-black
                     border-r border-black/80 overflow-y-auto transform transition-transform duration-300
                     ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
             >
@@ -61,7 +61,7 @@ const Sidebar = () => {
                 </button>
 
                 {/* Main navigation */}
-                <div className="flex flex-col gap-3 px-6 pt-12 md:pt-6">
+                <div className="flex   flex-col gap-3 px-6 pt-12 md:pt-6">
                     {navItems.map(({ label, path, icon }) => {
                         const isActive =
                             path === '/'
@@ -73,8 +73,8 @@ const Sidebar = () => {
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full flex items-center gap-3 border border-black/80 font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-gray-400/50 ${
-                                    isActive ? 'bg-gray-400/60' : ''
+                                className={`w-full flex items-center gap-3 div-theme border border-black/80 font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-black/5 ${
+                                    isActive ? 'nav-theme' : 'bg-[#A8B99F]'
                                 }`}
                             >
                                 {icon && <img src={icon} alt="" width={20} height={20} />}
