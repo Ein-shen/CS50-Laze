@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.card-theme{
+    background-color: #ACC5A6
+}
+
+
+.div-theme{
+    background-color:#D1EDD3
+}
+
+.nav-theme{
+    background-color: #89A482;
+}
+
+.inner-theme{
+    background: #8BBB92;
+}
