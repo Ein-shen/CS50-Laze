@@ -40,7 +40,7 @@ const Dashboard = ({ session }) => {
   }
 
   return (
-     <div className="h-screen bg-gray-300 overflow-hidden pt-14">
+     <div className="h-screen div-theme overflow-hidden pt-14">
         <Navbar />
         <Sidebar />
 
