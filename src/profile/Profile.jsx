@@ -52,7 +52,7 @@ const Profile = ({ user }) => {
     if (!user || !profile) return null
 
     return (
-        <div className="bg-gray-300 w-full h-[40%] box-border flex flex-col items-center justify-start">
+        <div className="card-theme w-full h-[40%] box-border flex flex-col items-center justify-start">
             <ProfileCard
                 user={user}
                 profile={profile}
