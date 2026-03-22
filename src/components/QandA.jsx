@@ -4,15 +4,21 @@ import { X, Upload } from 'lucide-react'
 
 // Shared responsive class strings (mobile-first, scale up at sm:)
 const fieldInput =
-  "w-full min-h-[3.5rem] sm:min-h-[6rem] border-black border-2 bg-gray-300 " +
+  "w-full min-h-[3.5rem] sm:min-h-[6rem] border border-black/80 bg-gray-300 " +
   "rounded-2xl sm:rounded-full px-4 sm:px-10 py-3 text-base sm:text-lg " +
   "focus:outline-none focus:ring-2 focus:ring-black/40"
 
-const fieldLabel = "block font-bold px-1 sm:pl-10 pb-1 text-base sm:text-lg"
+const fieldLabel = "block  font-bold px-1 sm:pl-10 pb-1 text-base sm:text-lg"
 
-const pillBtn =
+
+const save =
   "font-bold min-h-[3rem] sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
-  "border-black border-2 rounded-full px-5 text-sm sm:text-base " +
+  "border border-black/80  hover:bg-green-400 rounded-full px-5 text-sm sm:text-base " +
+  "disabled:opacity-60"
+
+const choice =
+  "font-bold min-h-[3rem] hover:bg-blue-400 sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
+  "border border-black/80  rounded-full px-5 text-sm sm:text-base " +
   "disabled:opacity-60"
 
  
@@ -213,7 +219,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
       {showForm ? (
         <>
           {/* Form card */}
-          <div className="flex flex-col w-full border-2 border-black/80 rounded-xl">
+          <div className="flex flex-col w-full border border-black/80 rounded-xl">
             <button
               type="button"
               aria-label="Close form"
@@ -333,7 +339,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               {choices.length > 0 && (
                 <button
                   type="button"
-                  className={pillBtn}
+                  className={save}
                   onClick={() => setChoices(choices.slice(0, -1))}
                 >
                   Delete choice
@@ -341,13 +347,13 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               )}
 
               {choices.length < 3 && (
-                <button type="button" className={pillBtn} onClick={addChoice}>
+                <button type="button" className={choice} onClick={addChoice}>
                   Add choices
                 </button>
               )}
 
               <button
-                className={pillBtn}
+                className={save}
                 type="submit"
                 form="card-form"
                 disabled={loading}
