@@ -10,6 +10,10 @@ const fieldInput =
 
 const fieldLabel = "block  font-bold px-1 sm:pl-10 pb-1 text-base sm:text-lg"
 
+const del =
+  "font-bold min-h-[3rem] sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
+  "border border-black/80  hover:bg-red-400 rounded-full px-5 text-sm sm:text-base " +
+  "disabled:opacity-60"
 
 const save =
   "font-bold min-h-[3rem] sm:min-h-[3.5rem] w-full sm:w-auto sm:flex-1 " +
@@ -339,7 +343,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               {choices.length > 0 && (
                 <button
                   type="button"
-                  className={save}
+                  className={del}
                   onClick={() => setChoices(choices.slice(0, -1))}
                 >
                   Delete choice
