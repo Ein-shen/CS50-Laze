@@ -4,6 +4,21 @@ import Greetings from "../components/Greetings"
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
 
+const MAX_RECENT = 3
+const FETCH_LIMIT = 20
+
+// Keep only the newest attempt per deck (list is already newest-first)
+const getUniqueRecent = (attempts) => {
+  const seen = new Set()
+  return attempts
+    .filter((attempt) => {
+      if (seen.has(attempt.deck_id)) return false
+      seen.add(attempt.deck_id)
+      return true
+    })
+    .slice(0, MAX_RECENT)
+}
+
 const Ai = () => {
   const [recentAttempts, setRecentAttempts] = useState([])
   const navigate = useNavigate()
@@ -12,7 +27,7 @@ const Ai = () => {
     const cached = localStorage.getItem('recent_attempts')
     if (cached && cached !== 'undefined') {
       try {
-        setRecentAttempts(JSON.parse(cached))
+        setRecentAttempts(getUniqueRecent(JSON.parse(cached)))
       } catch {
         localStorage.removeItem('recent_attempts')
       }
@@ -26,7 +41,7 @@ const Ai = () => {
       .select('id, deck_id, score, total_questions, created_at, decks(deckname)')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
-      .limit(5)
+      .limit(FETCH_LIMIT)
 
     if (error) {
       console.error('Error fetching recent attempts:', error)
@@ -34,8 +49,9 @@ const Ai = () => {
     }
 
     if (data) {
-      setRecentAttempts(data)
-      localStorage.setItem('recent_attempts', JSON.stringify(data))
+      const unique = getUniqueRecent(data)
+      setRecentAttempts(unique)
+      localStorage.setItem('recent_attempts', JSON.stringify(unique))
     }
   }
 
