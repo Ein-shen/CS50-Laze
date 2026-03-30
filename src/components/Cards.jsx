@@ -62,9 +62,9 @@ const Cards = ({children}) => {
         <div className="flex flex-col h-full">
           <div className="flex items-center gap-4">
             <Return to="/decks" />
-            <h1 className="pl-5 font-bold text-xl">{deck?.deckname} </h1>
+            <h1 className="pl-3 font-bold text-xl">{deck?.deckname} </h1>
           </div>
-          <div className="ml-40 flex flex-row gap-2 pl-10 mt-auto mb-[-12px]">
+          <div className="flex flex-row gap-2 pl-24 pt-10 mt-auto mb-[-12px]">
 
             <button className=" hover:bg-gray-400 text-xs border border-black/80 flex items-center font-bold gap-2 border-black/80  px-6 py-2 rounded-lg w-fit"
               onClick={() => navigate(`/study/${deckId}`)}
