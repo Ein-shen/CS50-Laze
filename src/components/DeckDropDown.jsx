@@ -122,7 +122,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                 {open && (
                     <div
                         role="menu"
-                       className="border-black border-2 absolute right-0 top-6 w-36 rounded-lg border border-black bg-gray-300 shadow-md z-10 overflow-hidden"
+                       className=" border-black/80 absolute right-0 top-6 w-36 rounded-lg border border-black bg-gray-300 shadow-md z-10 overflow-hidden"
                     >
                         <button
                             role="menuitem"
@@ -131,8 +131,9 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                                 setIsEditing(true)
                                 setOpen(false)
                             }}
-                            className=" border-b-2 border-black   font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className=" border-b  items-center gap-1 flex flex-row border-black/80  text-xs  font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                         >
+                            <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={16} width={16}/>
                             Edit
                         </button>
 
@@ -143,8 +144,10 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                                 handleDelete()
                                 setOpen(false)
                             }}
-                       className="border-b-2 border-black font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                       className="border-b border-black/80 flex flex-row items-center gap-1  text-xs font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                         >
+                            <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={16} width={16}/>
+                  
                             Delete
                         </button>
 
@@ -153,8 +156,13 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                             setOpen(false)
                             handlePublic()
                         }}
-                            className="border-b-2 border-black   font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className="border-b flex flex-row gap-1 items-center border-black/80 text-xs  font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                             >
+                                <img 
+                                    src="https://img.icons8.com/?size=100&id=w_qRMJOKoZGs&format=png&color=000000" 
+                                    alt="public"
+                                    height={16}
+                                    width={16} />
 
                             {deck.is_public ? 'Make Private' : 'Make Public'}
                             </button>
@@ -165,8 +173,9 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                             setOpen(false)
                             handleCopyLink()
                         }}
-                            className=" rounded-md font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className=" flex flex-row gap-1 items-center rounded-md font-bold block text-xs  w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                             >
+                                <img src="https://img.icons8.com/?size=100&id=CYKLk4DosdHW&format=png&color=000000" alt="link"  height={16} width={16}/>
                             Copy link
                         </button>
                     </div>
