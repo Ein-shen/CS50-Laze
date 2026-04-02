@@ -6,7 +6,8 @@ const Edit = ({ onEdit }) => {
             e.stopPropagation()  
             onEdit()
         }}>
-            <Pencil size={20} />
+             <img src="https://img.icons8.com/?size=100&id=9i9HlS0bGONj&format=png&color=000000" alt="edit" height={20} width={20}/>
+                
         </button>
     )
 }
