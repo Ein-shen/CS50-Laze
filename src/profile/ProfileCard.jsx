@@ -140,12 +140,21 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
                     </div>
                   )}
                 </div>
-                <div>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <h2 style={styles.name}>{profile.fullname}</h2>
-                    {onEditClick && <Edit onEdit={onEditClick} />}
+                <div className=''>
+                  <div className="flex items-center  justify-center gap-2 min-w-0">
+                    <h2 className="break-words min-w-0" style={styles.name}>
+                      {profile.fullname}
+                    </h2>
+                    {onEditClick && (
+                      <div className="shrink-0">
+                        <Edit onEdit={onEditClick} />
+                      </div>
+                     
+                    )}
+                    
                   </div>
-                  <h2 className="pb-5" style={styles.username}>@{profile.username}</h2>
+                   <h2 className="flex pl-8 min-w-0" style={styles.username}>@{profile.username}</h2>
+                  
 
 
                 {!isOwnProfile && (
@@ -233,9 +242,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem',
-    width: '210px',
+    width: '280px',
     color: '#fff',
-    maxHeight: '360px',
+    minHeight: '260px',   // was maxHeight, so the card can grow with long names
   },
   avatar: {
     width: '150px',
