@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+       <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product["symbol"] }}</td>
+            <td>{{ product["name"] }}</td>
+            <td>{{ product["Shares_total"] }}</td>
+            <td>{{ usd(product["price"]) }}</td>
+            <td>{{ usd(product["Shares_total"] * product["price"])  }}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td>CASH</td>
+            <td colspan="3"></td>
+            <td>{{ usd(money_cash) }}</td>
+        </tr>
+       </tbody>
+
+
+        <tfoot>
+            <td colspan="4"></td>
+            <td>{{ usd(total) }}</td>
+        </tfoot>
+    </table>
+
+
+{% endblock %}
