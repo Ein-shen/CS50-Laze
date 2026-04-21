@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
+
+            <p> Product name {{product.name}} price is {{usd_dollar_sign(product.price)}}</p>
+
+{% endblock %}
