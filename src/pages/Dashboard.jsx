@@ -45,9 +45,9 @@ const Dashboard = ({ session }) => {
         <Sidebar />
 
         <div className="md:ml-64 h-full flex flex-col overflow-y-auto">
-        
           <Outlet />
         </div>
+  {/* Popup stays the same */}
 
         {session?.user && !hasProfile && (
           <Popup
