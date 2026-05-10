@@ -66,7 +66,7 @@ const Cards = ({children}) => {
           </div>
           <div className="ml-40 flex flex-row gap-2 pl-10 mt-auto mb-[-12px]">
 
-            <button className=" border-black border-2 flex items-center font-bold gap-2 border-[3px] px-6 py-2 rounded-full w-fit"
+            <button className=" border-black border-2 flex items-center font-bold gap-2 border-black/80  px-6 py-2 rounded-full w-fit"
               onClick={() => navigate(`/study/${deckId}`)}
               disabled={cards.length === 0}
             >
@@ -74,7 +74,7 @@ const Cards = ({children}) => {
             </button>
 
 
-            <button className="border-black border-2 flex items-center font-bold gap-2 border-[3px] px-6 py-2 rounded-full w-fit" // The upper Add Card button that exist
+            <button className="border-black border-2 flex items-center font-bold gap-2 border border-black/80 px-6 py-2 rounded-full w-fit" // The upper Add Card button that exist
               onClick={() => setAddNewTrigger((n) => n + 1)}
             >
               Add cards
