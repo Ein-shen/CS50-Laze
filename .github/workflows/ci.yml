@@ -25,16 +25,6 @@ jobs:
 
       - name: Build project
         run: npm run build
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Build Docker image
         run: docker build -t lazeu-app:ci .
-
-      - name: Deploy to Netlify
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: npx netlify-cli deploy --prod --dir=dist
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
