@@ -159,5 +159,4 @@ export const Settings = () => {
   )
 }
 
-export default Settings$env:GIT_AUTHOR_DATE="2026-1-3  2:12:00"
-$env:GIT_COMMITTER_DATE="2026-1-3 3:21:00"
+export default Settings
