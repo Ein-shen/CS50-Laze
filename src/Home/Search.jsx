@@ -104,7 +104,7 @@ const Search = () => {
         onChange={e => handleSearch(e.target.value)}
         onFocus={() => query && setOpen(true)}
         placeholder="Look for friends"
-        className="h-7 w-full bg-transparent div-theme border border-black/80 rounded-lg pl-10 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="h-9 w-full bg-transparent div-theme border border-black/80 rounded-lg pl-10 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
 
       {/* Results dropdown (original card styling) */}
