@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
-import Upperbar from "../components/Upperbar"
+
 import Popup from "../components/Popup"
 import { supabase } from "../supabaseClient"
 import { Navbar } from '../components/Navbar'
@@ -45,7 +45,7 @@ const Dashboard = ({ session }) => {
         <Sidebar />
 
         <div className="md:ml-64 h-full flex flex-col overflow-y-auto">
-          <Upperbar />
+        
           <Outlet />
         </div>
 
