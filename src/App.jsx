@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from './supabaseClient'
-
+import Overview from './pages/Overview'
 // Profile
 import Profile from './profile/Profile'
 import ProfileCard from './profile/ProfileCard'
@@ -149,20 +149,21 @@ export default function App() {
     // LOADING
     // =====================================================
 
-   if (loading) {
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-300">
-            <h1 className="font-bold text-4xl leading-none flex items-end">
-                L<img src="/mortarboard.png" alt="" className="w-9 h-10 inline pb-1" />zeu
-                <span className="ml-1 flex gap-1 pb-1">
-                    <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.3s]" />
-                    <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.15s]" />
-                    <span className="w-2 h-2 bg-black rounded-full animate-bounce" />
-                </span>
-            </h1>
-        </div>
-    )
-}
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-300">
+                <h1 className="font-bold text-4xl leading-none flex items-end">
+                    L<img src="/mortarboard.png" alt="" className="w-9 h-10 inline pb-1" />zeu
+                    <span className="ml-1 flex gap-1 pb-1">
+                        <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.3s]" />
+                        <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.15s]" />
+                        <span className="w-2 h-2 bg-black rounded-full animate-bounce" />
+                    </span>
+                </h1>
+            </div>
+        )
+    }
+
     return (
 
         <Routes>
@@ -244,140 +245,57 @@ export default function App() {
                 }
             >
 
-                <Route
-                    index
-                    element={<Home />}
-                />
+                <Route index element={<Home />} />
 
-                <Route
-                    path="createdeck"
-                    element={<Createdeck />}
-                />
+                <Route path="createdeck" element={<Createdeck />} />
 
-                <Route
-                    path="chat"
-                    element={<Chat />}
-                />
+                <Route path="chat" element={<Chat />} />
+                <Route path="chat/:deckId" element={<Chat />} />
 
-                <Route
-                    path="chat/:deckId"
-                    element={<Chat />}
-                />
+                <Route path="message" element={<Message />} />
+                <Route path="message/:deckId" element={<Message />} />
 
-                <Route
-                    path="message"
-                    element={<Message />}
-                />
+                <Route path="profile" element={<Profile user={session?.user} />} />
+                <Route path="profile/:deckId" element={<Profile />} />
 
-                <Route
-                    path="message/:deckId"
-                    element={<Message />}
-                />
+                <Route path="profilecard" element={<ProfileCard />} />
 
-                <Route
-                    path="profile"
-                    element={<Profile user={session?.user} />}
-                />
+                <Route path="stalk/:username" element={<Stalk />} />
 
-                <Route
-                    path="profile/:deckId"
-                    element={<Profile />}
-                />
+                <Route path="decks" element={<Decks />} />
+                <Route path="decks/:deckId" element={<Decks />} />
 
-                <Route
-                    path="profilecard"
-                    element={<ProfileCard />}
-                />
+                <Route path="cards/:deckId" element={<Cards />} />
 
-                <Route
-                    path="stalk/:username"
-                    element={<Stalk />}
-                />
+                <Route path="deckdropdown" element={<DeckDropDown />} />
 
-                <Route
-                    path="decks"
-                    element={<Decks />}
-                />
+                <Route path="qanda" element={<QandA />} />
 
-                <Route
-                    path="decks/:deckId"
-                    element={<Decks />}
-                />
+                <Route path="overview" element={<Overview />} />
 
-                <Route
-                    path="cards/:deckId"
-                    element={<Cards />}
-                />
+                <Route path="edit" element={<Edit />} />
 
-                <Route
-                    path="deckdropdown"
-                    element={<DeckDropDown />}
-                />
+                <Route path="return" element={<Return />} />
 
-                <Route
-                    path="qanda"
-                    element={<QandA />}
-                />
+                <Route path="delete" element={<Delete />} />
 
-                <Route
-                    path="edit"
-                    element={<Edit />}
-                />
+                <Route path="notification" element={<Notification />} />
 
-                <Route
-                    path="return"
-                    element={<Return />}
-                />
+                <Route path="search" element={<Search />} />
 
-                <Route
-                    path="delete"
-                    element={<Delete />}
-                />
+                <Route path="greetings" element={<Greetings />} />
 
-                <Route
-                    path="notification"
-                    element={<Notification />}
-                />
+                <Route path="popup" element={<Popup />} />
 
-                <Route
-                    path="search"
-                    element={<Search />}
-                />
+                <Route path="ai" element={<Ai />} />
 
-                <Route
-                    path="greetings"
-                    element={<Greetings />}
-                />
+                <Route path="public" element={<Public />} />
 
-                <Route
-                    path="popup"
-                    element={<Popup />}
-                />
+                <Route path="private" element={<Private />} />
 
-                <Route
-                    path="ai"
-                    element={<Ai />}
-                />
+                <Route path="stats" element={<Stats />} />
 
-                <Route
-                    path="public"
-                    element={<Public />}
-                />
-
-                <Route
-                    path="private"
-                    element={<Private />}
-                />
-
-                <Route
-                    path="stats"
-                    element={<Stats />}
-                />
-
-                <Route
-                    path="addfriendbutton"
-                    element={<AddFriendButton />}
-                />
+                <Route path="addfriendbutton" element={<AddFriendButton />} />
 
             </Route>
 
