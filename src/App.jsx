@@ -149,18 +149,20 @@ export default function App() {
     // LOADING
     // =====================================================
 
-    if (loading) {
-
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-300">
-                <p className="text-lg font-bold">
-                    Loading...
-                </p>
-            </div>
-        )
-    }
-
-
+   if (loading) {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-300">
+            <h1 className="font-bold text-4xl leading-none flex items-end">
+                L<img src="/mortarboard.png" alt="" className="w-9 h-10 inline pb-1" />zeu
+                <span className="ml-1 flex gap-1 pb-1">
+                    <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-2 h-2 bg-black rounded-full animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-2 h-2 bg-black rounded-full animate-bounce" />
+                </span>
+            </h1>
+        </div>
+    )
+}
     return (
 
         <Routes>
