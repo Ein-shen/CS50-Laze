@@ -69,7 +69,7 @@ const Ai = () => {
               <div
                 key={attempt.id}
                 onClick={() => navigate(`/cards/${attempt.deck_id}`)}
-                className="flex justify-between border-2 border-black rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
+                className="flex justify-between border border-black/80 rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
               >
                 <span className="font-semibold">{attempt.decks?.deckname ?? 'Unknown deck'}</span>
                 <span>{attempt.score} / {attempt.total_questions}</span>
