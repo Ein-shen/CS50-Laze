@@ -1,16 +1,18 @@
+
 import Edit from '../components/Edit'
 import { useRef, useState } from 'react'
 import { supabase } from '../supabaseClient'
-import Public from "../components/Public"
-import Private from "../components/Private"
-import Stats from "../components/Stats"
-import AddFriendButton from "../components/AddFriendButton"
+import Public from '../components/Public'
+import Private from '../components/Private'
+import AddFriendButton from '../components/AddFriendButton'
 import { MessageCircle } from 'lucide-react'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 const compressImage = (file, maxSize = 512) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const img = new Image()
+    const objectUrl = URL.createObjectURL(file)
+
     img.onload = () => {
       let { width, height } = img
 
@@ -23,25 +25,57 @@ const compressImage = (file, maxSize = 512) => {
       }
 
       const canvas = document.createElement('canvas')
-      canvas.width = width
-      canvas.height = height
-      canvas.getContext('2d').drawImage(img, 0, 0, width, height)
+      canvas.width = Math.round(width)
+      canvas.height = Math.round(height)
+
+      const context = canvas.getContext('2d')
+
+      if (!context) {
+        URL.revokeObjectURL(objectUrl)
+        reject(new Error('Unable to process image'))
+        return
+      }
+
+      context.drawImage(img, 0, 0, canvas.width, canvas.height)
 
       canvas.toBlob(
-        (blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })),
+        (blob) => {
+          URL.revokeObjectURL(objectUrl)
+
+          if (!blob) {
+            reject(new Error('Unable to compress image'))
+            return
+          }
+
+          resolve(
+            new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), {
+              type: 'image/jpeg',
+            })
+          )
+        },
         'image/jpeg',
         0.8
       )
-      URL.revokeObjectURL(img.src)
     }
-    img.src = URL.createObjectURL(file)
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl)
+      reject(new Error('Unable to load image'))
+    }
+
+    img.src = objectUrl
   })
 }
 
-const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }) => {
+const ProfileCard = ({
+  user,
+  profile,
+  onEditClick,
+  isOwnProfile,
+  onImageUpdate,
+}) => {
   const initials = profile.fullname?.charAt(0).toLowerCase() ?? '?'
 
-  const [isActive, setIsActive] = useState(false)
   const [visibility, setVisibility] = useState('public')
   const [uploading, setUploading] = useState(false)
 
@@ -58,146 +92,194 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
     setUploading(true)
 
-    const compressedFile = await compressImage(file)
+    try {
+      const compressedFile = await compressImage(file)
+      const fileName = `${user.id}-${Date.now()}.jpg`
 
-    const fileName = `${user.id}-${Date.now()}.jpg`
+      const { error: uploadError } = await supabase.storage
+        .from('profile-image')
+        .upload(fileName, compressedFile)
 
-    const { error: uploadError } = await supabase.storage
-      .from('profile-image')
-      .upload(fileName, compressedFile)
+      if (uploadError) {
+        throw uploadError
+      }
 
-    if (uploadError) {
-      console.error(uploadError.message)
+      const { data: publicUrlData } = supabase.storage
+        .from('profile-image')
+        .getPublicUrl(fileName)
+
+      const newImageUrl = publicUrlData.publicUrl
+
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ profiles_image: newImageUrl })
+        .eq('id', user.id)
+
+      if (updateError) {
+        throw updateError
+      }
+
+      onImageUpdate?.(newImageUrl)
+    } catch (error) {
+      console.error('Error updating profile image:', error.message)
+    } finally {
       setUploading(false)
       e.target.value = ''
-      return
     }
-
-    const { data: publicUrlData } = supabase.storage
-      .from('profile-image')
-      .getPublicUrl(fileName)
-
-    const newImageUrl = publicUrlData.publicUrl
-
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update({ profiles_image: newImageUrl })
-      .eq('id', user.id)
-
-    if (!updateError) {
-      onImageUpdate?.(newImageUrl)
-    } else {
-      console.error(updateError.message)
-    }
-
-    setUploading(false)
-    e.target.value = ''
   }
 
   return (
-    <div className="flex justify-center div-theme items-center pt-14 flex-col gap-4 w-full">
-      <div>
-        <div style={styles.card}>
-          <div
-            style={{
-              ...styles.avatar,
-              flexShrink: 0,
-              alignSelf: 'center',
-              overflow: 'hidden',
-              cursor: isOwnProfile ? 'pointer' : 'default',
-              position: 'relative',
-            }}
-            onClick={handleAvatarClick}
-          >
-            {profile.profiles_image ? (
-              <img
-                src={profile.profiles_image}
-                alt={profile.fullname}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            ) : (
-              initials
-            )}
+    <div className="div-theme flex w-full flex-col items-center justify-center gap-4 pt-14">
+      <div style={styles.card}>
+        {/* Profile picture */}
+        <div
+          style={{
+            ...styles.avatar,
+            flexShrink: 0,
+            alignSelf: 'center',
+            overflow: 'hidden',
+            cursor: isOwnProfile ? 'pointer' : 'default',
+            position: 'relative',
+          }}
+          onClick={handleAvatarClick}
+        >
+          {profile.profiles_image ? (
+            <img
+              src={profile.profiles_image}
+              alt={profile.fullname}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
+            initials
+          )}
 
-            {isOwnProfile && (
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-            )}
+          {isOwnProfile && (
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+          )}
 
-            {uploading && (
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: 'rgba(0,0,0,0.4)', fontSize: '0.7rem', color: '#fff'
-              }}>
-                ...
-              </div>
-            )}
-          </div>
-          <div className=''>
-            <div className="flex items-center justify-center gap-2 min-w-0">
-              <h2 className="break-words min-w-0" style={styles.name}>
+          {uploading && (
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                fontSize: '0.7rem',
+                color: '#fff',
+              }}
+            >
+              Uploading...
+            </div>
+          )}
+        </div>
+
+        {/* Name, username, and friend actions */}
+       
+        <div className="w-full min-w-0">
+        {/* Name and username aligned with the photo's left edge */}
+        <div className="flex w-full justify-center">
+          <div className="w-full pl-[41px]">
+            <div className="flex min-w-0 items-center justify-start gap-2">
+              <h2 className="min-w-0 break-words" style={styles.name}>
                 {profile.fullname}
               </h2>
+
               {onEditClick && (
                 <div className="shrink-0">
                   <Edit onEdit={onEditClick} />
                 </div>
               )}
             </div>
-            <h2 className="flex pl-8 min-w-0" style={styles.username}>@{profile.username}</h2>
 
-            {!isOwnProfile && (
-              <div className="flex justify-center items-center gap-5">
-                <AddFriendButton targetUserId={profile.id} />
+            <h2 className="min-w-0 text-left" style={styles.username}>
+              @{profile.username}
+            </h2>
+          </div>
+        </div>
 
-                <Link to="/message">
-                  <MessageCircle className="text-black" strokeWidth={3} size={24} />
+          {/* Friend button and message icon */}
+          {!isOwnProfile && (
+            <div className="mt-2 flex w-full justify-center">
+              <div className="grid w-[150px] grid-cols-[minmax(0,1fr)_40px] items-center gap-2">
+                <div className="flex min-w-0 justify-start">
+                  <AddFriendButton targetUserId={profile.id} />
+                </div>
+
+                <Link
+                  to="/message"
+                  className="flex h-10 w-10 items-center justify-center"
+                  aria-label={`Message ${profile.fullname}`}
+                >
+                  <MessageCircle
+                    className="text-black"
+                    strokeWidth={3}
+                    size={24}
+                  />
                 </Link>
               </div>
-            )}
-          </div>
-          <div style={styles.actions}></div>
+            </div>
+          )}
         </div>
-      </div>
+        </div>
 
-      {/* FIX 1: both tabs always use border-b-2; only the color changes, so sizes never differ */}
-      <div className="flex flex-row justify-center items-center gap-4 w-[100%] h-10 pr-1">
+      {/* Public and private tabs */}
+      <div className="flex h-10 w-full flex-row items-center justify-center gap-4 pr-1">
         <button
-          className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center border-b-2 ${
-            visibility === 'public' ? 'border-black' : 'border-transparent'
+          className={`flex h-10 flex-row items-center gap-1 border-b-2 px-2 py-2 font-bold ${
+            visibility === 'public'
+              ? 'border-black'
+              : 'border-transparent'
           }`}
           onClick={() => setVisibility('public')}
         >
-          <img src="https://img.icons8.com/?size=100&id=paJ3yfLnNSCK&format=png&color=000000" alt="pub" height={18} width={18} />
+          <img
+            src="https://img.icons8.com/?size=100&id=paJ3yfLnNSCK&format=png&color=000000"
+            alt=""
+            height={18}
+            width={18}
+          />
           Public
         </button>
 
         {isOwnProfile && (
           <button
-            className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center border-b-2 ${
-              visibility === 'private' ? 'border-black' : 'border-transparent'
+            className={`flex h-10 flex-row items-center gap-1 border-b-2 px-2 py-2 font-bold ${
+              visibility === 'private'
+                ? 'border-black'
+                : 'border-transparent'
             }`}
             onClick={() => setVisibility('private')}
           >
-            <img src="https://img.icons8.com/?size=100&id=LnUkDWKbslSu&format=png&color=000000" alt="priv" height={18} width={18} />
+            <img
+              src="https://img.icons8.com/?size=100&id=LnUkDWKbslSu&format=png&color=000000"
+              alt=""
+              height={18}
+              width={18}
+            />
             Private
           </button>
         )}
       </div>
 
-      {/* FIX 2: no inner scrollbar; min height keeps the page scrollable on both tabs */}
-      <div className="flex justify-center w-4/5 min-h-[calc(100vh-200px)]">
-        {(() => {
-          if (visibility === 'public') return <Public userId={profile.id} />
-          if (visibility === 'private' && isOwnProfile) return <Private userId={profile.id} viewerId={user?.id} />
-          return null
-        })()}
+      {/* Profile content */}
+      <div className="flex min-h-[calc(100vh-200px)] w-4/5 justify-center">
+        {visibility === 'public' && <Public userId={profile.id} />}
+
+        {visibility === 'private' && isOwnProfile && (
+          <Private userId={profile.id} viewerId={user?.id} />
+        )}
       </div>
     </div>
   )
@@ -210,11 +292,14 @@ const styles = {
     padding: '1.5rem',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'stretch',
     gap: '1rem',
     width: '280px',
+    boxSizing: 'border-box',
     color: '#fff',
     minHeight: '260px',
   },
+
   avatar: {
     width: '150px',
     height: '120px',
@@ -225,34 +310,23 @@ const styles = {
     justifyContent: 'center',
     fontSize: '2rem',
     fontWeight: '600',
-    color: ' ',
+    color: '#fff',
     flexShrink: 0,
     alignSelf: 'center',
   },
+
   name: {
     margin: 0,
     fontSize: '1.25rem',
     fontWeight: '700',
+    textAlign: 'left',
   },
+
   username: {
     margin: 0,
     fontSize: '0.9rem',
     color: 'black',
-  },
-  actions: {
-    display: 'flex',
-    gap: '0.5rem',
-    alignItems: 'center',
-  },
-  iconBtn: {
-    width: '36px',
-    height: '36px',
-    borderRadius: '50%',
-    border: '1px solid #555',
-    backgroundColor: 'transparent',
-    color: '#fff',
-    cursor: 'pointer',
-    fontSize: '1rem',
+    textAlign: 'left',
   },
 }
 
