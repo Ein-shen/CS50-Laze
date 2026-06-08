@@ -1,47 +1,78 @@
+
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 
 const AddFriendButton = ({ targetUserId }) => {
-  const [status, setStatus] = useState('loading') // loading | none | pending_sent | pending_received | friends
+  const [status, setStatus] = useState('loading')
   const [requestId, setRequestId] = useState(null)
   const [currentUserId, setCurrentUserId] = useState(null)
 
   useEffect(() => {
     const init = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
       if (!user || !targetUserId) return
+
       setCurrentUserId(user.id)
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('friends')
         .select('*')
-        .or(`and(requester_id.eq.${user.id},receiver_id.eq.${targetUserId}),and(requester_id.eq.${targetUserId},receiver_id.eq.${user.id})`)
+        .or(
+          `and(requester_id.eq.${user.id},receiver_id.eq.${targetUserId}),and(requester_id.eq.${targetUserId},receiver_id.eq.${user.id})`
+        )
         .maybeSingle()
+
+      if (error) {
+        console.error('Error fetching friend request:', error.message)
+        setStatus('none')
+        return
+      }
 
       if (!data) {
         setStatus('none')
       } else if (data.status === 'accepted') {
         setStatus('friends')
         setRequestId(data.id)
-      } else if (data.status === 'pending' && data.requester_id === user.id) {
+      } else if (
+        data.status === 'pending' &&
+        data.requester_id === user.id
+      ) {
         setStatus('pending_sent')
         setRequestId(data.id)
-      } else if (data.status === 'pending' && data.receiver_id === user.id) {
+      } else if (
+        data.status === 'pending' &&
+        data.receiver_id === user.id
+      ) {
         setStatus('pending_received')
         setRequestId(data.id)
       }
     }
+
     init()
   }, [targetUserId])
 
   const sendRequest = async () => {
+    if (!currentUserId) return
+
     const { data, error } = await supabase
       .from('friends')
-      .insert({ requester_id: currentUserId, receiver_id: targetUserId, status: 'pending' })
+      .insert({
+        requester_id: currentUserId,
+        receiver_id: targetUserId,
+        status: 'pending',
+      })
       .select()
       .single()
 
-    if (!error && data) {
+    if (error) {
+      console.error('Error sending friend request:', error.message)
+      return
+    }
+
+    if (data) {
       setStatus('pending_sent')
       setRequestId(data.id)
     }
@@ -49,28 +80,53 @@ const AddFriendButton = ({ targetUserId }) => {
 
   const cancelRequest = async () => {
     if (!requestId) return
-    await supabase.from('friends').delete().eq('id', requestId)
+
+    const { error } = await supabase
+      .from('friends')
+      .delete()
+      .eq('id', requestId)
+
+    if (error) {
+      console.error('Error cancelling friend request:', error.message)
+      return
+    }
+
     setStatus('none')
     setRequestId(null)
   }
 
   const acceptRequest = async () => {
     if (!requestId) return
+
     const { error } = await supabase
       .from('friends')
       .update({ status: 'accepted' })
       .eq('id', requestId)
 
-    if (!error) setStatus('friends')
+    if (error) {
+      console.error('Error accepting friend request:', error.message)
+      return
+    }
+
+    setStatus('friends')
   }
 
-  if (status === 'loading' || !targetUserId || targetUserId === currentUserId) return null
+  const buttonClass =
+    'w-full min-h-10 px-3 py-2 border-2 border-black rounded-lg font-bold text-center leading-tight transition-colors'
+
+  if (
+    status === 'loading' ||
+    !targetUserId ||
+    targetUserId === currentUserId
+  ) {
+    return null
+  }
 
   if (status === 'none') {
     return (
       <button
         onClick={sendRequest}
-        className="border-2 border-black rounded-lg px-4 py-1 font-bold hover:bg-gray-100 transition"
+        className={`${buttonClass} bg-[#B8F5CE] hover:bg-[#9BE9B8] text-white`}
       >
         Add Friend
       </button>
@@ -81,7 +137,7 @@ const AddFriendButton = ({ targetUserId }) => {
     return (
       <button
         onClick={cancelRequest}
-        className="border-2 border-black rounded-lg px-4 py-1 font-bold hover:bg-gray-300 transition"
+        className={`${buttonClass} bg-gray-100 hover:bg-gray-200 text-black`}
       >
         Requested
       </button>
@@ -92,7 +148,7 @@ const AddFriendButton = ({ targetUserId }) => {
     return (
       <button
         onClick={acceptRequest}
-        className="border-2 border-black rounded-lg px-4 py-1 font-bold bg-green-200 hover:bg-green-300 transition"
+        className={`${buttonClass} bg-[#B8F5CE] hover:bg-[#9BE9B8] text-white`}
       >
         Accept Request
       </button>
@@ -101,7 +157,9 @@ const AddFriendButton = ({ targetUserId }) => {
 
   if (status === 'friends') {
     return (
-      <span className="border-2 border-black rounded-lg px-4 py-1 font-bold ">
+      <span
+        className={`${buttonClass} flex items-center justify-center bg-transparent text-black`}
+      >
         Friends
       </span>
     )
