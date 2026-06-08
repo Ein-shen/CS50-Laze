@@ -1,75 +1,101 @@
+
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import ProfileCard from './ProfileCard'
 import Popup from '../components/Popup'
 
 const Profile = ({ user }) => {
-    const [profile, setProfile] = useState(null)
-    const [isEditing, setIsEditing] = useState(false)
+  const [profile, setProfile] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
 
-    useEffect(() => {
-        if (!user) return
+  useEffect(() => {
+    if (!user) return
 
-        const fetchProfile = async () => {
-            const cached = localStorage.getItem(`profile_${user.id}`)
-            if (cached) setProfile(JSON.parse(cached))
+    const fetchProfile = async () => {
+      const cached = localStorage.getItem(`profile_${user.id}`)
 
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('id, fullname, username, profiles_image')
-                .eq('id', user.id)
-                .single()
-
-            if (!error && data) {
-                setProfile(data)
-                localStorage.setItem(`profile_${user.id}`, JSON.stringify(data))
-            }
+      if (cached) {
+        try {
+          setProfile(JSON.parse(cached))
+        } catch {
+          localStorage.removeItem(`profile_${user.id}`)
         }
+      }
 
-        fetchProfile()
-    }, [user])
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id, fullname, username, profiles_image')
+        .eq('id', user.id)
+        .single()
 
-    const handleEditComplete = async () => {
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('id, fullname, username, profiles_image')
-            .eq('id', user.id)
-            .single()
-
-        if (!error && data) {
-            setProfile(data)
-            localStorage.setItem(`profile_${user.id}`, JSON.stringify(data))
-        }
-        setIsEditing(false)
+      if (!error && data) {
+        setProfile(data)
+        localStorage.setItem(
+          `profile_${user.id}`,
+          JSON.stringify(data)
+        )
+      } else if (error) {
+        console.error('Error fetching profile:', error.message)
+      }
     }
 
-    const handleImageUpdate = (newImageUrl) => {
-        const updated = { ...profile, profiles_image: newImageUrl }
-        setProfile(updated)
-        localStorage.setItem(`profile_${user.id}`, JSON.stringify(updated))
+    fetchProfile()
+  }, [user])
+
+  const handleEditComplete = async () => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, fullname, username, profiles_image')
+      .eq('id', user.id)
+      .single()
+
+    if (!error && data) {
+      setProfile(data)
+      localStorage.setItem(
+        `profile_${user.id}`,
+        JSON.stringify(data)
+      )
     }
 
-    if (!user || !profile) return null
+    setIsEditing(false)
+  }
 
-    return (
-        <div className="card-theme w-full h-[40%] box-border flex flex-col items-center justify-start">
-            <ProfileCard
-                user={user}
-                profile={profile}
-                onEditClick={() => setIsEditing(true)}
-                isOwnProfile={true}
-                onImageUpdate={handleImageUpdate}
-            />
-            {isEditing && (
-                <Popup
-                    user={user}
-                    profile={profile}
-                    onComplete={handleEditComplete}
-                    onCancel={() => setIsEditing(false)}
-                />
-            )}
-        </div>
+  const handleImageUpdate = (newImageUrl) => {
+    const updated = {
+      ...profile,
+      profiles_image: newImageUrl,
+    }
+
+    setProfile(updated)
+
+    localStorage.setItem(
+      `profile_${user.id}`,
+      JSON.stringify(updated)
     )
+  }
+
+  if (!user || !profile) return null
+
+  return (
+    <div className="card-theme box-border flex h-[40%] w-full flex-col items-center justify-start">
+      <ProfileCard
+        user={user}
+        profile={profile}
+        onEditClick={() => setIsEditing(true)}
+        isOwnProfile={true}
+        onImageUpdate={handleImageUpdate}
+      />
+
+      {isEditing && (
+        <Popup
+          user={user}
+          profile={profile}
+          onComplete={handleEditComplete}
+          onCancel={() => setIsEditing(false)}
+        />
+      )}
+    </div>
+  )
 }
 
 export default Profile
