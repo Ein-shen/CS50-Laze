@@ -71,7 +71,7 @@ export default function Landing() {
           <div className="max-w-6xl mx-auto px-6 pt-6 pb-20 md:pb-28 grid md:grid-cols-2 gap-10 items-start">
             <div className="md:pt-6">
               <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Turn your notes into decks.<br />Turn decks into study nights.
+                Turn your notes into decks.<br />Turn decks into study sessions.
               </h1>
               <p className="text-gray-100 text-base leading-relaxed mb-6 max-w-md">
                 Build multiple-choice decks in minutes, quiz yourself solo, or invite friends
