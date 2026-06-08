@@ -11,7 +11,7 @@ const Sidebar = () => {
             {/* mobile hamburger toggle (sits inside the navbar) */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="md:hidden fixed top-2 left-3 z-[60] p-2 border-2 border-black rounded-lg bg-gray-300 flex items-center"
+                className="md:hidden fixed top-2 left-3 z-[60] p-2 border-x border-black/80 rounded-lg bg-gray-300 flex items-center"
             >
                 <Menu size={24} strokeWidth={3} />
             </button>
