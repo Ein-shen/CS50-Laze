@@ -11,17 +11,35 @@ const Decks = () => {
     const navigate = useNavigate()
     const scrollRef = useRef(null)
 
+    // The logged-in user's id, used to namespace the cache per account
+    const userIdRef = useRef(null)
+
+    const saveCache = (list) => {
+        if (userIdRef.current) {
+            localStorage.setItem(`decks:${userIdRef.current}`, JSON.stringify(list))
+        }
+    }
+
     const fetchDecks = async () => {
-        const cached = localStorage.getItem('decks')
+        // getSession reads the local session, so it's fast and lets us
+        // show the right user's cache immediately
+        const { data: { session } } = await supabase.auth.getSession()
+        const user = session?.user
+        if (!user) return
+        userIdRef.current = user.id
+
+        localStorage.removeItem('decks') // old shared key from before this fix
+
+        const cacheKey = `decks:${user.id}`
+        const cached = localStorage.getItem(cacheKey)
         if (cached && cached !== 'undefined') {
             try {
                 setDecks(JSON.parse(cached))
             } catch {
-                localStorage.removeItem('decks')
+                localStorage.removeItem(cacheKey)
             }
         }
 
-        const { data: { user } } = await supabase.auth.getUser()
         const { data } = await supabase
             .from('decks')
             .select('*')
@@ -41,7 +59,7 @@ const Decks = () => {
             )
 
             setDecks(decksWithCounts)
-            localStorage.setItem('decks', JSON.stringify(decksWithCounts))
+            saveCache(decksWithCounts)
         }
     }
 
@@ -79,9 +97,10 @@ const Decks = () => {
                      Create deck
                 </button>
 
+                {/* justify-start: decks begin at the left, right under the Create deck button */}
                 <div
                     ref={scrollRef}
-                    className="flex flex-wrap justify-center gap-4 overflow-y-auto pb-6 w-full"
+                    className="flex flex-wrap justify-start gap-4 overflow-y-auto pb-6 w-full"
                     style={{ alignContent: 'flex-start' }}
                 >
                     {decks.map((deck) => (
@@ -98,21 +117,21 @@ const Decks = () => {
                                             const updated = prev.map(d =>
                                                 d.id === updatedDeck.id ? { ...d, ...updatedDeck } : d
                                             )
-                                            localStorage.setItem('decks', JSON.stringify(updated))
+                                            saveCache(updated)
                                             return updated
                                         })
                                     }}
                                     onDelete={(deletedId) => {
                                         setDecks(prev => {
                                             const updated = prev.filter(d => d.id !== deletedId)
-                                            localStorage.setItem('decks', JSON.stringify(updated))
+                                            saveCache(updated)
                                             return updated
                                         })
                                     }}
                                 >
                                     <div className="h-24 " />
                                     <div className="px-2 py-3">
-                                        <p className="capitalize font-bold text-md capitalize items-center flex flex-row gap-1">
+                                        <p className="capitalize font-bold text-md items-center flex flex-row gap-1">
                                             <img src="https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000" alt="deck"
                                                   width={24} height={24} />
                                             {deck.deckname}
@@ -147,7 +166,7 @@ const Decks = () => {
                     }
                     setDecks(prev => {
                         const updated = [plainDeck, ...prev]
-                        localStorage.setItem('decks', JSON.stringify(updated))
+                        saveCache(updated)
                         return updated
                     })
                 }} />
