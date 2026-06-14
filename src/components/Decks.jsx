@@ -69,7 +69,7 @@ const Decks = () => {
                 <h1 className="text-2xl font-bold mb-8">Your Deck</h1>
 
                 <button
-                    className="flex items-center font-bold gap-2 border-[3px] border-black px-6 py-2 rounded-md w-fit mb-10"
+                    className="flex items-center font-bold gap-2  border border-black/80  px-6 py-2 rounded-md w-fit mb-10"
                     onClick={() => setShowCreateDeck(true)}>
                     <FolderPlus size={24} /> Create deck
                 </button>
@@ -77,7 +77,7 @@ const Decks = () => {
                 <div ref={scrollRef} className=" flex flex-wrap gap-4  overflow-y-auto pb-6" style={{ alignContent: 'flex-start' }}>
                     {decks.map((deck) => (
                         deck.id ? (
-                            <div key={deck.id} className="border-black border-2 rounded-md  ">
+                            <div key={deck.id} className="border border-black/80 rounded-md  ">
                                 <DeckDropDown
                                     deck={deck}
 
