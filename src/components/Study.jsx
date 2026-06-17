@@ -242,7 +242,7 @@ const Study = () => {
                             key={opt}
                             disabled={selected !== null}
                             onClick={() => handleAnswer(opt)}
-                            className="w-full h-16 border-black border-2 rounded-md px-10 my-2 text-center font-bold text-md"
+                            className="w-full h-16 border border-black/80 rounded-md px-10 my-2 text-center font-bold text-md"
                             style={{
                                 background:
                                 selected && isPicked
