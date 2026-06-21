@@ -5,6 +5,7 @@ import Signout from '../pages/Signout'
 
 const navItems = [
     { label: 'Home', path: '/' },
+    { label: 'Overview', path: '/overview' },
     { label: 'Decks', path: '/decks' },
     { label: 'Profile', path: '/profile' },
 ]
