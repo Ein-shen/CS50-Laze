@@ -329,7 +329,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           </div>
 
           {/* Action bar: stacked on mobile, row on sm+ */}
-          <div className="w-full mt-3 border-black border-2 rounded-xl px-3 sm:px-8 py-3 sm:py-4">
+          <div className="w-full mt-3 border border-black/80 rounded-xl px-3 sm:px-8 py-3 sm:py-4">
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3">
               {choices.length > 0 && (
                 <button
@@ -364,7 +364,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           {cardsList.map((c) => (
             <div
               key={c.id}
-              className="border-black border-2 rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
+              className="border border-black/80 rounded-xl p-3 sm:p-6 bg-gray-300 flex flex-col gap-2 min-w-0"
             >
               <h2 className="text-gray-600 text-lg sm:text-2xl px-1 sm:pl-2 pb-2 sm:pb-4">Front</h2>
 
@@ -376,17 +376,17 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
                 />
               )}
 
-              <p className="font-bold border-b-2 border-black pb-3 sm:pb-5 pt-3 sm:pt-4 px-1 sm:pl-5 text-base sm:text-lg break-words">
+              <p className="font-bold border-b border-black/80 pb-3 sm:pb-5 pt-3 sm:pt-4 px-1 sm:pl-5 text-base sm:text-lg break-words">
                 {c.front}
               </p>
 
               <h2 className="text-gray-600 text-lg sm:text-2xl pt-3 sm:pt-5 px-1 sm:pl-2">Back</h2>
-              <p className="font-bold border-b-2 border-black pb-3 sm:pb-5 pt-2 sm:pt-5 px-1 sm:pl-5 text-base sm:text-lg break-words">
+              <p className="font-bold border-b  border-black/80 pb-3 sm:pb-5 pt-2 sm:pt-5 px-1 sm:pl-5 text-base sm:text-lg break-words">
                 {c.back}
               </p>
 
               {(c.option1 || c.option2 || c.option3) && (
-                <div className="flex flex-col gap-2 pt-2 border-b-2 border-black pb-5 sm:pb-8">
+                <div className="flex flex-col gap-2 pt-2 border-b  border-black/80 pb-5 sm:pb-8">
                   <h2 className="text-gray-600 text-lg sm:text-2xl pt-2 sm:pt-5 px-1 sm:pl-2">Choices</h2>
                   {[c.option1, c.option2, c.option3].filter(Boolean).map((opt, i) => (
                     <span key={i} className="font-bold px-1 sm:pl-5 text-base sm:text-lg break-words">
@@ -408,7 +408,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           ))}
 
           <button
-            className="font-bold border-[3px] border-black px-6 py-2.5 rounded-full w-full sm:w-fit self-center mt-2 text-sm sm:text-base"
+            className="font-bold border border-black/80 px-6 py-2.5 rounded-full w-full sm:w-fit self-center mt-2 text-sm sm:text-base"
             onClick={handleAddNew}
           >
             Add cards
