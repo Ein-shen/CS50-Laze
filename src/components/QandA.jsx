@@ -205,7 +205,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
     <div ref={scrollRef} className="flex flex-col items-center h-auto rounded-xl pt-1 max-w-3xl w-full mx-auto mt-5 px-3 sm:px-0">
       {showForm ? (
         <>
-          <div className="flex flex-col h-auto border-black rounded-xl border-2 pt-1 max-w-3xl w-full mx-auto mt-5">
+          <div className="flex flex-col h-auto border border-black/80 rounded-xl border-2 pt-1 max-w-3xl w-full mx-auto mt-5">
             <button
                 type="button"
                 onClick={() => { setShowForm(false); setEditingId(null) }}
@@ -235,7 +235,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
                           setImageFile(null)
                           setImagePreview(null)
                         }}
-                        className="absolute -top-2 -right-2 border-black border-2 bg-white text-black rounded-full w-6 h-6 flex items-center justify-center"
+                        className="absolute -top-2 -right-2 border border-black/80  bg-white text-black rounded-full w-6 h-6 flex items-center justify-center"
                       >
                         <X size={14} />
                       </button>
@@ -244,7 +244,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
 
                   <div className="relative w-full">
                     <input
-                      className="w-full h-20 sm:h-24 border-2 border-black rounded-2xl sm:rounded-full px-4 sm:px-10 pr-12 sm:pr-16 bg-gray-300 text-sm sm:text-base"
+                      className="w-full h-20 sm:h-24 border border-blac/80 rounded-2xl sm:rounded-full px-4 sm:px-10 pr-12 sm:pr-16 bg-gray-300 text-sm sm:text-base"
                       placeholder="Add Question"
                       name="front"
                       value={formCard.front}
