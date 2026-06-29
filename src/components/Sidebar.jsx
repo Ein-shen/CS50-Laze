@@ -58,7 +58,7 @@ const Sidebar = () => {
                     </Link>
 
                     <Link to="/profile" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full  border-black font-bold text-left px-4 py-2 rounded-lg">
+                        <button className="w-full border border-black/80  font-bold text-left px-4 py-2 rounded-lg">
                             Profile
                         </button>
                     </Link>
