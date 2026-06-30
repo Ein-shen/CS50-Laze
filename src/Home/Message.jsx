@@ -2,33 +2,61 @@ import Return from "../components/Return"
 import React from 'react'
 import { supabase } from "../supabaseClient"
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Search as SearchIcon } from 'lucide-react'
 
 const Message = () => {
-
-  const { deckId } = useParams()
-
   const [friends, setFriends] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  const fetchFriends = async () => {
-
-    const { data, error } = await supabase.from('my_friends').select('*')
-
-    if (error) {
-      console.error('Error fetching friends:', error)
-      setLoading(false)
-      return
-    }
-    setFriends(data)
-    setLoading(false)
-
-  }
-
   useEffect(() => {
-    fetchFriends()
+    let cancelled = false
+
+    const loadFriends = async () => {
+      // 1. get the logged-in user so the cache key is per user
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user
+
+      if (!user) {
+        setFriends([])
+        setLoading(false)
+        return
+      }
+
+      const cacheKey = `friends_${user.id}`
+
+      // 2. show the saved copy instantly (if there is one)
+      const cached = localStorage.getItem(cacheKey)
+      if (cached && cached !== 'undefined') {
+        try {
+          if (!cancelled) {
+            setFriends(JSON.parse(cached))
+            setLoading(false)
+          }
+        } catch {
+          localStorage.removeItem(cacheKey) // corrupted, throw it away
+        }
+      }
+
+      // 3. fetch fresh data, then update the screen AND the saved copy
+      const { data, error } = await supabase.from('my_friends').select('*')
+
+      if (cancelled) return
+
+      if (error) {
+        console.error('Error fetching friends:', error)
+        setLoading(false)
+        return
+      }
+
+      setFriends(data || [])
+      localStorage.setItem(cacheKey, JSON.stringify(data || []))
+      setLoading(false)
+    }
+
+    loadFriends()
+    return () => { cancelled = true }
   }, [])
 
   return (
@@ -36,17 +64,18 @@ const Message = () => {
       <div className="w-full h-screen flex flex-col gap-6 sm:gap-12">
         <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
-          <h1 className="text-base sm:text-lg  flex flex-row gap-2  justify-center font-bold flex-1 text-center pr-10 sm:pr-16">
-            <img src="https://img.icons8.com/?size=100&id=jOjH1Mt48Fp1&format=png&color=000000" 
-                     alt=" messenger"
-                     width={24}
-                     height={24} />
-
+          <h1 className="text-base sm:text-lg flex flex-row gap-2 justify-center font-bold flex-1 text-center pr-10 sm:pr-16">
+            <img
+              src="https://img.icons8.com/?size=100&id=jOjH1Mt48Fp1&format=png&color=000000"
+              alt="messenger"
+              width={24}
+              height={24}
+            />
             Message
           </h1>
         </div>
 
-        <div className="  card-theme rounded-md w-full flex-1 px-4 sm:px-10 py-6 sm:py-10 flex flex-col items-center gap-2">
+        <div className="card-theme rounded-md w-full flex-1 px-4 sm:px-10 py-6 sm:py-10 flex flex-col items-center gap-2">
           <div className="relative w-full max-w-[200px]">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
             <input
@@ -64,11 +93,12 @@ const Message = () => {
             {friends.map((friend) => (
               <div
                 key={friend.friendship_id}
-                className="div-theme  card-hover-theme rounded-md p-3 sm:p-4 w-full sm:w-2/3 flex items-center gap-3 shadow-sm hover:shadow-md transition cursor-pointer"
-                onClick={() => {
-                  console.log('name being passed:', friend.fullname)
-                  navigate(`/chat/${friend.friendship_id}`, { state: { name: friend.fullname, imageUrl: friend.profiles_image } })
-                }}
+                className="div-theme card-hover-theme rounded-md p-3 sm:p-4 w-full sm:w-2/3 flex items-center gap-3 shadow-sm hover:shadow-md transition cursor-pointer"
+                onClick={() =>
+                  navigate(`/chat/${friend.friendship_id}`, {
+                    state: { name: friend.fullname, imageUrl: friend.profiles_image },
+                  })
+                }
               >
                 {friend.profiles_image && (
                   <img
@@ -81,7 +111,6 @@ const Message = () => {
                 <h2 className="font-bold text-l truncate">{friend.fullname}</h2>
               </div>
             ))}
-
           </div>
         </div>
       </div>
