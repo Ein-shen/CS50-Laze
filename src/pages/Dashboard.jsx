@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
-import Signout from "../pages/Signout"
 import Upperbar from "../components/Upperbar"
 import Popup from "../components/Popup"
 import { supabase } from "../supabaseClient"
+import { Navbar } from '../components/Navbar'
 
 const Dashboard = ({ session }) => {
   const [hasProfile, setHasProfile] = useState(true)
@@ -40,11 +40,11 @@ const Dashboard = ({ session }) => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-300 overflow-hidden">
-
+    <div className="h-screen bg-gray-300 overflow-hidden pt-14">
+      <Navbar />
       <Sidebar />
 
-      <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto">
+      <div className="md:ml-64 h-full flex flex-col overflow-y-auto">
         <Upperbar />
         <Outlet />
       </div>
@@ -60,7 +60,6 @@ const Dashboard = ({ session }) => {
           onCancel={() => setHasProfile(true)}
         />
       )}
-
     </div>
   )
 }
