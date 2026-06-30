@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { supabase } from "../supabaseClient"
 import { useNavigate } from "react-router-dom"
@@ -7,45 +6,55 @@ const Public = ({ userId }) => {
   const [decks, setDecks] = useState([])
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
-  const { deckId } = useParams()
-
-  const fetchDecks = async () => {
-    const cacheKey = `public_decks_${userId}`
-    const cached = localStorage.getItem(cacheKey)
-
-    if (cached && cached !== 'undefined') {
-      try {
-        setDecks(JSON.parse(cached))
-        setLoading(false)
-      } catch {
-        localStorage.removeItem(cacheKey)
-      }
-    }
-
-    const { data, error } = await supabase
-      .from('decks')
-      .select('*')
-      .eq('is_public', true)
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false })
-
-    console.log('data:', data, 'error:', error)
-
-    if (error) {
-      console.error('Error fetching public decks:', error)
-      setLoading(false)
-      return
-    }
-
-    if (data) {
-      setDecks(data)
-      localStorage.setItem(cacheKey, JSON.stringify(data))
-    }
-    setLoading(false)
-  }
 
   useEffect(() => {
-    if (userId) fetchDecks()               // wait until userId is available
+    if (!userId) return // wait until userId is available
+
+    let cancelled = false
+
+    const fetchDecks = async () => {
+      // clear the previous user's decks right away
+      setDecks([])
+      setLoading(true)
+
+      const cacheKey = `public_decks_${userId}`
+      const cached = localStorage.getItem(cacheKey)
+
+      if (cached && cached !== 'undefined') {
+        try {
+          if (!cancelled) {
+            setDecks(JSON.parse(cached))
+            setLoading(false)
+          }
+        } catch {
+          localStorage.removeItem(cacheKey)
+        }
+      }
+
+      const { data, error } = await supabase
+        .from('decks')
+        .select('*')
+        .eq('is_public', true)
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+
+      if (cancelled) return // userId changed while fetching, ignore this result
+
+      if (error) {
+        console.error('Error fetching public decks:', error)
+        setLoading(false)
+        return
+      }
+
+      if (data) {
+        setDecks(data)
+        localStorage.setItem(cacheKey, JSON.stringify(data))
+      }
+      setLoading(false)
+    }
+
+    fetchDecks()
+    return () => { cancelled = true }
   }, [userId])
 
   if (loading) {
