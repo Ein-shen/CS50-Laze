@@ -1,9 +1,17 @@
+ 
 import { useEffect, useRef, useState } from 'react'
 import { MoreHorizontal } from 'lucide-react'
-import Createdeck from "../components/Createdeck"
+import Createdeck from '../components/Createdeck'
 import { supabase } from '../supabaseClient'
 
-const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
+const DeckDropDown = ({
+    deck,
+    onNavigate,
+    onUpdate,
+    onDelete,
+    children,
+    className = '',
+}) => {
     const [open, setOpen] = useState(false)
     const menuRef = useRef(null)
     const [isEditing, setIsEditing] = useState(false)
@@ -15,14 +23,15 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                 setOpen(false)
             }
         }
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => document.removeEventListener("mousedown", handleClickOutside)
+
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
     }, [])
 
-
-   //Deleting an entire deck need to delete the others look below
-   const handleDelete = async () => {
-        // delete dependent quiz_attempts first
+    const handleDelete = async () => {
         const { error: attemptsError } = await supabase
             .from('quiz_attempts')
             .delete()
@@ -33,7 +42,6 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
             return
         }
 
-        // delete dependent cards
         const { error: cardsError } = await supabase
             .from('cards')
             .delete()
@@ -44,7 +52,6 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
             return
         }
 
-        // finally delete the deck itself
         const { error } = await supabase
             .from('decks')
             .delete()
@@ -58,124 +65,123 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
         onDelete?.(deck.id)
     }
 
-
     const handlePublic = async () => {
-
-
         const { data, error } = await supabase
-        .from('decks')
-        .update({is_public: !deck.is_public})
-        .eq('id', deck.id)
-        .select()
-        .single()
+            .from('decks')
+            .update({ is_public: !deck.is_public })
+            .eq('id', deck.id)
+            .select()
+            .single()
 
-    if (error) {
-        console.error('Error updating deck visibility:', error)
-        return
-
+        if (error) {
+            console.error('Error updating deck visibility:', error)
+            return
         }
+
         onUpdate?.(data)
         setOpen(false)
     }
 
-
     const handleCopyLink = async () => {
-
         const link = `${window.location.origin}/share/${deck.id}`
+
         try {
             await navigator.clipboard.writeText(link)
-            // optional: show a toast/alert
             alert('Link copied!')
         } catch (err) {
             console.error('Failed to copy link:', err)
         }
+
         setOpen(false)
-    }
-
-
-    const handleUpdate = (updatedDeck) => {
-        setDecks(prevDecks =>
-            prevDecks.map(d => d.id === updatedDeck.id ? updatedDeck : d)
-        )
     }
 
     return (
         <div
-            className="rounded-xl overflow-hidden cursor-pointer hover:shadow-md  pl-3 pr-3 pt-3"
-            style={{ width: '220px' }}
+            className={`relative box-border w-full min-w-0 cursor-pointer rounded-md ${className}`}
             onClick={onNavigate}
         >
-            <div className="relative flex justify-end" ref={menuRef}>
+            <div
+                className="absolute right-2 top-2 z-20"
+                ref={menuRef}
+            >
                 <button
                     onClick={(e) => {
                         e.stopPropagation()
                         setOpen((o) => !o)
                     }}
+                    aria-label="Deck options"
                     aria-haspopup="true"
                     aria-expanded={open}
-                    
-                    className="flex justify-end p-1  cursor-pointer"
+                    className="flex cursor-pointer items-center justify-center rounded-md p-1"
                 >
-                    <MoreHorizontal />
+                    <MoreHorizontal size={20} />
                 </button>
 
                 {open && (
                     <div
                         role="menu"
-                       className=" border-black/80  absolute right-0 top-6 w-36 rounded-lg border border-black bg-gray-300 shadow-md z-10 overflow-hidden"
+                        className="absolute right-0 top-8 z-30 w-36 overflow-hidden rounded-lg border border-black bg-gray-300 shadow-md"
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             role="menuitem"
-                            onClick={(e) => {
-                                e.stopPropagation()
+                            onClick={() => {
                                 setIsEditing(true)
                                 setOpen(false)
                             }}
-                            className=" border-b nav-theme card-hover-theme  items-center gap-1 flex flex-row border-black/80  text-xs  font-bold block w-full text-left px-3 py-2 text-sm  "
+                            className="nav-theme card-hover-theme flex w-full items-center gap-1 border-b border-black/80 px-3 py-2 text-left text-xs font-bold"
                         >
-                            <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={16} width={16}/>
+                            <img
+                                src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000"
+                                alt="edit"
+                                height={16}
+                                width={16}
+                            />
                             Edit
                         </button>
 
                         <button
                             role="menuitem"
-                            onClick={(e) => {
-                                e.stopPropagation()
+                            onClick={() => {
                                 handleDelete()
                                 setOpen(false)
                             }}
-                       className="border-b border-black/80  nav-theme card-hover-theme  flex flex-row items-center gap-1  text-xs font-bold block w-full text-left px-3 py-2 text-sm  "
+                            className="nav-theme card-hover-theme flex w-full items-center gap-1 border-b border-black/80 px-3 py-2 text-left text-xs font-bold"
                         >
-                            <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={16} width={16}/>
-                  
+                            <img
+                                src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000"
+                                alt="delete"
+                                height={16}
+                                width={16}
+                            />
                             Delete
                         </button>
 
-                        <button role="menuitem"
-                            onClick={(e) => { e.stopPropagation()
-                            setOpen(false)
-                            handlePublic()
-                        }}
-                            className="border-b  nav-theme card-hover-theme  flex flex-row gap-1 items-center border-black/80 text-xs  font-bold block w-full text-left px-3 py-2 text-sm  "
-                            >
-                                <img 
-                                    src="https://img.icons8.com/?size=100&id=w_qRMJOKoZGs&format=png&color=000000" 
-                                    alt="public"
-                                    height={16}
-                                    width={16} />
-
+                        <button
+                            role="menuitem"
+                            onClick={handlePublic}
+                            className="nav-theme card-hover-theme flex w-full items-center gap-1 border-b border-black/80 px-3 py-2 text-left text-xs font-bold"
+                        >
+                            <img
+                                src="https://img.icons8.com/?size=100&id=w_qRMJOKoZGs&format=png&color=000000"
+                                alt="public"
+                                height={16}
+                                width={16}
+                            />
                             {deck.is_public ? 'Make Private' : 'Make Public'}
-                            </button>
+                        </button>
 
-                        <button role="menuitem"
-                            onClick={(e) => {
-                            e.stopPropagation()
-                            setOpen(false)
-                            handleCopyLink()
-                        }}
-                            className=" flex flex-row gap-1  nav-theme card-hover-theme  items-center rounded-b-md font-bold block text-xs  w-full text-left px-3 py-2  "
-                            >
-                                <img src="https://img.icons8.com/?size=100&id=CYKLk4DosdHW&format=png&color=000000" alt="link"  height={16} width={16}/>
+                        <button
+                            role="menuitem"
+                            onClick={handleCopyLink}
+                            className="nav-theme card-hover-theme flex w-full items-center gap-1 px-3 py-2 text-left text-xs font-bold"
+                        >
+                            <img
+                                src="https://img.icons8.com/?size=100&id=CYKLk4DosdHW&format=png&color=000000"
+                                alt="link"
+                                height={16}
+                                width={16}
+                            />
                             Copy link
                         </button>
                     </div>
@@ -200,3 +206,4 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
 }
 
 export default DeckDropDown
+ 
