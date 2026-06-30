@@ -1,10 +1,10 @@
- import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Return from "../components/Return"
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import QandA from "../components/QandA"
 
-const Cards = ({children}) => {
+const Cards = () => {
   const { deckId } = useParams()
   const [deck, setDeck] = useState(null)
   const navigate = useNavigate()
@@ -12,91 +12,121 @@ const Cards = ({children}) => {
   const [cards, setCards] = useState([])
   const [addNewTrigger, setAddNewTrigger] = useState(0)
 
-
-  // ---- fetch deck info ----
+  // ---- fetch deck info (local first, then refresh) ----
   useEffect(() => {
     if (!deckId) return
 
-    const fetchDeck = async () => {
-      const cached = localStorage.getItem(`decks_${deckId}`)
-      if (cached) {
-        setDeck(JSON.parse(cached))
-        return
-      }
+    let cancelled = false
+    const cacheKey = `decks_${deckId}`
 
+    // reset so a previous deck's name never flashes
+    setDeck(null)
+
+    const cached = localStorage.getItem(cacheKey)
+    if (cached && cached !== 'undefined') {
+      try {
+        setDeck(JSON.parse(cached))
+      } catch {
+        localStorage.removeItem(cacheKey)
+      }
+    }
+
+    const fetchDeck = async () => {
       const { data, error } = await supabase
         .from('decks')
         .select('deckname')
         .eq('id', deckId)
         .single()
 
+      if (cancelled) return
+
       if (!error && data) {
         setDeck(data)
-        localStorage.setItem(`decks_${deckId}`, JSON.stringify(data))
+        localStorage.setItem(cacheKey, JSON.stringify(data))
       }
     }
 
     fetchDeck()
+    return () => { cancelled = true }
   }, [deckId])
 
-  // ---- fetch cards (standalone function, reusable) ----
+  // ---- fetch cards (standalone so QandA can call it via onComplete) ----
   const fetchCards = async () => {
     const { data, error } = await supabase
       .from('cards')
-      .select('*')
+      .select('id, front, back, option1, option2, option3, create_at, front_image_url')
       .eq('deck_id', deckId)
+      .order('create_at', { ascending: false })
 
-    if (!error && data) setCards(data)
-    else if (error) console.error("Error fetching cards:", error)
+    if (!error && data) {
+      setCards(data)
+      localStorage.setItem(`cards_${deckId}`, JSON.stringify(data))
+    } else if (error) {
+      console.error("Error fetching cards:", error)
+    }
   }
 
-  // ---- run fetchCards on load ----
+  // ---- load cached cards instantly, then fetch fresh ----
   useEffect(() => {
     if (!deckId) return
+
+    setCards([])
+
+    const cacheKey = `cards_${deckId}`
+    const cached = localStorage.getItem(cacheKey)
+    if (cached && cached !== 'undefined') {
+      try {
+        setCards(JSON.parse(cached))
+      } catch {
+        localStorage.removeItem(cacheKey)
+      }
+    }
+
     fetchCards()
   }, [deckId])
 
   return (
     <>
-      <div className="flex px-10 py-10 w-full h-[200px] ">
-        <div className="flex flex-col h-full">
-          <div className="flex items-center gap-4">
-            <Return to="/decks" />
-            <h1 className="pl-3 font-bold capitalize text-xl">{deck?.deckname} </h1>
-          </div>
-          <div className="flex flex-row gap-2 pl-24 pt-10 mt-auto mb-[-12px]">
+      {/* Header */}
+      <div className="w-full px-4 py-6 sm:px-10 sm:py-10">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <Return to="/decks" />
+          <h1 className="min-w-0 flex-1 break-words text-center font-bold capitalize text-lg sm:flex-none sm:pl-3 sm:text-left sm:text-xl">
+            {deck?.deckname}
+          </h1>
+        </div>
 
-            <button className="  card-hover-theme card-theme text-xs flex items-center font-bold gap-2  px-6 py-2 rounded-lg w-fit"
-              onClick={() => navigate(`/study/${deckId}`)}
-              disabled={cards.length === 0}
-            >
-              <img 
-                src="https://img.icons8.com/?size=100&id=MmkqIRv7P6Xy&format=png&color=000000"
-                alt="study"
-                width={24}
-                height={24}  />
-              Start study
-            </button>
+        <div className="mt-6 flex flex-wrap gap-2 sm:mt-10 sm:pl-24">
+          <button
+            className="card-hover-theme card-theme flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold sm:px-6  "
+            onClick={() => navigate(`/study/${deckId}`)}
+            disabled={cards.length === 0}
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=MmkqIRv7P6Xy&format=png&color=000000"
+              alt="study"
+              width={24}
+              height={24}
+            />
+            Start study
+          </button>
 
-
-            <button className=" card-hover-theme text-xs card-theme flex items-center font-bold gap-2 px-6 py-2 rounded-lg w-fit" // The upper Add Card button that exist
-              onClick={() => setAddNewTrigger((n) => n + 1)}
-            >
-              <img 
-                src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000" 
-                alt="add"
-                width={24}
-                height={24} 
-
-                 />
-              Add cards
-            </button>
-
-          </div>
+          <button
+            className="card-hover-theme card-theme flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold sm:px-6"
+            onClick={() => setAddNewTrigger((n) => n + 1)}
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000"
+              alt="add"
+              width={24}
+              height={24}
+            />
+            Add cards
+          </button>
         </div>
       </div>
 
-      <div className="h-[calc(100vh-200px)]">
+      <div>
         <QandA
           deckId={deckId}
           showForm={showForm}
