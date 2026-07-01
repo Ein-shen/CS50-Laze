@@ -12,59 +12,91 @@ const Decks = () => {
     const scrollRef = useRef(null)
     const userIdRef = useRef(null)
 
-    const saveCache = (list, userId) => {
-        if (userId) {
-            localStorage.setItem(`decks:${userId}`, JSON.stringify(list))
+    // Save decks locally for the current user.
+    const saveCache = (list, userId = userIdRef.current) => {
+        if (!userId) return
+
+        try {
+            localStorage.setItem(
+                `decks:${userId}`,
+                JSON.stringify(list)
+            )
+        } catch (error) {
+            console.error('Error saving decks locally:', error)
         }
     }
 
     const fetchDecks = async () => {
-        const {
-            data: { user },
-        } = await supabase.auth.getUser()
+        try {
+            const {
+                data: { user },
+                error: authError,
+            } = await supabase.auth.getUser()
 
-        if (!user) return
+            if (authError) throw authError
 
-        userIdRef.current = user.id
-
-        const cacheKey = `decks:${user.id}`
-        localStorage.removeItem('decks')
-
-        const cached = localStorage.getItem(cacheKey)
-
-        if (cached && cached !== 'undefined') {
-            try {
-                setDecks(JSON.parse(cached))
-            } catch {
-                localStorage.removeItem(cacheKey)
+            if (!user) {
+                userIdRef.current = null
+                setDecks([])
+                return
             }
-        }
 
-        const { data, error } = await supabase
-            .from('decks')
-            .select('*')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
+            userIdRef.current = user.id
 
-        if (error) {
-            console.error('Error fetching decks:', error)
-            return
-        }
+            const cacheKey = `decks:${user.id}`
+            const cached = localStorage.getItem(cacheKey)
 
-        if (data) {
+            // Show cached decks immediately while fetching fresh data.
+            if (cached && cached !== 'undefined') {
+                try {
+                    const parsed = JSON.parse(cached)
+
+                    if (Array.isArray(parsed)) {
+                        setDecks(parsed)
+                    }
+                } catch (error) {
+                    console.error('Invalid local deck cache:', error)
+                    localStorage.removeItem(cacheKey)
+                }
+            }
+
+            // Fetch the permanent deck records from Supabase.
+            const { data, error } = await supabase
+                .from('decks')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+
+            if (error) throw error
+
             const decksWithCounts = await Promise.all(
-                data.map(async (deck) => {
-                    const { count } = await supabase
+                (data ?? []).map(async (deck) => {
+                    const { count, error: countError } = await supabase
                         .from('cards')
-                        .select('*', { count: 'exact', head: true })
+                        .select('*', {
+                            count: 'exact',
+                            head: true,
+                        })
                         .eq('deck_id', deck.id)
 
-                    return { ...deck, cardCount: count ?? 0 }
+                    if (countError) {
+                        console.error(
+                            `Error fetching card count for deck ${deck.id}:`,
+                            countError
+                        )
+                    }
+
+                    return {
+                        ...deck,
+                        cardCount: count ?? 0,
+                    }
                 })
             )
 
             setDecks(decksWithCounts)
             saveCache(decksWithCounts, user.id)
+        } catch (error) {
+            console.error('Error fetching decks:', error)
         }
     }
 
@@ -72,6 +104,7 @@ const Decks = () => {
         fetchDecks()
     }, [])
 
+    // Restore the previous scroll position.
     useEffect(() => {
         if (decks.length === 0) return
 
@@ -82,6 +115,63 @@ const Decks = () => {
             localStorage.removeItem('decksScroll')
         }
     }, [decks])
+
+    // Handle a newly created deck.
+    const handleDeckCreated = async (newDeck) => {
+        setShowCreateDeck(false)
+
+        if (!newDeck?.id) {
+            console.error(
+                'Createdeck did not return a valid deck:',
+                newDeck
+            )
+
+            // Reload from Supabase in case the insert succeeded.
+            await fetchDecks()
+            return
+        }
+
+        const plainDeck = {
+            ...newDeck,
+            cardCount: newDeck.cardCount ?? 0,
+        }
+
+        setDecks((prev) => {
+            const updated = [
+                plainDeck,
+                ...prev.filter((deck) => deck.id !== plainDeck.id),
+            ]
+
+            saveCache(updated)
+            return updated
+        })
+    }
+
+    // Handle a deck update.
+    const handleDeckUpdated = (updatedDeck) => {
+        setDecks((prev) => {
+            const updated = prev.map((deck) =>
+                deck.id === updatedDeck.id
+                    ? { ...deck, ...updatedDeck }
+                    : deck
+            )
+
+            saveCache(updated)
+            return updated
+        })
+    }
+
+    // Handle a deck deletion.
+    const handleDeckDeleted = (deletedId) => {
+        setDecks((prev) => {
+            const updated = prev.filter(
+                (deck) => deck.id !== deletedId
+            )
+
+            saveCache(updated)
+            return updated
+        })
+    }
 
     return (
         <div className="flex h-screen w-full min-w-0 flex-col items-center overflow-hidden">
@@ -106,7 +196,7 @@ const Decks = () => {
 
                 <div
                     ref={scrollRef}
-                    className="flex w-full flex-1 min-h-0 flex-col items-center gap-3 overflow-y-auto pb-6 md:flex-row md:flex-wrap md:items-start md:justify-start md:gap-4"
+                    className="flex min-h-0 w-full flex-1 flex-col items-center gap-3 overflow-y-auto pb-6 md:flex-row md:flex-wrap md:items-start md:justify-start md:gap-4"
                     style={{ alignContent: 'flex-start' }}
                 >
                     {decks.map((deck) =>
@@ -121,35 +211,21 @@ const Decks = () => {
                                     onNavigate={() => {
                                         localStorage.setItem(
                                             'decksScroll',
-                                            String(scrollRef.current?.scrollTop || 0)
+                                            String(
+                                                scrollRef.current?.scrollTop || 0
+                                            )
                                         )
+
                                         navigate(`/cards/${deck.id}`)
                                     }}
-                                    onUpdate={(updatedDeck) => {
-                                        setDecks((prev) => {
-                                            const updated = prev.map((d) =>
-                                                d.id === updatedDeck.id
-                                                    ? { ...d, ...updatedDeck }
-                                                    : d
-                                            )
-                                            saveCache(updated, userIdRef.current)
-                                            return updated
-                                        })
-                                    }}
-                                    onDelete={(deletedId) => {
-                                        setDecks((prev) => {
-                                            const updated = prev.filter(
-                                                (d) => d.id !== deletedId
-                                            )
-                                            saveCache(updated, userIdRef.current)
-                                            return updated
-                                        })
-                                    }}
+                                    onUpdate={handleDeckUpdated}
+                                    onDelete={handleDeckDeleted}
                                 >
                                     <div className="flex h-[72px] w-full min-w-0 items-end px-2 pb-2 md:h-32">
-                                        <div className="flex w-full min-w-0 items-end py-2 justify-between gap-2">
+                                        <div className="flex w-full min-w-0 items-end justify-between gap-2 py-2">
+
                                             {/* Deck name */}
-                                            <p className="flex min-w-0 items-center  gap-1 text-sm font-bold capitalize md:text-md">
+                                            <p className="flex min-w-0 items-center gap-1 text-sm font-bold capitalize md:text-md">
                                                 <img
                                                     src="https://img.icons8.com/?size=100&id=Mz7SNHv9HVjx&format=png&color=000000"
                                                     alt="deck"
@@ -165,7 +241,7 @@ const Decks = () => {
 
                                             {/* Card count */}
                                             <p className="flex shrink-0 items-center justify-end gap-1 text-right text-xs text-gray-500 md:text-sm">
-                                                {deck.cardCount}
+                                                {deck.cardCount ?? 0}
 
                                                 <img
                                                     src="https://img.icons8.com/?size=100&id=gQhB1Tfi2cG2&format=png&color=000000"
@@ -186,23 +262,7 @@ const Decks = () => {
 
             {showCreateDeck && (
                 <Createdeck
-                    onComplete={(newDeck) => {
-                        setShowCreateDeck(false)
-
-                        const plainDeck = {
-                            id: newDeck.id,
-                            deckname: newDeck.deckname,
-                            user_id: newDeck.user_id,
-                            created_at: newDeck.created_at,
-                            cardCount: 0,
-                        }
-
-                        setDecks((prev) => {
-                            const updated = [plainDeck, ...prev]
-                            saveCache(updated, userIdRef.current)
-                            return updated
-                        })
-                    }}
+                    onComplete={handleDeckCreated}
                 />
             )}
         </div>
