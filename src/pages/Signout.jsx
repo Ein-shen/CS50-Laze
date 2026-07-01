@@ -12,7 +12,7 @@ const Signout = () => {
   return (
     <button
         onClick={handleSignOut}
-        className="text-center w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
+        className="text-center w-full border border-black/80 font-bold text-left px-4 py-2 rounded-lg">
         Sign Out
     </button>
   )
