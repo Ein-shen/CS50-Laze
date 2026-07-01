@@ -141,8 +141,16 @@ export function SignupForm() {
 }
 
 const Signup = () => (
-  <div className="min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
-    <div className="card-theme p-8 rounded-xl shadow-md w-full max-w-md">
+  <div className="relative min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
+    {/* background image + dark overlay */}
+    <div
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/bg.png')" }}
+    >
+      <div className="absolute inset-0 bg-black/40" />
+    </div>
+
+    <div className="relative card-theme p-8 rounded-xl shadow-md w-full max-w-md">
       <div className="flex justify-center mb-8">
         <p className="font-bold flex items-center text-2xl">
           Welcome to&nbsp;L
