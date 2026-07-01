@@ -24,19 +24,34 @@ const Ai = ({ onNavigate }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    let cancelled = false
+
     const fetchRecentAttempts = async () => {
-      // show cached data instantly
-      const cached = localStorage.getItem('recent_attempts')
-      if (cached && cached !== 'undefined') {
-        try {
-          setRecentAttempts(getUniqueRecent(JSON.parse(cached)))
-        } catch {
-          localStorage.removeItem('recent_attempts')
-        }
+      // old global cache key leaked between accounts, so remove it
+      localStorage.removeItem('recent_attempts')
+
+      // getSession reads the local session, so it's instant (no network call)
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user
+
+      if (!user) {
+        setRecentAttempts([])
+        return
       }
 
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      // cache is now per user
+      const cacheKey = `recent_attempts_${user.id}`
+      const cached = localStorage.getItem(cacheKey)
+
+      if (cached && cached !== 'undefined') {
+        try {
+          if (!cancelled) setRecentAttempts(getUniqueRecent(JSON.parse(cached)))
+        } catch {
+          localStorage.removeItem(cacheKey)
+        }
+      } else {
+        setRecentAttempts([])
+      }
 
       // then fetch fresh data
       const { data, error } = await supabase
@@ -51,14 +66,15 @@ const Ai = ({ onNavigate }) => {
         return
       }
 
-      if (data) {
+      if (data && !cancelled) {
         const unique = getUniqueRecent(data)
         setRecentAttempts(unique)
-        localStorage.setItem('recent_attempts', JSON.stringify(unique))
+        localStorage.setItem(cacheKey, JSON.stringify(unique))
       }
     }
 
     fetchRecentAttempts()
+    return () => { cancelled = true }
   }, [])
 
   const handleClick = (deckId) => {
