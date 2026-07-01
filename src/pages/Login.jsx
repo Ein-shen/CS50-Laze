@@ -37,18 +37,26 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
-      <div className="card-theme p-8 rounded-xl shadow-md w-full max-w-md">
+    <div className="relative min-h-screen flex items-center justify-center div-theme overflow-y-auto py-8">
+      {/* background image + dark overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/bg.png')" }}
+      >
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      <div className="relative card-theme p-8 rounded-xl shadow-md w-full max-w-md">
 
         <div className="flex flex-col items-center gap-2 mb-10">
-          
-          <p className="font-bold flex flex-row items-center text-2xl">Welcome to 
-             L <img src="/mortarboard.png" alt="Laze logo" className="w-8 h-8" />zeu</p>
+          <p className="font-bold flex flex-row items-center text-2xl">
+            Welcome to L
+            <img src="/mortarboard.png" alt="Laze logo" className="w-8 h-8" />
+            ze
+          </p>
         </div>
-        
-         <h1 className="text-md font-bold mb-6 text-center">Login now</h1>
 
-       
+        <h1 className="text-md font-bold mb-6 text-center">Login now</h1>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
@@ -90,9 +98,9 @@ const Login = () => {
 
         <button
           onClick={handleGoogle}
-          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 card-hover-theme  card-theme"
+          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 card-hover-theme card-theme"
         >
-          <img src="https://www.google.com/favicon.ico" className="w-5 h-5 " />
+          <img src="https://www.google.com/favicon.ico" className="w-5 h-5" />
           Continue with Google
         </button>
 
