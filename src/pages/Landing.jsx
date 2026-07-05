@@ -55,7 +55,7 @@ export default function Landing() {
               <div className="flex items-center font-bold text-2xl text-white">
                 <span>L</span>
                 <img src="/mortarboard.png" alt="" className="w-8 h-8" />
-                <span>ze</span>
+                <span>zeu</span>
               </div>
 
               <a
