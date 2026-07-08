@@ -170,7 +170,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
               <button
                   className={`h-10 py-2 px-2 font-bold ${
-                    visibility === 'public' ? 'border-b-4 border-black' : 'border-2 border-transparent'
+                    visibility === 'public' ? 'border-b-2 border-black' : 'border-2 border-transparent'
                   }`}
 
                     onClick={() =>
@@ -185,7 +185,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
                   <button
                     className={`h-10 py-2 px-2 font-bold ${
-                      visibility === 'private' ? 'border-b-4 border-black' : 'border-2 border-transparent'
+                      visibility === 'private' ? 'border-b-2 border-black' : 'border-2 border-transparent'
                     }`}
                     onClick={() => setVisibility('private')}
                   >
