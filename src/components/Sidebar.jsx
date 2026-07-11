@@ -8,41 +8,28 @@ const Sidebar = () => {
 
     return (
         <>
-            {/* mobile hamburger toggle */}
-            <div className='pt-10'>
-                <button
-                    onClick={() => setIsOpen(true)}
-                    className="md:hidden fixed top-4 left-4 z-30 p-2 border-2 border-black rounded-lg bg-gray-300  flex items-start"
-                >
-                    <Menu size={24} strokeWidth={3} />
-                </button>
+            {/* mobile hamburger toggle (sits inside the navbar) */}
+            <button
+                onClick={() => setIsOpen(true)}
+                className="md:hidden fixed top-2 left-3 z-[60] p-2 border-2 border-black rounded-lg bg-gray-300 flex items-center"
+            >
+                <Menu size={24} strokeWidth={3} />
+            </button>
 
-            </div>
-
-            {/* mobile overlay backdrop */}
+            {/* mobile overlay backdrop (starts below the navbar) */}
             {isOpen && (
                 <div
                     onClick={() => setIsOpen(false)}
-                    className="md:hidden fixed inset-0 bg-black/40 z-30"
+                    className="md:hidden fixed inset-0 top-14 bg-black/40 z-30"
                 />
             )}
 
             {/* sidebar */}
             <div
-                className={`flex flex-col h-screen w-64 text-black p-6 fixed top-0 left-0 border-x-2 border-black z-40 bg-gray-300 transition-transform duration-200 
-                ${isOpen ? 'translate-x-0 ' : '-translate-x-full '} md:translate-x-0`}
+                className={`flex flex-col w-64 text-black p-6 fixed top-14 bottom-0 left-0 border-x-2 border-black z-40 bg-gray-300 transition-transform duration-200 
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
             >
-                <div className="relative flex items-center justify-center mb-8">
-                    <h1 className="text-center font-bold text-2xl">
-                        L<img src="/mortarboard.png" className="w-6 h-7 inline pb-1" />zeu
-                    </h1>
-                    <button
-                        onClick={() => setIsOpen(false)}
-                        className="md:hidden absolute right-0 p-1"
-                    >
-                        <X size={22} strokeWidth={3} />
-                    </button>
-                </div>
+                
 
                 <div className="flex flex-col gap-3">
                     <Link to="/" className="w-full" onClick={() => setIsOpen(false)}>
@@ -58,7 +45,7 @@ const Sidebar = () => {
                     </Link>
 
                     <Link to="/profile" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border border-black/80  font-bold text-left px-4 py-2 rounded-lg">
+                        <button className="w-full border border-black/80 font-bold text-left px-4 py-2 rounded-lg">
                             Profile
                         </button>
                     </Link>
