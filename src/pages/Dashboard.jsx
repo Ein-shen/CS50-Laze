@@ -40,27 +40,27 @@ const Dashboard = ({ session }) => {
   }
 
   return (
-    <div className="h-screen bg-gray-300 overflow-hidden pt-14">
-      <Navbar />
-      <Sidebar />
+     <div className="h-screen bg-gray-300 overflow-hidden pt-14">
+        <Navbar />
+        <Sidebar />
 
-      <div className="md:ml-64 h-full flex flex-col overflow-y-auto">
-        <Upperbar />
-        <Outlet />
+        <div className="md:ml-64 h-full flex flex-col overflow-y-auto">
+          <Upperbar />
+          <Outlet />
+        </div>
+
+        {session?.user && !hasProfile && (
+          <Popup
+            user={session.user}
+            profile={profile}
+            onComplete={() => {
+              setHasProfile(true)
+              localStorage.setItem(`hasProfile_${session.user.id}`, JSON.stringify(true))
+            }}
+            onCancel={() => setHasProfile(true)}
+          />
+        )}
       </div>
-
-      {session?.user && !hasProfile && (
-        <Popup
-          user={session.user}
-          profile={profile}
-          onComplete={() => {
-            setHasProfile(true)
-            localStorage.setItem(`hasProfile_${session.user.id}`, JSON.stringify(true))
-          }}
-          onCancel={() => setHasProfile(true)}
-        />
-      )}
-    </div>
   )
 }
 
