@@ -8,6 +8,7 @@ import { supabase } from "../supabaseClient"
 
 const Dashboard = ({ session }) => {
   const [hasProfile, setHasProfile] = useState(true)
+  const [profile, setProfile] = useState(null)
 
   useEffect(() => {
     if (session?.user) {
@@ -27,12 +28,15 @@ const Dashboard = ({ session }) => {
 
     const { data } = await supabase
       .from('profiles')
-      .select('id')
+      .select('fullname, username')
       .eq('id', userId)
       .single()
 
-    setHasProfile(!!data)
-    localStorage.setItem(`hasProfile_${userId}`, JSON.stringify(!!data))
+    const complete = !!(data?.fullname && data?.username)
+
+    setProfile(data)
+    setHasProfile(complete)
+    localStorage.setItem(`hasProfile_${userId}`, JSON.stringify(complete))
   }
 
   return (
@@ -40,11 +44,7 @@ const Dashboard = ({ session }) => {
 
       <Sidebar />
 
-      <div className="fixed bottom-0 left-0 w-64 px-6 pb-6">
-        <Signout />
-      </div>
-
-      <div className="ml-64 flex-1 flex flex-col overflow-y-auto">
+      <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto">
         <Upperbar />
         <Outlet />
       </div>
@@ -52,7 +52,12 @@ const Dashboard = ({ session }) => {
       {session?.user && !hasProfile && (
         <Popup
           user={session.user}
-          onComplete={() => setHasProfile(true)}
+          profile={profile}
+          onComplete={() => {
+            setHasProfile(true)
+            localStorage.setItem(`hasProfile_${session.user.id}`, JSON.stringify(true))
+          }}
+          onCancel={() => setHasProfile(true)}
         />
       )}
 

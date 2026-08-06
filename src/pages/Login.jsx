@@ -3,27 +3,17 @@ import { supabase } from '../supabaseClient'
 import { useNavigate, Link } from 'react-router-dom'
 
 const Login = () => {
-  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
-  const normalizePhone = (raw) => {
-    const digits = raw.replace(/\D/g, '')
-    if (digits.startsWith('63')) return digits.slice(2)
-    if (digits.startsWith('0')) return digits.slice(1)
-    return digits
-  }
-
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
-    const loginEmail = `${normalizePhone(phone)}@laze.app`
-
-    const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) setError(error.message)
     else navigate('/')
     setLoading(false)
@@ -60,10 +50,10 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <input
-            type="tel"
-            placeholder="Phone Number (e.g. 09171234567)"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />

@@ -3,19 +3,12 @@ import { supabase } from '../supabaseClient'
 import { useNavigate, Link } from 'react-router-dom'
 
 const Signup = () => {
-  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
-
-  const normalizePhone = (raw) => {
-    const digits = raw.replace(/\D/g, '')
-    if (digits.startsWith('63')) return digits.slice(2)
-    if (digits.startsWith('0')) return digits.slice(1)
-    return digits
-  }
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -26,38 +19,14 @@ const Signup = () => {
     setLoading(true)
     setError(null)
 
-    const normalizedPhone = normalizePhone(phone)
-    if (normalizedPhone.length < 10) {
-      setError("Please enter a valid phone number.")
-      setLoading(false)
-      return
-    }
-
-    const fakeEmail = `${normalizedPhone}@laze.app`
-
-    const { data, error } = await supabase.auth.signUp({
-      email: fakeEmail,
-      password,
-    })
+    const { error } = await supabase.auth.signUp({ email, password })
 
     if (error) {
       setError(error.message)
-      setLoading(false)
-      return
+    } else {
+      navigate('/')
     }
 
-    if (data.user) {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({ phone: normalizedPhone })
-        .eq('id', data.user.id)
-
-      if (profileError) {
-        console.error('Failed to save phone:', profileError.message)
-      }
-    }
-
-    navigate('/')
     setLoading(false)
   }
 
@@ -92,10 +61,10 @@ const Signup = () => {
 
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input
-            type="tel"
-            placeholder="Phone Number (e.g. 09171234567)"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
