@@ -1,10 +1,9 @@
-import Greetings from "../components/Greetings"
 import Ai from "../components/Ai"
 
 const Home = () => {
   return (
     <>
-      <Greetings />
+      
       <div className="flex justify-center items-center h-full overflow-y-auto pb-30">
         <Ai />
       </div>

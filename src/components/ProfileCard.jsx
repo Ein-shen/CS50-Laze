@@ -193,18 +193,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
                   </button>
                 )}
 
-              <button
-                  className={`h-10 py-2 px-2 font-bold  ${
-                    visibility === 'stats' ? 'border-b-4 border-black' : 'border-2 border-transparent'
-                  }`}
-                 onClick={() =>
-                    setVisibility('stats')
-
-                  }
-
-                >
-                  Stats
-              </button>
+              
              </div>
 
 
@@ -213,7 +202,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
               {(() => {
                 if (visibility === 'public') return <Public userId={profile.id} />
                 if (visibility === 'private' && isOwnProfile) return <Private userId={profile.id} viewerId={user?.id} />
-                if (visibility === 'stats') return <Stats />
+               
                 return null
               })()}
 

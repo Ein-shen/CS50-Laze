@@ -33,7 +33,6 @@ const Greetings = () => {
         data: { user },
       } = await supabase.auth.getUser()
 
-      // Only trust the cache if it belongs to THIS user
       const cachedUid = localStorage.getItem("username_uid")
       const cachedName = localStorage.getItem("username")
 
@@ -47,7 +46,6 @@ const Greetings = () => {
 
     getUser()
 
-    // Keep it in sync when user logs in/out/switches
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setNameFromUser(session?.user ?? null)
     })
@@ -57,15 +55,9 @@ const Greetings = () => {
     }
   }, [])
 
-  return (
-    <div className={isHome ? "mt-16 flex-1" : "flex-1"}>
-      {isHome && (
-        <h1 className="font-bold text-2xl flex justify-center">
-          Hello {username}!
-        </h1>
-      )}
-    </div>
-  )
+  if (!isHome) return null
+
+  return <>Hello {username}!</>
 }
 
 export default Greetings;
