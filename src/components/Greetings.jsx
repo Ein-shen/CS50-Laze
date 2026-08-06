@@ -9,19 +9,26 @@ const Greetings = () => {
   const [username, setUsername] = useState("")
 
   useEffect(() => {
-    const setNameFromUser = (user) => {
+    const setNameFromProfile = async (user) => {
       if (!user) {
         setUsername("")
         localStorage.removeItem("username")
+        localStorage.removeItem("username_uid")
         return
       }
 
-      const fullName =
-        user.user_metadata?.full_name ||
-        user.user_metadata?.name ||
-        user.email;
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("fullname")
+        .eq("id", user.id)
+        .single()
 
-      const firstName = fullName.split(" ")[0]
+      if (error || !profile?.fullname) {
+        setUsername("")
+        return
+      }
+
+      const firstName = profile.fullname.split(" ")[0]
 
       setUsername(firstName)
       localStorage.setItem("username", firstName)
@@ -41,13 +48,13 @@ const Greetings = () => {
         return
       }
 
-      setNameFromUser(user)
+      setNameFromProfile(user)
     }
 
     getUser()
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setNameFromUser(session?.user ?? null)
+      setNameFromProfile(session?.user ?? null)
     })
 
     return () => {

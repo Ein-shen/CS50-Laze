@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import { supabase } from '../supabaseClient'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Signup = () => {
-  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
+
+  const normalizePhone = (raw) => {
+    const digits = raw.replace(/\D/g, '')
+    if (digits.startsWith('63')) return digits.slice(2)
+    if (digits.startsWith('0')) return digits.slice(1)
+    return digits
+  }
 
   const handleSignup = async (e) => {
     e.preventDefault()
@@ -19,9 +25,39 @@ const Signup = () => {
     }
     setLoading(true)
     setError(null)
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) setError(error.message)
-    else navigate('/')
+
+    const normalizedPhone = normalizePhone(phone)
+    if (normalizedPhone.length < 10) {
+      setError("Please enter a valid phone number.")
+      setLoading(false)
+      return
+    }
+
+    const fakeEmail = `${normalizedPhone}@laze.app`
+
+    const { data, error } = await supabase.auth.signUp({
+      email: fakeEmail,
+      password,
+    })
+
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+      return
+    }
+
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ phone: normalizedPhone })
+        .eq('id', data.user.id)
+
+      if (profileError) {
+        console.error('Failed to save phone:', profileError.message)
+      }
+    }
+
+    navigate('/')
     setLoading(false)
   }
 
@@ -38,15 +74,15 @@ const Signup = () => {
   }
 
   return (
-    <div className="py-20 flex items-center justify-center bg-gray-50 pt-20">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-400 overflow-y-auto py-8">
+      <div className="bg-gray-200 p-8 rounded-xl shadow-md w-full max-w-md">
 
-        {success && (
-          <div className="bg-green-100 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
-            ✅ Account created! You are now logged in.
-          </div>
-        )}
+        <div className="flex flex-col items-center gap-2 mb-6">
+          <img src="/mortarboard.png" alt="Laze logo" className="w-16 h-16" />
+          <p className="font-bold">Welcome to Laze</p>
+        </div>
+
+        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
 
         {error && (
           <div className="bg-red-100 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
@@ -56,10 +92,10 @@ const Signup = () => {
 
         <form onSubmit={handleSignup} className="flex flex-col gap-4">
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="tel"
+            placeholder="Phone Number (e.g. 09171234567)"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             required
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -103,7 +139,7 @@ const Signup = () => {
         </button>
 
         <p className="text-center text-sm text-gray-500 mt-4">
-          Already have an account? <a href="/login" className="text-blue-500 hover:underline">Log in</a>
+          Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Log in</Link>
         </p>
       </div>
     </div>
