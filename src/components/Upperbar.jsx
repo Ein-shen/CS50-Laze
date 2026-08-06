@@ -11,7 +11,7 @@ const Upperbar = () => {
     if (!isHome) return null
 
     return (
-       <div className="flex flex-row h-16 w-full text-black px-6 fixed top-0 left-0 right-0 border-gray-400 items-center z-10">
+       <div className="flex flex-row h-16 w-full text-black px-6 pl-10 fixed top-0 left-0 right-0 border-gray-400 items-center z-10">
 
              <div className="ml-auto flex flex-row gap-6 items-center">
 
