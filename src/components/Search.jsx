@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import Return from "./Return"
+import { Search as SearchIcon } from 'lucide-react'
 
 const Search = () => {
   const [query, setQuery] = useState("")
@@ -29,6 +30,7 @@ const Search = () => {
     let queryBuilder = supabase
       .from('profiles')
       .select('id, fullname, username, profiles_image')
+      .or(`fullname.ilike.%${value}%,username.ilike.%${value}%`)
       .limit(10)
 
     if (currentUserId) {
@@ -76,13 +78,16 @@ const Search = () => {
       </div>
 
       <div className="flex flex-col items-center pt-20 ">
-        <input
-          type="text"
-          value={query}
-          onChange={e => handleSearch(e.target.value)}
-          placeholder="Look for friends"
-          className=" bg-gray-300 h-16 w-[40%] border-2 border-black rounded-lg px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <div className="relative w-[40%]">
+          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
+          <input
+            type="text"
+            value={query}
+            onChange={e => handleSearch(e.target.value)}
+            placeholder="Look for friends"
+            className="bg-gray-300 h-16 w-full border-2 border-black rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
         {loading && <p className="mt-4 text-gray-500">Searching...</p>}
         {error && <p className="mt-4 text-red-400">{error}</p>}
@@ -96,7 +101,7 @@ const Search = () => {
             <li
               key={user.id}
               onClick={() => navigate(`/stalk/${user.username}`)}
-              className="  border-2 border-black rounded-lg p-3 flex flex-col cursor-pointer hover:bg-gray-50 transition"
+              className="border-2 border-black rounded-lg p-3 flex flex-col cursor-pointer hover:bg-gray-50 transition"
             >
               <span className="font-semibold">{user.fullname}</span>
               <span className="text-sm text-gray-500">@{user.username}</span>

@@ -89,61 +89,62 @@ const Chat = () => {
       setNewMessage('')
     }
 
+
+
   return (
 
+          <div className="flex flex-col h-screen min-h-0 items-center pt-10 pb-10 pl-20 pr-20 gap-8">
 
-    <div className="flex flex-col h-screen min-h-0 items-center pt-10 pb-10 pl-20 pr-20 gap-8">
+          <div className="border-2 border-black rounded-md w-full flex-1 flex flex-col min-h-0">
 
-      <div className="flex flex-row items-center w-full">
-        <Return to={`/message/${deckId}`} className="top-0" />
-        <h1 className="text-xl font-bold flex-1 text-center  pr-16">Chat</h1>
-      </div>
+            <div className="flex flex-row items-center gap-10 border-b-2 border-black py-5">
+              <div>
+                <Return to={`/message/${deckId}`} />
+              </div>
+              <div className='flex flex-row items-center gap-2'>
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt={name}
+                    className="w-10 h-10 rounded-md object-cover"
+                  />
+                )}
+                <h1 className="font-bold text-lg">{name}</h1>
+              </div>
+              
+            </div>
 
-      <div className="border-2 border-black rounded-md w-full flex-1 flex flex-col min-h-0">
+            <div className="flex-1 overflow-y-auto min-h-0 px-5 py-3 flex flex-col gap-4">
+              {messages.map((message) => {
+                const isMine = message.sender_id === user?.id
+                return (
+                  <div key={message.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
+                    <div className="bg-gray-200 rounded-md px-3 py-2 w-fit">
+                      <span className="font-bold">
+                        {isMine ? 'You' : name}
+                      </span>
+                      :  {message.content}
+                    </div>
+                  </div>
+                )
+              })}
+              <div ref={bottomRef} />
+            </div>
 
-        <div>
-          <div className="flex items-center gap-3 border-b-2 px-10 py-5 border-black">
-            {imageUrl && (
-              <img
-                src={imageUrl}
-                alt={name}
-                className="w-10 h-10 rounded-md object-cover"
+            <form onSubmit={sendMessage} className="items-center gap-2 flex flex-row mt-auto py-5 px-5">
+              <input
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                className="border-2 border-black flex-1 h-12 px-2 rounded-md bg-gray-300"
+                placeholder="Type a message"
               />
-            )}
-            <h1 className="font-bold text-md">{name}</h1>
+              <button type="submit" className="border-2 border-black w-20 h-12 rounded-md font-bold">
+                Send
+              </button>
+            </form>
+
           </div>
         </div>
-
-       <div className="flex-1 overflow-y-auto min-h-0 px-5 py-3 flex flex-col gap-4">
-          {messages.map((message) => {
-            const isMine = message.sender_id === user?.id
-            return (
-              <div key={message.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
-                <div className="bg-gray-200 rounded-md px-3 py-2 w-fit">
-                  <span className="font-bold">
-                    {isMine ? 'You' : name}
-                  </span>
-                  :  {message.content}
-                </div>
-              </div>
-            )
-          })}
-          <div ref={bottomRef} />
-        </div>
-
-        <form onSubmit={sendMessage} className="items-center gap-2 flex flex-row mt-auto py-5 px-5">
-          <input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            className="border-2 border-black flex-1 h-12 px-2 rounded-md bg-gray-300"
-            placeholder="Type a message"
-          />
-          <button type="submit" className="border-2 border-black w-20 h-12 rounded-md font-bold">
-            Send
-          </button>
-        </form>
-      </div>
-    </div>
 
 
   )
