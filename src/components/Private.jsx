@@ -13,6 +13,18 @@ const Private = ({ userId }) => {
       return
     }
 
+    const cacheKey = `private_decks_${userId}`
+    const cached = localStorage.getItem(cacheKey)
+
+    if (cached && cached !== 'undefined') {
+      try {
+        setDecks(JSON.parse(cached))
+        setLoading(false)
+      } catch {
+        localStorage.removeItem(cacheKey)
+      }
+    }
+
     const { data, error } = await supabase
       .from('decks')
       .select('*')
@@ -26,6 +38,7 @@ const Private = ({ userId }) => {
     }
 
     setDecks(data || [])
+    localStorage.setItem(cacheKey, JSON.stringify(data || []))
     setLoading(false)
   }
 
