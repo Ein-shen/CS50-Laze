@@ -72,27 +72,27 @@ const Search = () => {
 
   return (
     <div>
-      <div className="flex items-center py-10 ">
+      <div className="flex items-center py-6 sm:py-10 px-4">
         <Return to="/" className="top-0" />
-        <h1 className=" text-lg font-bold flex-1 text-center pr-16">Search</h1>
+        <h1 className="text-base sm:text-lg font-bold flex-1 text-center pr-10 sm:pr-16">Search</h1>
       </div>
 
-      <div className="flex flex-col items-center pt-20 ">
-        <div className="relative w-[40%]">
+      <div className="flex flex-col items-center pt-10 sm:pt-20 px-4">
+        <div className="relative w-full max-w-md">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-5 h-5" />
           <input
             type="text"
             value={query}
             onChange={e => handleSearch(e.target.value)}
             placeholder="Look for friends"
-            className="bg-gray-300 h-16 w-full border-2 border-black rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="bg-gray-300 h-14 sm:h-16 w-full border-2 border-black rounded-lg pl-12 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
         {loading && <p className="mt-4 text-gray-500">Searching...</p>}
-        {error && <p className="mt-4 text-red-400">{error}</p>}
+        {error && <p className="mt-4 text-red-400 text-center">{error}</p>}
 
-        <ul className="mt-8 w-80 space-y-2">
+        <ul className="mt-8 w-full max-w-sm space-y-2">
           {results.length === 0 && query && !loading && !error && (
             <p className="text-gray-400 text-center">No users found.</p>
           )}

@@ -33,22 +33,22 @@ const Notification = () => {
 
   return (
 
-    <div className="flex flex-col items-center pt-10 gap-4">
+    <div className="flex flex-col items-center pt-6 sm:pt-10 gap-4 px-4">
 
       <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
-          <h1 className="font-bold text-lg flex-1 text-center pr-16">Friend Requests</h1>
+          <h1 className="font-bold text-base sm:text-lg flex-1 text-center pr-10 sm:pr-16">Friend Requests</h1>
       </div>
 
       {requests.length === 0 && <p className="text-gray-400 pt-10">No pending requests.</p>}
 
       {requests.map(r => (
-        <div key={r.id} className="border-2 border-black rounded-lg  w-80 flex justify-between items-center">
-          <div>
-            <p className="font-bold">{r.profiles.fullname}</p>
-            <p className="text-sm text-gray-500">@{r.profiles.username}</p>
+        <div key={r.id} className="border-2 border-black rounded-lg w-full max-w-xs sm:w-80 flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 p-3">
+          <div className="min-w-0">
+            <p className="font-bold truncate">{r.profiles.fullname}</p>
+            <p className="text-sm text-gray-500 truncate">@{r.profiles.username}</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <button onClick={() => respond(r.id, true)} className="border-2 border-black rounded px-3 py-1 font-bold bg-green-200">Accept</button>
             <button onClick={() => respond(r.id, false)} className="border-2 border-black rounded px-3 py-1 font-bold bg-red-200">Decline</button>
           </div>
