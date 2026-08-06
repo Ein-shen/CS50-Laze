@@ -9,12 +9,15 @@ const Sidebar = () => {
     return (
         <>
             {/* mobile hamburger toggle */}
-            <button
-                onClick={() => setIsOpen(true)}
-                className="md:hidden fixed top-4 left-4 z-30 p-2 border-2 border-black rounded-lg bg-gray-300"
-            >
-                <Menu size={24} strokeWidth={3} />
-            </button>
+            <div className='pt-10'>
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="md:hidden fixed top-4 left-4 z-30 p-2 border-2 border-black rounded-lg bg-gray-300  flex items-start"
+                >
+                    <Menu size={24} strokeWidth={3} />
+                </button>
+
+            </div>
 
             {/* mobile overlay backdrop */}
             {isOpen && (
@@ -26,8 +29,8 @@ const Sidebar = () => {
 
             {/* sidebar */}
             <div
-                className={`flex flex-col h-screen w-64 text-black p-6 fixed top-0 left-0 border-x-2 border-black z-40 bg-gray-300 transition-transform duration-200
-                ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+                className={`flex flex-col h-screen w-64 text-black p-6 fixed top-0 left-0 border-x-2 border-black z-40 bg-gray-300 transition-transform duration-200 
+                ${isOpen ? 'translate-x-0 ' : '-translate-x-full '} md:translate-x-0`}
             >
                 <div className="relative flex items-center justify-center mb-8">
                     <h1 className="text-center font-bold text-2xl">

@@ -14,8 +14,13 @@ const Login = () => {
     setLoading(true)
     setError(null)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) setError(error.message)
-    else navigate('/')
+    if (error) {
+      setError(error.message)
+    } else {
+      setEmail('')
+      setPassword('')
+      navigate('/')
+    }
     setLoading(false)
   }
 
@@ -82,9 +87,9 @@ const Login = () => {
 
         <button
           onClick={handleGoogle}
-          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50"
+          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 border-black border-1"
         >
-          <img src="https://www.google.com/favicon.ico" className="w-5 h-5" />
+          <img src="https://www.google.com/favicon.ico" className="w-5 h-5 " />
           Continue with Google
         </button>
 

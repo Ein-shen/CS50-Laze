@@ -24,6 +24,9 @@ const Signup = () => {
     if (error) {
       setError(error.message)
     } else {
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
       navigate('/')
     }
 
@@ -101,7 +104,7 @@ const Signup = () => {
 
         <button
           onClick={handleGoogle}
-          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50"
+          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 border-black border-1"
         >
           <img src="https://www.google.com/favicon.ico" className="w-5 h-5" />
           Continue with Google

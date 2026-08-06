@@ -6,7 +6,10 @@ const Greetings = () => {
   const location = useLocation();
   const isHome = location.pathname === "/"
 
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState(() => {
+    const cached = localStorage.getItem("username")
+    return cached && cached !== 'undefined' ? cached : ""
+  })
 
   useEffect(() => {
     const setNameFromProfile = async (user) => {
@@ -43,8 +46,9 @@ const Greetings = () => {
       const cachedUid = localStorage.getItem("username_uid")
       const cachedName = localStorage.getItem("username")
 
+      // already showing cached name for this user — just verify quietly in background
       if (cachedName && cachedUid === user?.id) {
-        setUsername(cachedName)
+        setNameFromProfile(user)
         return
       }
 
