@@ -101,10 +101,19 @@ const Search = () => {
             <li
               key={user.id}
               onClick={() => navigate(`/stalk/${user.username}`)}
-              className="border-2 border-black rounded-lg p-3 flex flex-col cursor-pointer hover:bg-gray-50 transition"
+              className="flex items-center gap-3 border-2 border-black rounded-md px-4 py-2 bg-gray-300 shadow-sm hover:shadow-md transition cursor-pointer"
             >
-              <span className="font-semibold">{user.fullname}</span>
-              <span className="text-sm text-gray-500">@{user.username}</span>
+              {user.profiles_image && (
+                <img
+                  src={user.profiles_image}
+                  alt={user.fullname}
+                  className="w-10 h-10 rounded-md object-cover flex-shrink-0"
+                />
+              )}
+              <div className="flex flex-col">
+                <span className="font-semibold">{user.fullname}</span>
+                <span className="text-sm text-gray-500">@{user.username}</span>
+              </div>
             </li>
           ))}
         </ul>

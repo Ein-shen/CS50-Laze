@@ -59,7 +59,7 @@ const Message = () => {
             {friends.map((friend) => (
               <div
                 key={friend.friendship_id}
-                className="hover:bg-[#f0ede6] transition bg-gray-300 border-2 border-black rounded-lg p-3 sm:p-4 w-full sm:w-2/3 flex items-center gap-3 cursor-pointer"
+                className="bg-gray-300 border-2 border-black rounded-md p-3 sm:p-4 w-full sm:w-2/3 flex items-center gap-3 shadow-sm hover:shadow-md transition cursor-pointer"
                 onClick={() => {
                   console.log('name being passed:', friend.fullname)
                   navigate(`/chat/${friend.friendship_id}`, { state: { name: friend.fullname, imageUrl: friend.profiles_image } })
