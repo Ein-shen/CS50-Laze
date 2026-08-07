@@ -1,4 +1,4 @@
-import Ai from "../components/Ai"
+import Ai from "../Home/Ai"
 
 const Home = () => {
   return (

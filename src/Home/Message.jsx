@@ -1,4 +1,4 @@
-import Return from "./Return"
+import Return from "../components/Return"
 import React from 'react'
 import { supabase } from "../supabaseClient"
 import { useEffect, useState } from 'react'

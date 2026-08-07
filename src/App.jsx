@@ -2,20 +2,33 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { supabase } from "./supabaseClient"
 
+
+import Profile from "./user/Profile" 
+import ProfileCard from "./user/ProfileCard"
+
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
+import Signout from "./pages/Signout"
+
+
+import Message from "./Home/Message"
+import Search from "./Home/Search"
+import Ai from "./Home/Ai"
+import Home from "./Home/Home"
+import Notification from "./Home/Notification"
+import Chat from "./Home/Chat"
+
 import Footer from "./components/Footer"
 import Sidebar from "./components/Sidebar"
-import Signout from "./pages/Signout"
+
 import Decks from "./components/Decks"
-import Profile from "./components/Profile"
-import Notification from "./components/Notification"
-import Message from "./components/Message"
-import Search from "./components/Search"
+
+
+
 import Greetings from "./components/Greetings"
 import Popup from "./components/Popup"
-import ProfileCard from "./components/ProfileCard"
+
 import Createdeck from "./components/Createdeck"
 import Cards from "./components/Cards"
 import Edit from "./components/Edit"
@@ -23,8 +36,8 @@ import Delete from "./components/Delete"
 import Return from "./components/Return"
 import DeckDropDown from "./components/DeckDropDown"
 import Total from "./components/Total"
-import Ai from "./components/Ai"
-import Home from "./components/Home"
+
+
 
 import Study from "./components/Study"
 import QandA from "./components/QandA"
@@ -32,7 +45,7 @@ import Public from "./components/Public"
 import Private from "./components/Private"
 import Stats from "./components/Stats"
 import ShareStudy from "./components/ShareStudy"
-import Chat from "./components/Chat"
+
 import Stalk from  "./components/Stalk"
 import AddFriendButton from  "./components/AddFriendButton"
 import ShareTotal from  "./components/ShareTotal"

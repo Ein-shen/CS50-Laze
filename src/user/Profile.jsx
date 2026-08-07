@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
-import ProfileCard from '../components/ProfileCard'
+import ProfileCard from '../user/ProfileCard'
 import Popup from '../components/Popup'
 
 const Profile = ({ user }) => {

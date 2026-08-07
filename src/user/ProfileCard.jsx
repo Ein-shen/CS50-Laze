@@ -1,10 +1,10 @@
-import Edit from './Edit'
+import Edit from '../components/Edit'
 import { useRef, useState } from 'react'
 import { supabase } from '../supabaseClient'
-import Public from "./Public"
-import Private from "./Private"
-import Stats from "./Stats"
-import AddFriendButton from "./AddFriendButton"
+import Public from "../components/Public"
+import Private from "../components/Private"
+import Stats from "../components/Stats"
+import AddFriendButton from "../components/AddFriendButton"
 import { MessageCircle } from 'lucide-react'
 import { Link } from "react-router-dom"
 

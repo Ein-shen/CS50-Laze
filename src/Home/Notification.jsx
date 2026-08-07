@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
-import Return from "./Return"
+import Return from "../components/Return"
 
 const Notification = () => {
   const [requests, setRequests] = useState([])
