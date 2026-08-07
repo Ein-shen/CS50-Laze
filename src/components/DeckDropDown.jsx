@@ -113,7 +113,8 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                     }}
                     aria-haspopup="true"
                     aria-expanded={open}
-                    className="flex justify-end p-1 rounded hover:bg-gray-200"
+                    
+                    className="flex justify-end p-1  shadow-sm hover:shadow-md transition cursor-pointer"
                 >
                     <MoreHorizontal />
                 </button>
@@ -121,7 +122,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                 {open && (
                     <div
                         role="menu"
-                        className="border-black border-2 absolute right-0 top-6 w-36 rounded-lg border border-gray-200 bg-white shadow-md z-10"
+                       className="border-black border-2 absolute right-0 top-6 w-36 rounded-lg border border-black bg-gray-300 shadow-md z-10 overflow-hidden"
                     >
                         <button
                             role="menuitem"
@@ -130,7 +131,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                                 setIsEditing(true)
                                 setOpen(false)
                             }}
-                            className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className=" border-b-2 border-black   font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                         >
                             Edit
                         </button>
@@ -142,7 +143,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                                 handleDelete()
                                 setOpen(false)
                             }}
-                            className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                       className="border-b-2 border-black font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                         >
                             Delete
                         </button>
@@ -152,7 +153,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                             setOpen(false)
                             handlePublic()
                         }}
-                            className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className="border-b-2 border-black   font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                             >
 
                             {deck.is_public ? 'Make Private' : 'Make Public'}
@@ -164,7 +165,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                             setOpen(false)
                             handleCopyLink()
                         }}
-                            className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                            className=" rounded-md font-bold block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
                             >
                             Copy link
                         </button>

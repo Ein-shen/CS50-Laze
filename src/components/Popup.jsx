@@ -34,8 +34,8 @@ const Popup = ({ user, profile, onComplete, onCancel }) => {
   return (
     <div style={styles.overlay}>
       <div style={styles.modal}>
-        <h2>Edit Profile</h2>
-        <p>Update your details below.</p>
+        <h2 className='font-bold'>Edit Profile</h2>
+        <p className='font-bold'>Update your details below.</p>
         <form onSubmit={handleSubmit}>
           <input
             style={styles.input}
@@ -56,11 +56,19 @@ const Popup = ({ user, profile, onComplete, onCancel }) => {
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
 
-          <button style={styles.button} type="submit" disabled={loading}>
-            {loading ? 'Saving...' : 'Save Changes'}
+         <button
+              type="submit"
+              disabled={loading}
+              className='border-2 border-black bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
+          >
+              {loading ? 'Saving...' : 'Save Changes'}
           </button>
-          <button type="button" onClick={onCancel} style={styles.cancelButton}>
-            Cancel
+          <button
+              type="button"
+              onClick={onCancel}
+              className='border-2 border-black bg-gray-200 rounded-md px-4 py-2 font-semibold w-full mt-2'
+          >
+              Cancel
           </button>
         </form>
       </div>

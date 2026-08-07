@@ -67,7 +67,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <X size={24} />
                 </button>
 
-                <h1>{isEditing ? 'Edit your deck' : 'Add your deck'}</h1>
+                <h1 className='font-bold'>{isEditing ? 'Edit your deck' : 'Add your deck'}</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <input
@@ -79,8 +79,8 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     />
                     <button
                         type="submit"
-                        style={Deck_style.button}
                         disabled={loading}
+                        className=' border-2 border-black bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
