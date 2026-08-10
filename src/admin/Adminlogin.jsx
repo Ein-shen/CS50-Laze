@@ -127,19 +127,8 @@ const AdminLogin = () => {
           </button>
         </form>
 
-        <div className="flex items-center my-4">
-          <hr className="flex-1" />
-          <span className="mx-3 text-gray-400 text-sm">or</span>
-          <hr className="flex-1" />
-        </div>
-
-        <button
-          onClick={handleGoogle}
-          className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 border-black border-1"
-        >
-          <img src="https://www.google.com/favicon.ico" className="w-5 h-5 " />
-          Continue with Google
-        </button>
+       
+        
       </div>
     </div>
   )
