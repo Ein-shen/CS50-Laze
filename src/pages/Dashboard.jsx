@@ -5,8 +5,9 @@ import Signout from "../pages/Signout"
 import Upperbar from "../components/Upperbar"
 import Popup from "../components/Popup"
 import { supabase } from "../supabaseClient"
+import AdminDashboard from "../admin/AdminDashboard"
 
-const Dashboard = ({ session }) => {
+const Dashboard = ({ session, role }) => {
   const [hasProfile, setHasProfile] = useState(true)
   const [profile, setProfile] = useState(null)
 
@@ -42,14 +43,16 @@ const Dashboard = ({ session }) => {
   return (
     <div className="flex h-screen bg-gray-300 overflow-hidden">
 
-      <Sidebar />
+      <Sidebar role={role} />
 
       <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto">
         <Upperbar />
-        <Outlet />
+        {/* NEW: admins always see the admin panel here, no matter the URL */}
+        {role === 'admin' ? <AdminDashboard /> : <Outlet />}
       </div>
 
-      {session?.user && !hasProfile && (
+      {/* NEW: skip the "complete your profile" popup for admins, they don't need one */}
+      {role !== 'admin' && session?.user && !hasProfile && (
         <Popup
           user={session.user}
           profile={profile}

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ShieldCheck } from 'lucide-react'
 import Signout from '../pages/Signout'
 
-const Sidebar = () => {
+const Sidebar = ({ role }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const isAdmin = role === 'admin'
 
     return (
         <>
@@ -44,25 +45,33 @@ const Sidebar = () => {
                     </button>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                    <Link to="/" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Home
-                        </button>
-                    </Link>
+                {isAdmin ? (
+                    // NEW: admins only see this — no Home/Decks/Profile at all
+                    <div className="flex items-center gap-2 border-2 border-black font-bold px-4 py-2 rounded-lg mb-3">
+                        <ShieldCheck size={18} />
+                        Admin Panel
+                    </div>
+                ) : (
+                    <div className="flex flex-col gap-3">
+                        <Link to="/" className="w-full" onClick={() => setIsOpen(false)}>
+                            <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
+                                Home
+                            </button>
+                        </Link>
 
-                    <Link to="/decks" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Decks
-                        </button>
-                    </Link>
+                        <Link to="/decks" className="w-full" onClick={() => setIsOpen(false)}>
+                            <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
+                                Decks
+                            </button>
+                        </Link>
 
-                    <Link to="/profile" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Profile
-                        </button>
-                    </Link>
-                </div>
+                        <Link to="/profile" className="w-full" onClick={() => setIsOpen(false)}>
+                            <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
+                                Profile
+                            </button>
+                        </Link>
+                    </div>
+                )}
 
                 <div className="mt-auto">
                     <Signout />
