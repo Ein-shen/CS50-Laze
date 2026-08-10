@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ShieldCheck } from 'lucide-react'
 import Signout from '../pages/Signout'
 
-const Sidebar = () => {
+const AdminLayout = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <>
+        <div className="flex h-screen bg-gray-300 overflow-hidden">
+
             {/* mobile hamburger toggle */}
             <div className='pt-10'>
                 <button
@@ -16,7 +17,6 @@ const Sidebar = () => {
                 >
                     <Menu size={24} strokeWidth={3} />
                 </button>
-
             </div>
 
             {/* mobile overlay backdrop */}
@@ -45,30 +45,23 @@ const Sidebar = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <Link to="/" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Home
-                        </button>
-                    </Link>
-
-                    <Link to="/decks" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Decks
-                        </button>
-                    </Link>
-
-                    <Link to="/profile" className="w-full" onClick={() => setIsOpen(false)}>
-                        <button className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg">
-                            Profile
-                        </button>
-                    </Link>
+                    <div className="w-full border-2 border-black font-bold text-left px-4 py-2 rounded-lg flex items-center gap-2">
+                        <ShieldCheck size={18} />
+                        Admin Panel
+                    </div>
                 </div>
 
                 <div className="mt-auto">
                     <Signout />
                 </div>
             </div>
-        </>
+
+            {/* main content, offset to the right of the panel — same as Dashboard.jsx */}
+            <div className="md:ml-64 flex-1 flex flex-col overflow-y-auto">
+                <Outlet />
+            </div>
+        </div>
     )
 }
-export default Sidebar
+
+export default AdminLayout
