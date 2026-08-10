@@ -101,7 +101,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
 
     return (
         <div
-            className="rounded-xl overflow-hidden cursor-pointer hover:shadow-md transition-shadow pl-3 pr-3 pt-3"
+            className="rounded-xl overflow-hidden cursor-pointer hover:shadow-md  pl-3 pr-3 pt-3"
             style={{ width: '220px' }}
             onClick={onNavigate}
         >
@@ -114,7 +114,7 @@ const DeckDropDown = ({ deck, onNavigate, onUpdate, onDelete, children }) => {
                     aria-haspopup="true"
                     aria-expanded={open}
                     
-                    className="flex justify-end p-1  shadow-sm hover:shadow-md transition cursor-pointer"
+                    className="flex justify-end p-1  cursor-pointer"
                 >
                     <MoreHorizontal />
                 </button>

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
-import ProfileCard from '../user/ProfileCard'
+import ProfileCard from '../profile/ProfileCard'
 
 const Stalk = () => {
     const { username } = useParams()
