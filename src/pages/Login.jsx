@@ -42,7 +42,7 @@ const Login = () => {
 
         <div className="flex flex-col items-center gap-2 mb-6">
           <img src="/mortarboard.png" alt="Laze logo" className="w-16 h-16" />
-          <p className="font-bold">Welcome to Laze</p>
+          <p className="font-bold">Welcome to Lazeu</p>
         </div>
 
         <h1 className="text-2xl font-bold mb-6 text-center">Welcome Back!</h1>
