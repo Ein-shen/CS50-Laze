@@ -44,7 +44,7 @@ const Ai = () => {
   }, [])
 
   return (
-    <div className="w-[80%] h-[38rem] border-black border-2 rounded-md flex flex-col px-10">
+    <div className="w-[80%] h-[36rem] border-black border-2 rounded-md flex flex-col px-10">
 
       <h1 className="font-bold text-2xl text-center pb-10 py-10">
         <Greetings /> Let's go study?

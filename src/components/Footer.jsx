@@ -9,7 +9,7 @@ import React from 'react'
         <>
 
         <footer>
-        <p className="fontte-bold">© {new Date().getFullYear()} Laze.</p>
+        <p className="fontte-bold">© {new Date().getFullYear()} Lazeu.</p>
         </footer>
 
 
