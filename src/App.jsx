@@ -235,7 +235,7 @@ export default function App() {
 
                     !session
 
-                        ? <Login />
+                        ? <Landing />
 
                         : role === 'admin'
 
@@ -449,9 +449,10 @@ export default function App() {
             />
 
 
-            <Route 
-                    path="/welcome"
-                     element={<Landing />} />
+            <Route
+                path="/welcome"
+                element={<Landing />}
+            />
 
         </Routes>
     )
