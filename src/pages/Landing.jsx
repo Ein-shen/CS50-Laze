@@ -53,7 +53,7 @@ export default function Landing() {
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2">
           <img src="/mortarboard.png" alt="" className="w-8 h-8" />
-          <span className="font-bold text-xl text-black">Laze</span>
+          <span className="font-bold text-xl text-black">Lazeu</span>
         </div>
         <div className="flex items-center gap-3">
           <Link
