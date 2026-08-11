@@ -9,6 +9,7 @@ import ProfileCard from './profile/ProfileCard'
 // Authentication
 import Signup from './pages/Signup'
 import Login from './pages/Login'
+import Landing from './pages/Landing'
 
 // Main pages
 import Dashboard from './pages/Dashboard'
@@ -446,6 +447,11 @@ export default function App() {
                         : <Login />
                 }
             />
+
+
+            <Route 
+                    path="/welcome"
+                     element={<Landing />} />
 
         </Routes>
     )
