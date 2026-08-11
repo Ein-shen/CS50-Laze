@@ -34,7 +34,7 @@ const Sidebar = () => {
             >
                 <div className="relative flex items-center justify-center mb-8">
                     <h1 className="text-center font-bold text-2xl">
-                        L<img src="/mortarboard.png" className="w-6 h-7 inline pb-1" />ze
+                        L<img src="/mortarboard.png" className="w-6 h-7 inline pb-1" />zeu
                     </h1>
                     <button
                         onClick={() => setIsOpen(false)}
