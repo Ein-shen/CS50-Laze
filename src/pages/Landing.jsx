@@ -195,12 +195,13 @@ export default function Landing() {
       {/* =====================================================
           FOOTER
       ===================================================== */}
-      <footer className="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="max-w-6xl mx-auto px-6 py-10 flex items-center justify-center gap-4">
         <div className="flex items-center gap-2">
-          <img src="/mortarboard.png" alt="" className="w-5 h-5" /><span className="font-bold text-sm text-black"><Footer /></span>
-         
+          <img src="/mortarboard.png" alt="" className="w-5 h-5" />
+          <span className="font-bold text-sm text-black">
+            <Footer />
+          </span>
         </div>
-        <p className="text-xs text-gray-600"></p>
       </footer>
 
     </div>
