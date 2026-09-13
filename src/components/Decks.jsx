@@ -47,9 +47,6 @@ const Decks = () => {
         }
     }
 
-
-
-
     useEffect(() => {
         fetchDecks()
     }, [])
