@@ -80,7 +80,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className=' border-2 border-black bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
+                        className=' border  border-black/80 bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
