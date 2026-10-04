@@ -179,7 +179,7 @@ const Study = () => {
 
         <div className="w-screen h-screen bg-gray-300 flex flex-col items-center gap-4 pt-10">
 
-            <div className="rounded-md relative flex items-center justify-center border-black border-2 gap-10 w-[55%] h-auto px-6">
+            <div className="rounded-md relative flex items-center justify-center border border-black/80 gap-10 w-[55%] h-auto px-6">
 
                 <div className="pb-10 pt-10 flex flex-row">
                     <button type="button" className="absolute left-5 top-1/2 -translate-y-1/2 flex items-center justify-centerr" onClick={() => navigate(`/cards/${deckId}`)}>
