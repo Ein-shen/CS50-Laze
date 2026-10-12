@@ -16,7 +16,7 @@ const pillBtn =
   "disabled:opacity-60"
 
 const smallBtn =
-  "font-bold border-black border-2 rounded-md px-4 py-2 text-sm sm:text-base"
+  "font-bold border boder-black/80 rounded-lg px-4 py-2 text-sm sm:text-base"
 
 const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => {
 
