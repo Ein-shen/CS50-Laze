@@ -4,7 +4,11 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import Signout from '../pages/Signout'
 
 const navItems = [
-    { label: 'Home', path: '/' },
+    {
+    label: 'Home',
+    path: '/',
+    icon: 'https://img.icons8.com/?size=100&id=tNcJ7GGjHsUq&format=png&color=000000',
+    },
     { label: 'Overview', path: '/overview' },
     { label: 'Decks', path: '/decks' },
     { label: 'Profile', path: '/profile' },
@@ -58,22 +62,23 @@ const Sidebar = () => {
 
                 {/* Main navigation */}
                 <div className="flex flex-col gap-3 px-6 pt-12 md:pt-6">
-                    {navItems.map(({ label, path }) => {
+                    {navItems.map(({ label, path, icon }) => {
                         const isActive =
                             path === '/'
                                 ? location.pathname === '/'
                                 : location.pathname === path ||
-                                  location.pathname.startsWith(path + '/')
+                                location.pathname.startsWith(path + '/')
 
                         return (
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full border border-black/80 font-bold text-left px-4 py-2 rounded-lg transition-colors hover:bg-gray-400/50 ${
+                                className={`w-full flex items-center gap-3 border border-black/80 font-bold text-left px-4 py-2 rounded-lg transition-colors hover:bg-gray-400/50 ${
                                     isActive ? 'bg-gray-400/60' : ''
                                 }`}
                             >
-                                {label}
+                                {icon && <img src={icon} alt="" width={20} height={20} />}
+                                <span>{label}</span>
                             </button>
                         )
                     })}
