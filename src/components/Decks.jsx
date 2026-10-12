@@ -62,13 +62,21 @@ const Decks = () => {
         <div className="flex flex-col items-center h-screen">
             <div className="flex flex-col  w-full max-w-5xl h-full pb-10 px-10 pt-10">
 
-                <h1 className="text-2xl font-bold mb-8">Your Deck</h1>
+                <h1 className="text-lg font-bold mb-8">Your Decks</h1>
 
                 <button
-                    className="flex font-bold gap-2 border border-black/80 px-6 py-2 rounded-md w-fit mb-10"
+                    className="flex flex-row items-center hover:bg-gray-400 text-xs font-bold gap-2 border border-black/80 px-6 py-2 rounded-md w-fit mb-10"
                     onClick={() => setShowCreateDeck(true)}
                 >
-                    <FolderPlus size={24} /> Create deck
+                    <img 
+                    src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000" 
+                    alt="add"
+                    width={24}
+                    height={24} 
+
+                    />
+                    
+                     Create deck
                 </button>
 
                 <div
