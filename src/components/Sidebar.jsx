@@ -9,9 +9,9 @@ const navItems = [
     path: '/',
     icon: 'https://img.icons8.com/?size=100&id=tNcJ7GGjHsUq&format=png&color=000000',
     },
-    { label: 'Overview', path: '/overview' },
-    { label: 'Decks', path: '/decks' },
-    { label: 'Profile', path: '/profile' },
+    { label: 'Overview', path: '/overview', icon: 'https://img.icons8.com/?size=100&id=aOXlHTOpHruk&format=png&color=000000'},
+    { label: 'Decks', path: '/decks', icon: 'https://img.icons8.com/?size=100&id=4I9RTdowfoBi&format=png&color=000000' },
+    { label: 'Profile', path: '/profile', icon: 'https://img.icons8.com/?size=100&id=rZLCb6BZFj26&format=png&color=000000' },
 ]
 
 const Sidebar = () => {
@@ -73,7 +73,7 @@ const Sidebar = () => {
                             <button
                                 key={label}
                                 onClick={() => handleNavigate(path)}
-                                className={`w-full flex items-center gap-3 border border-black/80 font-bold text-left px-4 py-2 rounded-lg transition-colors hover:bg-gray-400/50 ${
+                                className={`w-full flex items-center gap-3 border border-black/80 font-bold text-left text-xs px-4 py-2 rounded-lg transition-colors hover:bg-gray-400/50 ${
                                     isActive ? 'bg-gray-400/60' : ''
                                 }`}
                             >
