@@ -70,42 +70,41 @@ const Total = () => {
 
   }, [deckId])
 
+return (
+  <div className="w-full min-h-screen bg-gray-300 flex flex-col items-center pt-20 px-4">
+    <div className="gap-4 w-full md:w-[55%] h-auto flex flex-col px-6 py-10 md:px-10 border border-black/80">
 
-  return (
+      <h1 className="font-bold text-2xl text-center">
+        <img src="/mortarboard.png" className="w-12 h-16 inline pb-1" />
+        {deck?.deckname}
+      </h1>
 
+      <h1 className="font-bold text-2xl text-center pt-20">Your result:</h1>
 
+      <h1 className="font-bold text-4xl text-center pt-5">
+        {result ? `${result.score} / ${result.total_questions}` : 'Loading...'}
+      </h1>
 
-    <div className="w-screen h-screen bg-gray-300 flex flex-col items-center pt-20">
-      <div className="  gap-4 w-[55%] h-auto flex flex-colborder border-black/80 rounded-md bg-white-300  px-10 py-10">
-
-        <h1 className="font-bold text-2xl text-center " > <img src="/mortarboard.png" className="w-12 h-16 inline pb-1"/>{deck?.deckname}  </h1>
-
-        <h1 className="font-bold text-2xl text-center pt-20    " > Your result:  </h1>
-
-        <h1 className="font-bold text-4xl text-center pt-5" > {result ? `${result.score} / ${result.total_questions}` : "Loading..."} </h1>
-
-
-        <div className="flex flex-row gap-10 justify-center items-center pt-32">
-
-
-          <button
-
+      <div className="flex flex-row flex-wrap gap-4 md:gap-10 justify-center items-center pt-20 md:pt-32">
+        <button
           className="font-bold text-md border-black border-2 rounded-md h-12 w-32"
           type="button"
           onClick={() => navigate(`/cards/${deckId}`)}
-          > Back </button>
+        >
+          Back
+        </button>
 
-
-          <button
+        <button
           className="font-bold text-md border-black border-2 rounded-md h-12 w-32"
           onClick={() => navigate(`/study/${deckId}`)}
-          > Re-study </button>
-
-        </div>
-
+        >
+          Re-study
+        </button>
       </div>
+
     </div>
-  )
+  </div>
+)
 }
 
 export default Total
