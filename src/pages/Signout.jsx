@@ -12,7 +12,7 @@ const Signout = () => {
   return (
     <button
         onClick={handleSignOut}
-        className="text-center  flex flex-row gap-2  items-center w-full text-xs border border-black/80 font-bold text-left px-4 py-2 rounded-lg"
+        className="text-center  flex flex-row gap-2 hover:bg-gray-400 items-center w-full text-xs border border-black/80 font-bold text-left px-4 py-2 rounded-lg"
         >
           <img src="https://img.icons8.com/?size=100&id=mFtP0gepGplg&format=png&color=000000" 
                alt=" logout"
