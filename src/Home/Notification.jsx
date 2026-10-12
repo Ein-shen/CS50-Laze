@@ -37,10 +37,10 @@ const Notification = () => {
 
       <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
-          <h1 className="font-bold text-base sm:text-lg flex-1 text-center pr-10 sm:pr-16">Friend Requests</h1>
+          <h1 className="font-bold text-base sm:text-lg flex-1 text-center pr-10 sm:pr-16">Notification</h1>
       </div>
 
-      {requests.length === 0 && <p className="text-gray-400 pt-10">No pending requests.</p>}
+      {requests.length === 0 && <p className="text-gray-400 pt-10">No Notifications.</p>}
 
       {requests.map(r => (
         <div key={r.id} className="border-2 border-black rounded-lg w-full max-w-xs sm:w-80 flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 p-3">
