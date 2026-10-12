@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Bell, MessageCircle, Search } from 'lucide-react'
+
 
 const Upperbar = () => {
     const location = useLocation()
@@ -8,17 +8,30 @@ const Upperbar = () => {
     if (!isHome) return null
 
     return (
-        <div className="flex flex-row items-center gap-6 text-black">
+        <div className="flex flex-row items-center gap-4 text-black">
             <Link to="/search">
-                <Search strokeWidth={3} size={24} />
+                <img
+                    src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
+                    alt="Search"
+                    width={24}
+                    height={24}
+                />
             </Link>
 
             <Link to="/notification">
-                <Bell strokeWidth={3} size={24} />
+                <img
+                 src="https://img.icons8.com/?size=100&id=F5WMYjiT3vpJ&format=png&color=000000"
+                 alt="Notification"
+                 width={24}
+                 height={24}
+                 />
             </Link>
 
             <Link to="/message">
-                <MessageCircle strokeWidth={3} size={24} />
+                <img src="https://img.icons8.com/?size=100&id=7xKps2PngOP0&format=png&color=000000" 
+                     alt=" messenger"
+                     width={24}
+                     height={24} />
             </Link>
         </div>
     )
