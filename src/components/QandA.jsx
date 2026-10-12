@@ -418,7 +418,7 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           <p className="text-sm sm:text-base">Add your activity to start study.</p>
 
           <button
-            className="flex flex-row gap-3 items-center font-bold border hover:bg-gray-400 border-black/80 text-xs px-6 py-2.5 rounded-full w-full max-w-xs sm:w-fit "
+            className="flex flex-row gap-3 items-center font-bold border hover:bg-gray-400 border-black/80 text-xs px-6 py-2.5 rounded-lg w-full max-w-xs sm:w-fit "
             onClick={handleAddNew}
           >
              <img 
