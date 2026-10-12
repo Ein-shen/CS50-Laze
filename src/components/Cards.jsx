@@ -66,17 +66,29 @@ const Cards = ({children}) => {
           </div>
           <div className="ml-40 flex flex-row gap-2 pl-10 mt-auto mb-[-12px]">
 
-            <button className=" border border-black/80 flex items-center font-bold gap-2 border-black/80  px-6 py-2 rounded-lg w-fit"
+            <button className=" hover:bg-gray-400 text-xs border border-black/80 flex items-center font-bold gap-2 border-black/80  px-6 py-2 rounded-lg w-fit"
               onClick={() => navigate(`/study/${deckId}`)}
               disabled={cards.length === 0}
             >
+              <img 
+                src="https://img.icons8.com/?size=100&id=MmkqIRv7P6Xy&format=png&color=000000"
+                alt="study"
+                width={24}
+                height={24}  />
               Start study
             </button>
 
 
-            <button className="border border-black/80 flex items-center font-bold gap-2 border border-black/80 px-6 py-2 rounded-lg w-fit" // The upper Add Card button that exist
+            <button className="hover:bg-gray-400 text-xs border border-black/80 flex items-center font-bold gap-2 border border-black/80 px-6 py-2 rounded-lg w-fit" // The upper Add Card button that exist
               onClick={() => setAddNewTrigger((n) => n + 1)}
             >
+              <img 
+                src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000" 
+                alt="add"
+                width={24}
+                height={24} 
+
+                 />
               Add cards
             </button>
 
