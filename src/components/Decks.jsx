@@ -111,9 +111,22 @@ const Decks = () => {
                                     }}
                                 >
                                     <div className="h-24 bg-gray-300" />
-                                    <div className="px-4 py-3">
-                                        <p className="font-bold text-lg">{deck.deckname}</p>
-                                        <p className="text-sm text-gray-500">{deck.cardCount} Cards</p>
+                                    <div className="px-2 py-3">
+                                        <p className="font-bold text-md capitalize items-center flex flex-row gap-1">
+                                            <img src="https://img.icons8.com/?size=100&id=4I9RTdowfoBi&format=png&color=000000" alt="deck"
+                                                  width={24} height={24} />
+                                            {deck.deckname}
+                                        </p>
+                                        <p className="w-full text-right text-sm text-gray-500 flex flex-row items-center justify-end gap-1">
+                                            {deck.cardCount}
+                                            <img
+                                                src="https://img.icons8.com/?size=100&id=gQhB1Tfi2cG2&format=png&color=000000"
+                                                alt="cards"
+                                                width={16}
+                                                height={16}
+                                                className="opacity-50"
+                                            />
+                                        </p>
                                     </div>
                                 </DeckDropDown>
                             </div>
