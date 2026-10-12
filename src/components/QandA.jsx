@@ -15,8 +15,7 @@ const pillBtn =
   "border-black border-2 rounded-full px-5 text-sm sm:text-base " +
   "disabled:opacity-60"
 
-const smallBtn =
-  "font-bold border boder-black/80 rounded-lg px-4 py-2 text-sm sm:text-base"
+ 
 
 const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => {
 
@@ -397,22 +396,21 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
               )}
 
               <div className="flex flex-wrap justify-end gap-3 mt-4 sm:mt-8">
-                <button onClick={() => handleEdit(c)} className={smallBtn}>
+                <button 
+                onClick={() => handleEdit(c)} className="items-center gap-2 flex flex-row border border-black/80 text-xs font-bold hover:bg-gray-400 rounded-lg px-4 py-2 ">
+                  <img src="https://img.icons8.com/?size=100&id=dGDK6sDzQfsa&format=png&color=000000" alt="edit" height={24} width={24}/>
                   Edit
                 </button>
-                <button onClick={() => handleDelete(c.id)} className={smallBtn}>
+                <button
+                 onClick={() => handleDelete(c.id)} className="items-center gap-2  flex flex-row border border-black/80 text-xs font-bold  hover:bg-gray-400 rounded-lg px-4 py-2  ">
+                  <img src="https://img.icons8.com/?size=100&id=A6KpvyL1Ezlb&format=png&color=000000" alt="delte" height={24} width={24}/>
                   Delete
                 </button>
               </div>
             </div>
           ))}
 
-          <button
-            className="font-bold border border-black/80 px-6 py-2.5 rounded-full w-full sm:w-fit self-center mt-2 text-sm sm:text-base"
-            onClick={handleAddNew}
-          >
-            Add cards
-          </button>
+          
         </div>
       ) : (
         <div className="py-16 sm:py-32 flex flex-col items-center justify-center gap-4 text-center px-4 w-full">
@@ -420,9 +418,16 @@ const QandA = ({ deckId, onComplete, showForm, setShowForm, triggerAddNew }) => 
           <p className="text-sm sm:text-base">Add your activity to start study.</p>
 
           <button
-            className="font-bold border-[3px] border-black px-6 py-2.5 rounded-full w-full max-w-xs sm:w-fit text-sm sm:text-base"
+            className="flex flex-row gap-3 items-center font-bold border hover:bg-gray-400 border-black/80 text-xs px-6 py-2.5 rounded-full w-full max-w-xs sm:w-fit "
             onClick={handleAddNew}
           >
+             <img 
+                src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000" 
+                alt="add"
+                width={24}
+                height={24} 
+
+                 />
             Add cards
           </button>
         </div>
