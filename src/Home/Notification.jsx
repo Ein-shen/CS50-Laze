@@ -37,7 +37,14 @@ const Notification = () => {
 
       <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
-          <h1 className="font-bold text-base sm:text-lg flex-1 text-center pr-10 sm:pr-16">Notification</h1>
+          <h1 className="font-bold text-base flex flex-row justify-center gap-2 sm:text-lg flex-1 text-center pr-10 sm:pr-16">
+            <img
+                 src="https://img.icons8.com/?size=100&id=F5WMYjiT3vpJ&format=png&color=000000"
+                 alt="Notification"
+                 width={24}
+                 height={20}
+                 />
+            Notification</h1>
       </div>
 
       {requests.length === 0 && <p className="text-gray-400 pt-10">No Notifications.</p>}
