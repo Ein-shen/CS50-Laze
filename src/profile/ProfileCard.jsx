@@ -178,7 +178,7 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
             <div className="flex flex-row  justify-center items-center gap-4 w-[100%] h-10 pr-1">
 
               <button
-                  className={`h-10 py-2 px-2 font-bold ${
+                  className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center ${
                     visibility === 'public' ? 'border-b-2 border-black' : 'border-2 border-transparent'
                   }`}
 
@@ -187,17 +187,19 @@ const ProfileCard = ({ user, profile, onEditClick, isOwnProfile, onImageUpdate }
 
                     }
                 >
+                  <img src="https://img.icons8.com/?size=100&id=paJ3yfLnNSCK&format=png&color=000000" alt="pub" height={18} width={18} />
                   Public
                 </button>
 
                 {isOwnProfile && (
 
                   <button
-                    className={`h-10 py-2 px-2 font-bold ${
+                    className={`h-10 py-2 px-2 font-bold flex flex-row gap-1 items-center  ${
                       visibility === 'private' ? 'border-b-2 border-black' : 'border-2 border-transparent'
                     }`}
                     onClick={() => setVisibility('private')}
                   >
+                    <img src="https://img.icons8.com/?size=100&id=LnUkDWKbslSu&format=png&color=000000" alt="priv" height={18} width={18}/>
                     Private
                   </button>
                 )}
