@@ -36,7 +36,12 @@ const Message = () => {
       <div className="w-full h-screen flex flex-col gap-6 sm:gap-12">
         <div className="flex flex-row items-center w-full">
           <Return to="/" className="top-0" />
-          <h1 className="text-base sm:text-lg font-bold flex-1 text-center pr-10 sm:pr-16">
+          <h1 className="text-base sm:text-lg  flex flex-row gap-2  justify-center font-bold flex-1 text-center pr-10 sm:pr-16">
+            <img src="https://img.icons8.com/?size=100&id=7xKps2PngOP0&format=png&color=000000" 
+                     alt=" messenger"
+                     width={18}
+                     height={18} />
+
             Message
           </h1>
         </div>
