@@ -60,6 +60,7 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
             <div style={Deck_style.modal}>
 
                 <button
+
                     style={Deck_style.X}
                     onClick={onCancel ?? onComplete}
 
@@ -67,20 +68,28 @@ const Createdeck = ({ deck = {}, onComplete, onCancel }) => {
                     <X size={24} />
                 </button>
 
-                <h1 className='font-bold'>{isEditing ? 'Edit your deck' : 'Add your deck'}</h1>
+                <h1 className='font-bold flex flex-row items-center gap-1'>
+                    <img 
+                    src="https://img.icons8.com/?size=100&id=DQ8rpgRkocmO&format=png&color=000000" 
+                    alt="add"
+                    width={20}
+                    height={20}
+                     />
+                    {isEditing ? 'Edit  deck' : 'Add deck'}</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <input
                         style={Deck_style.input}
                         name="deckname"
-                        placeholder="Input your deck name"
+                        placeholder="Name your deck"
                         value={form.deckname}
                         onChange={handleChange}
+                        required
                     />
                     <button
                         type="submit"
                         disabled={loading}
-                        className=' border  border-black/80 bg-gray-400 rounded-md px-4 py-2 font-semibold w-full'
+                        className=' border  border-black/80 bg-gray-200 hover:bg-green-400 rounded-md px-4 py-2 font-semibold w-full'
                     >
                         {loading ? 'Saving...' : isEditing ? 'Save Changes' : 'Create Deck'}
                     </button>
@@ -102,6 +111,7 @@ const Deck_style = {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 1000,
+       
     },
     modal: {
         position: 'relative',
