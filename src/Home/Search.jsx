@@ -74,7 +74,16 @@ const Search = () => {
     <div>
       <div className="flex items-center py-6 sm:py-10 px-4">
         <Return to="/" className="top-0" />
-        <h1 className="text-base sm:text-lg font-bold flex-1 text-center pr-10 sm:pr-16">Search</h1>
+        <h1 className="text-base sm:text-lg font-bold flex flex-row justify-center gap-2  flex-1 text-center pr-10 sm:pr-16">
+          <img
+                    src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
+                    alt="Search"
+                    width={24}
+                    height={20}
+                />
+          Search
+          
+          </h1>
       </div>
 
       <div className="flex flex-col items-center pt-10 sm:pt-20 px-4">
